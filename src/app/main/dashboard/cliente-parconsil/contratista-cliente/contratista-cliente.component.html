@@ -1,0 +1,450 @@
+<div class="content-wrapper">
+    <div class="content-body">
+        <!-- <app-content-header class="utble" [contentHeader]="contentHeader">
+
+        </app-content-header> -->
+        <h2>Clientes |
+            <span style="font-size: 14px;">
+                <a href="" style="margin-right: 5px; margin-left: 5px;" [routerLink]="['/dashboard/cliente-parconsil']"
+                    [queryParams]="{}"> Inicio</a>
+
+                <span data-feather="chevron-right" style="margin-right: 5px; margin-top: 4px;"></span>
+
+                <a href="" style="font-size: 14px;margin-right: 5px; margin-left: 5px;"
+                    [routerLink]="['/dashboard/cliente-parconsil']" [queryParams]="{}"> Cliente</a>
+
+                <span data-feather="chevron-right" style="margin-right: 5px; margin-top: 4px;"></span>
+
+                <span style="font-size: 14px;margin-right: 5px; margin-left: 5px;"> Contratista</span>
+            </span>
+        </h2>
+        <section class="app-user-view">
+            <div class="row">
+                <div class="col-xl-12 col-lg-8 col-md-7">
+                    <div class="card user-card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-xl-1 col-lg-12 d-flex justify-content-between border-container-lg"
+                                    style="text-align: center;">
+                                    <button [routerLink]="['/dashboard/cliente-parconsil']" [queryParams]="{}"
+                                        style="flex: auto;" queryParamsHandling="merge" skipLocationChange
+                                        class="btn go-back p-0 mr-1">
+                                        <i data-feather="chevron-left" [size]="21"></i>
+                                    </button>
+                                </div>
+                                <div
+                                    class="col-xl-5 col-lg-12 d-flex flex-column justify-content-between border-container-lg unselect">
+                                    <div class="user-avatar-section">
+                                        <div class="d-flex flex-wrap my-50">
+                                            <div class="user-info-title">
+                                                <i class="fa fa-building-o mr-1" style="margin-left: 2px;"></i>
+                                                <span
+                                                    class="card-text user-info-title font-weight-bold mb-0">Cliente</span>
+                                            </div>
+                                            <span class="card-text mb-0 ml-1">{{ params.RazonSocial }}</span>
+                                        </div>
+                                        <div class="d-flex flex-wrap my-50">
+                                            <div class="user-info-title">
+                                                <i data-feather="globe" class="mr-1"></i>
+                                                <span class="card-text user-info-title font-weight-bold mb-0">RUC</span>
+                                            </div>
+                                            <p class="card-text mb-0 ml-1"> {{ params.Ruc }} </p>
+                                        </div>
+                                        <div class="d-flex flex-wrap my-50">
+                                            <div class="user-info-title">
+                                                <i data-feather="phone" class="mr-1"></i>
+                                                <span
+                                                    class="card-text user-info-title font-weight-bold mb-0">Télefono</span>
+                                            </div>
+                                            <p class="card-text mb-0 ml-1"> {{ params.Telefono }} </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-12 mt-2 mt-xl-0 unselect">
+                                    <div class="user-info-wrapper">
+                                        <div class="d-flex flex-wrap my-50">
+                                            <div class="user-info-title">
+                                                <i data-feather="user" class="mr-1"></i>
+                                                <span
+                                                    class="card-text user-info-title font-weight-bold mb-0">Especialista</span>
+                                            </div>
+                                            <p class="card-text mb-0 ml-1"> {{ params.Especialista }}</p>
+                                        </div>
+                                        <div class="d-flex flex-wrap my-50">
+                                            <div class="user-info-title">
+                                                <i data-feather="mail" class="mr-1"></i>
+                                                <span
+                                                    class="card-text user-info-title font-weight-bold mb-0">Correo</span>
+                                            </div>
+                                            <p class="card-text mb-0 ml-1"> {{ params.Correo }} </p>
+                                        </div>
+                                        <div class="d-flex flex-wrap my-50">
+                                            <div class="user-info-title">
+                                                <i data-feather="compass" class="mr-1"></i>
+                                                <span
+                                                    class="card-text user-info-title font-weight-bold mb-0">Dirección</span>
+                                            </div>
+                                            <p class="card-text mb-0 ml-1"> {{ params.Direccion }} </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="col-12">
+                                <blockquote class="blockquote pl-1 border-left-primary border-left-3">
+                                    <div class="media">
+                                        <!-- <div class="media-left mr-1">
+                                            <div class="avatar rounded">
+                                                <div class="avatar-content">
+                                                    <img src="assets/images/icons/book.svg" alt="book svg" height="30"
+                                                        width="30" />
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                        <div class="media-body text-dark utble">
+                                            Contratistas
+                                        </div>
+                                    </div>
+                                    <!-- <footer class="blockquote-footer text-left">
+                                      Vista
+                                      <cite>Cliente</cite>
+                                    </footer> -->
+                                </blockquote>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-3 col-12">
+                                    <label class="d-flex align-items-center utble ml-2" style="margin-top: 6px;">
+                                        <span class="mr-1">Mostrar</span>
+                                        <ng-select (change)="onSetContratistaCliente()" [clearable]="false"
+                                            [items]="forPageOptions" [(ngModel)]="contratistaclienteSettings.pageSize">
+                                        </ng-select>
+                                        <span class="ml-1">Filas</span>
+                                    </label>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-12 d-flex justify-content-center">
+                                    <div class="pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+                                        <div class="demo-inline-spacing">
+                                            <div class="custom-control custom-control-primary custom-radio">
+                                                <input type="radio" id="customRadioA0" name="customRadioA"
+                                                    class="custom-control-input" value="0" (change)="onClickCtr(0)">
+                                                <label class="custom-control-label utble"
+                                                    for="customRadioA0">Todos</label>
+                                            </div>
+                                            <div class="custom-control custom-control-secondary custom-radio">
+                                                <input type="radio" id="customRadioA1" name="customRadioA"
+                                                    class="custom-control-input" value="1" (change)="onClickCtr(1)"
+                                                    checked>
+                                                <label class="custom-control-label utble"
+                                                    for="customRadioA1">Pendientes</label>
+                                            </div>
+                                            <div class="custom-control custom-control-warning custom-radio">
+                                                <input type="radio" id="customRadioA2" name="customRadioA"
+                                                    class="custom-control-input" value="2" (change)="onClickCtr(2)">
+                                                <label class="custom-control-label utble" for="customRadioA2">En
+                                                    Evaluación</label>
+                                            </div>
+                                            <div class="custom-control custom-control-success custom-radio">
+                                                <input type="radio" id="customRadioA3" name="customRadioA"
+                                                    class="custom-control-input" value="3" (change)="onClickCtr(3)">
+                                                <label class="custom-control-label utble"
+                                                    for="customRadioA3">Homologado</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 col-md-3 col-12">
+                                    <label class="d-flex align-items-center ml-1 utble">
+                                        <span class="d-none d-sm-inline-block mr-1">Buscar:</span>
+                                        <div class="input-group">
+                                            <input type="text" (change)="onSetContratistaCliente()" class="form-control"
+                                                placeholder="Texto de búsqueda..." aria-label="Amount"
+                                                [(ngModel)]="contratistaclienteSettings.searchString" />
+                                            <div class="input-group-append">
+                                                <button (click)="onClearFilter()" class="btn btn-outline-primary"
+                                                    type="button" rippleEffect>
+                                                    <i data-feather="trash-2"></i>
+                                                </button>
+                                                <button (click)="onSetContratistaCliente()"
+                                                    class="btn btn-outline-primary" type="button" rippleEffect>
+                                                    <i data-feather="search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-12" style="margin-top: 4px;">
+                                    <button class="btn btn-success" (click)="GetURL()">
+                                        <i class="mr-0 mr-sm-1 fa fa-file-excel-o"></i><span
+                                            class="d-none d-sm-inline-block">Exportar</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class=" col-md-12 col-12">
+                                <div class="table-responsive">
+                                    <ngx-datatable [columnMode]="ColumnMode.force"
+                                        [count]="contratistaclienteSettings.colletionSize" [externalPaging]="true"
+                                        [footerHeight]="50" [headerHeight]="40"
+                                        [limit]="contratistaclienteSettings.pageSize"
+                                        [offset]="contratistaclienteSettings.page" [rowHeight]="58"
+                                        [rows]="rowsContratistaCliente" [scrollbarH]="true" [summaryRow]="false"
+                                        class="bootstrap core-bootstrap unselect">
+                                        <ngx-datatable-column [sortable]="false" [width]="150" name="ACCIÓN">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                <div class="d-flex align-items-center justify-content-center">
+                                                    <div class="ml-1">
+                                                        <div class="position-relative d-inline-block">
+                                                            <button
+                                                                [routerLink]="['/dashboard/cliente-parconsil/revision-doc']"
+                                                                [queryParams]="{
+                                                                    IdCliente: this.params.IdCliente, IdContratista: row.idContratista, Contratista: row.razonSocial, IdClienteGrupo: row.idClienteGrupo,
+                                                                    NombreGrupo: row.nombreGrupo, Ruc: this.params.Ruc, ContratistaRuc: row.ruc, RazonSocial: this.params.RazonSocial, Direccion: this.params.Direccion,
+                                                                    Porcentaje: row.porcentaje, Ubigeo: this.params.IdUbigeo, Telefono: this.params.Telefono, Correo: this.params.Correo, CorreoContratista: row.correo,
+                                                                    Especialista: this.params.Especialista, IdGrupo: row.idClienteGrupo, FechaCreacion: this.params.FechaCreacion }"
+                                                                queryParamsHandling="merge" skipLocationChange
+                                                                ngbTooltip="Revisión" placement="top"
+                                                                class="btn btn-icon btn-icon rounded-circle btn-outline-warning"
+                                                                rippleEffect>
+                                                                <span [data-feather]="'archive'"></span>
+                                                            </button>
+                                                            <span *ngIf="row.documentosPendientes != 0"
+                                                                style="margin-top: 5px; margin-right: 4px;"
+                                                                class="badge badge-pill badge-primary badge-up">{{
+                                                                row.documentosPendientes }}</span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="ml-1" *ngIf="row.idEstado == 3">
+                                                        <div class="position-relative d-inline-block">
+                                                            <button
+                                                                [routerLink]="['/dashboard/cliente-parconsil/contratista-cliente/empleado-contratista']"
+                                                                [queryParams]="{
+                                                                    IdCliente: this.params.IdCliente, IdContratista: row.idContratista, Ruc: row.ruc, IdProyecto: row.idProyecto,
+                                                                    RazonSocial: row.razonSocial, Direccion: row.direccion, Telefono: row.telefono, Correo: row.correo,
+                                                                    PaginaWeb: row.paginaWeb, Especialista: this.params.Especialista, RucContratista: this.params.Ruc,
+                                                                    RazonSocialContratista: this.params.RazonSocial, DireccionContratista: this.params.Direccion, 
+                                                                    TelefonoContratista: this.params.Telefono, CorreoContratista: this.params.Correo}"
+                                                                queryParamsHandling="merge" skipLocationChange
+                                                                ngbTooltip="Empleados" placement="top"
+                                                                class="btn btn-icon btn-icon rounded-circle btn-outline-secondary"
+                                                                rippleEffect>
+                                                                <span [data-feather]="'users'"></span>
+                                                            </button>
+                                                            <!-- <span *ngIf="row.documentosPendientes != 0"
+                                                                style="margin-top: 5px; margin-right: 4px;"
+                                                                class="badge badge-pill badge-light-dark badge-up">{{
+                                                                row.documentosPendientes }}</span> -->
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="ml-1" *ngIf="row.idEstado == 3">
+                                                        <div class="position-relative d-inline-block">
+                                                            <button (click)="onContratistaCheckBox(row, AGP)"
+                                                                ngbTooltip="Asignar Proyecto" placement="top"
+                                                                class="btn btn-icon btn-icon rounded-circle btn-outline-secondary"
+                                                                rippleEffect>
+                                                                <span [data-feather]="'layers'"></span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- <button (click)="onDelete(row)"
+                                                        class="btn btn-icon btn-icon rounded-circle btn-outline-info ml-1"
+                                                        rippleEffect>
+                                                        <span [data-feather]="'trash-2'"></span>
+                                                    </button> -->
+                                                </div>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column [sortable]="true" [width]="100" name="RUC">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="cell-line-height">
+                                                        <p class="font-medium-1 font-weight-bold line-height-1 mb-25"
+                                                            style="font-size: small !important;">
+                                                            {{ row.ruc }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column [sortable]="true" [width]="500" name="RAZÓN SOCIAL">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="cell-line-height">
+                                                        <p class="font-medium-1 font-weight-bold line-height-1 mb-25"
+                                                            style="font-size: small !important;">
+                                                            {{ row.razonSocial }}
+                                                        </p>
+                                                        <span class="text-muted font-small-2"> {{ row.correo }} - {{
+                                                            row.telefono }}</span>
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <!-- <ngx-datatable-column [sortable]="true" [width]="130" name="TELÉFONO">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="cell-line-height">
+                                                        <p class="font-medium-1 font-weight-bold line-height-1 mb-25"
+                                                            style="font-size: small !important;">
+                                                            {{ row.telefono }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                        </ngx-datatable-column>-->
+                                        <ngx-datatable-column [sortable]="false" [width]="140" name="CUMPLIMIENTO">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                <div class="progress-wrapper" *ngIf="20 >= row.porcentaje">
+                                                    <div class="mb-25 text-danger text-center">
+                                                        Progreso&hellip;{{ row.porcentaje }}%</div>
+                                                    <ngb-progressbar type="danger" [animated]="true" showValue="true"
+                                                        [striped]="true" [value]="row.porcentaje"
+                                                        [height]="progressbarHeight">
+                                                    </ngb-progressbar>
+                                                </div>
+                                                <div class="progress-wrapper"
+                                                    *ngIf="row.porcentaje > 20 && 50 >= row.porcentaje">
+                                                    <!-- &hellip;{{ row.porcentaje }}% -->
+                                                    <div class="mb-25 text-warning text-center">Progreso
+                                                        Total</div>
+                                                    <ngb-progressbar type="warning" [animated]="true" showValue="true"
+                                                        [striped]="true" [value]="row.porcentaje"
+                                                        [height]="progressbarHeight">
+                                                    </ngb-progressbar>
+                                                </div>
+                                                <div class="progress-wrapper"
+                                                    *ngIf="row.porcentaje > 50 && 99 >= row.porcentaje">
+                                                    <!-- &hellip;{{ row.porcentaje }}% -->
+                                                    <div class="mb-25 text-info text-center">Progreso Total
+                                                    </div>
+                                                    <ngb-progressbar type="info" [animated]="true" showValue="true"
+                                                        [striped]="true" [value]="row.porcentaje"
+                                                        [height]="progressbarHeight">
+                                                    </ngb-progressbar>
+                                                </div>
+                                                <div class="progress-wrapper" *ngIf="100 == row.porcentaje">
+                                                    <!-- &hellip;{{ row.porcentaje }}% -->
+                                                    <div class="mb-25 text-success text-center">Progreso
+                                                        Total</div>
+                                                    <ngb-progressbar type="success" [animated]="true" showValue="true"
+                                                        [striped]="true" [value]="row.porcentaje"
+                                                        [height]="progressbarHeight">
+                                                    </ngb-progressbar>
+                                                </div>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column [sortable]="false" [width]="180" name="GRUPO - ESTADO">
+                                            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                                <div class="badge badge-pill" [ngClass]="{
+                                                    'badge-light-secondary': row.idEstado == '1',
+                                                    'badge-light-warning': row.idEstado == '2',
+                                                    'badge-light-success': row.idEstado == '3'
+                                                  }">
+                                                    {{ row.estado }}
+                                                </div>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <!-- <ngx-datatable-column [sortable]="true" [width]="200" name="CORREO">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="cell-line-height">
+                                                        <p class="font-medium-1 font-weight-bold line-height-1 mb-25"
+                                                            style="font-size: small !important;">
+                                                            {{ row.correo }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                        </ngx-datatable-column>  -->
+                                    </ngx-datatable>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!-- <div class="col-12 col-md-5 col-lg-5">
+                                <span *ngIf="contratistaclienteSettings.colletionSize == 0" class="ml-2"
+                                    style="color: #b9b9c3;">
+                                    No hay filas
+                                </span>
+                                <span *ngIf="contratistaclienteSettings.colletionSize == 1" class="ml-2"
+                                    style="color: #b9b9c3;">{{
+                                    contratistaclienteSettings.colletionSize }} Fila</span>
+                                <span *ngIf="contratistaclienteSettings.colletionSize > 1" class="ml-2"
+                                    style="color: #b9b9c3;">{{
+                                    contratistaclienteSettings.colletionSize }} Filas</span>
+                            </div> -->
+                            <div class="col-12 col-md-12 col-lg-12 utble d-flex justify-content-end">
+                                <ngb-pagination [collectionSize]="contratistaclienteSettings.colletionSize"
+                                    style="margin-right: 13px;" [(page)]="contratistaclienteSettings.page"
+                                    (pageChange)="onSetContratistaCliente()" [rotate]="true" [boundaryLinks]="true"
+                                    [pageSize]="contratistaclienteSettings.pageSize">
+                                    <ng-template ngbPaginationFirst>⠀<span data-feather="skip-back"></span>
+                                    </ng-template>
+                                    <ng-template ngbPaginationPrevious><span [data-feather]="'chevron-left'"
+                                            [class]="'font-weight-bolder'"></span>⠀
+                                    </ng-template>
+                                    <ng-template ngbPaginationNext>⠀<span [data-feather]="'chevron-right'"
+                                            [class]="'font-weight-bolder'"></span>
+                                    </ng-template>
+                                    <ng-template ngbPaginationLast><span data-feather="skip-forward"></span>⠀
+                                    </ng-template>
+                                </ngb-pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <ng-template #AGP let-modal>
+            <div class="modal-header utble" style="text-align: center;">
+                <h4 class="modal-title" id="myModalLabel1" style="flex: auto;">{{ AControls.titleProyecto.value }}</h4>
+                <button (click)="modal.dismiss('Cross click')" aria-label="Close" class="close" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" ngbAutofocus tabindex="0">
+                <div class="list-group">
+                    <a *ngFor="let row of rowsProyecto" (click)="onContratistaGrupoValue(row)"
+                        (click)="modal.dismiss('Cross click')" class="list-group-item list-group-item-action" [ngClass]="{                                
+                                'disabled': row.documentoConfigurado <= 0
+                            }">
+                        <div class="d-flex w-100 justify-content-center">
+                            <p class="float-left mb-0 mr-1">
+                                Asignar
+                            </p>
+                            <h5 class="mb-1 text-primary"> {{ row.proyecto }}</h5>
+                        </div>
+                        <p class="mb-0 d-flex justify-content-center">
+                            <span class="mr-1"> responsable:</span>
+                            <span class="f-w"> {{ row.responsable }} </span>
+                        </p>
+                        <p class="mb-0 d-flex justify-content-center" *ngIf="AControls.contratista.value != ''">
+                            <span class="mr-1"> a:</span>
+                            <span class="f-w"> {{ AControls.contratista.value }} </span>
+                        </p>
+                        <p class="f-w text-danger mt-1" *ngIf="row.documentoConfigurado <= 0">Documentos no configurados
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </ng-template>
+
+        <block-ui></block-ui>
+    </div>
+</div>

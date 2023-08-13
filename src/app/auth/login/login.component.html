@@ -1,0 +1,217 @@
+<div class="auth-wrapper auth-v2">
+  <div class="auth-inner row m-0">
+    <a class="brand-logo" href="javascript:void(0);">
+      <span class="brand-logo" *ngIf="currentSkin != 'dark'">
+        <img src="{{ coreConfig.app.appLogoImage }}" alt="brand-logo" height="50" />
+      </span>
+      <span class="brand-logo" *ngIf="currentSkin === 'dark'">
+        <img src="assets/images/logo/LogoMenuDark.png" alt="brand-logo" height="50" />
+      </span>
+      <h2 class="brand-text text-primary ml-1"></h2>
+      <!-- <img src="assets/images/logo/LogoLoginAdProv.png" alt="brand-logo" height="60" /> -->
+    </a>
+    <div class="d-none d-lg-flex col-lg-8 align-items-center p-5">
+      <div class="w-100 d-lg-flex align-items-center justify-content-center px-5">
+        <img *ngIf="AdprovUser == 4" class="img-fluid" [src]="coreConfig.layout.skin === 'dark'
+              ? 'assets/images/pages/auth-illustration-dark.png'
+              : 'assets/images/pages/auth-illustration-light.png'
+              " alt="Login V2" width="500" />
+        <img *ngIf="AdprovUser == 3" class="img-fluid" [src]="coreConfig.layout.skin === 'dark'
+              ? 'assets/images/pages/auth-login-dark.png'
+              : 'assets/images/pages/auth-login-light.png'
+              " alt="Login V2" width="500" />
+        <img *ngIf="AdprovUser == 2" class="img-fluid" [src]="coreConfig.layout.skin === 'dark'
+              ? 'assets/images/pages/auth-reset-dark.png'
+              : 'assets/images/pages/auth-reset-light.png'
+              " alt="Login V2" width="350" />
+      </div>
+    </div>
+
+    <div class="d-flex col-lg-4 align-items-center auth-bg px-2 p-lg-5">
+      <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
+        <h2 class="card-title font-weight-bold mb-1">Bienvenido al sistema 👋</h2>
+        <p class="card-text mb-2">Por favor, inicia sesión con su cuenta</p>
+        <ngb-alert [type]="'secondary'" [dismissible]="false" *ngIf="!error">
+          <div class="alert-body font-small-2">
+            <p *ngIf="AdprovUser == 4">
+              <small class="mr-50"><span class="font-weight-bold">Cliente :</span> 20809721104 | password: *****</small>
+            </p>
+            <p *ngIf="AdprovUser == 3">
+              <small class="mr-50"><span class="font-weight-bold">Contratista :</span> 20603781104 | password:
+                *****</small>
+            </p>
+            <p *ngIf="AdprovUser == 2">
+              <small class="mr-50"><span class="font-weight-bold">AdProv User :</span> Admin | Password: *****</small>
+            </p>
+          </div>
+          <span class="feather icon-help-circle auth-help-icon font-medium-3" placement="left"
+            ngbTooltip="Esta casilla muestra como llenar los campos"></span>
+        </ngb-alert>
+
+        <ngb-alert [type]="'danger'" [dismissible]="false" *ngIf="error">
+          <div class="alert-body">
+            <p>{{ error }}</p>
+          </div>
+        </ngb-alert>
+
+        <ul #navWithIcons="ngbNav" class="nav-tabs " ngbNav>
+          <li ngbNavItem>
+            <a ngbNavLink (click)="BagdeNameReturn(3)"><span [data-feather]="'users'"></span>Contratista</a>
+            <ng-template ngbNavContent>
+              <form class="auth-login-form mt-2" [formGroup]="ContratistaForm" (ngSubmit)="onContratistaSubmit()">
+                <div class="form-group">
+                  <label class="form-label" for="login-email">Usuario(RUC):</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><span [data-feather]="'user'"></span></span>
+                    </div>
+                    <input type="text" formControlName="ruc" class="form-control" placeholder="Ingrese su RUC"
+                      [ngClass]="{ 'is-invalid': submitContratista && contratista.ruc.errors }"
+                      aria-describedby="login-email" autofocus="" tabindex="1" />
+                  </div>
+                  <div *ngIf="submitContratista && contratista.ruc.errors" class="invalid-feedback"
+                    [ngClass]="{ 'd-block': submitContratista && contratista.ruc.errors }">
+                    <div *ngIf="contratista.ruc.errors.required">RUC requerida</div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="d-flex justify-content-between">
+                    <label class="form-label">Contraseña:</label>
+                  </div>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="login-password"><span [data-feather]="'lock'"></span></span>
+                    </div>
+                    <input [type]="passwordTextTypeUser ? 'text' : 'password'" formControlName="password"
+                      class="form-control form-control-merge"
+                      [ngClass]="{ 'is-invalid error': submitContratista && contratista.password.errors }"
+                      placeholder="············" aria-describedby="login-password" tabindex="2" />
+                    <div class="input-group-append">
+                      <span class="input-group-text cursor-pointer"><i class="feather font-small-4" [ngClass]="{
+                            'icon-eye-off': passwordTextTypeUser,
+                            'icon-eye': !passwordTextTypeUser
+                          }" (click)="togglePasswordTextTypeUser()"></i></span>
+                    </div>
+                  </div>
+
+                  <div *ngIf="submitContratista && contratista.password.errors" class="invalid-feedback"
+                    [ngClass]="{ 'd-block': submitContratista && contratista.password.errors }">
+                    <div *ngIf="contratista.password.errors.required">Contraseña requerida</div>
+                  </div>
+                </div>
+                <button [disabled]="loadingContratista" class="btn btn-primary btn-block mt-2" tabindex="4"
+                  rippleEffect>
+                  <span *ngIf="loadingContratista == true" class="spinner-border spinner-border-sm mr-1"></span>
+                  <i data-feather="log-in"></i> Iniciar Sesión
+                </button>
+              </form>
+            </ng-template>
+          </li>
+          <!-- <li ngbNavItem>
+            <a ngbNavLink (click)="BagdeNameReturn(4)"><span [data-feather]="'users'"></span>Cliente</a>
+            <ng-template ngbNavContent>
+              <form class="auth-login-form mt-2" [formGroup]="ClienteForm" (ngSubmit)="onClienteSubmit()">
+                <div class="form-group">
+                  <label class="form-label" for="login-email">Usuario(RUC):</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><span [data-feather]="'user'"></span></span>
+                    </div>
+                    <input type="text" formControlName="ruc" class="form-control" placeholder="Ingrese su RUC"
+                      [ngClass]="{ 'is-invalid': submitCliente && cliente.ruc.errors }" aria-describedby="login-email"
+                      autofocus="" tabindex="1" />
+                  </div>
+                  <div *ngIf="submitCliente && cliente.ruc.errors" class="invalid-feedback"
+                    [ngClass]="{ 'd-block': submitCliente && cliente.ruc.errors }">
+                    <div *ngIf="cliente.ruc.errors.required">RUC requerida</div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="d-flex justify-content-between">
+                    <label class="form-label">Contraseña:</label>
+                  </div>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="login-password"><span [data-feather]="'lock'"></span></span>
+                    </div>
+                    <input [type]="passwordTextTypeUser ? 'text' : 'password'" formControlName="password"
+                      class="form-control form-control-merge"
+                      [ngClass]="{ 'is-invalid error': submitCliente && cliente.password.errors }"
+                      placeholder="············" aria-describedby="login-password" tabindex="2" />
+                    <div class="input-group-append">
+                      <span class="input-group-text cursor-pointer"><i class="feather font-small-4" [ngClass]="{
+                            'icon-eye-off': passwordTextTypeUser,
+                            'icon-eye': !passwordTextTypeUser
+                          }" (click)="togglePasswordTextTypeUser()"></i></span>
+                    </div>
+                  </div>
+
+                  <div *ngIf="submitCliente && cliente.password.errors" class="invalid-feedback"
+                    [ngClass]="{ 'd-block': submitCliente && cliente.password.errors }">
+                    <div *ngIf="cliente.password.errors.required">Contraseña requerida</div>
+                  </div>
+                </div>
+                <button [disabled]="loadingCliente" class="btn btn-primary btn-block mt-2" tabindex="4" rippleEffect>
+                  <span *ngIf="loadingCliente" class="spinner-border spinner-border-sm mr-1"></span>
+                  <i data-feather="log-in"></i> Iniciar Sesión
+                </button>
+              </form>
+            </ng-template>
+          </li> -->
+          <li ngbNavItem>
+            <a ngbNavLink (click)="BagdeNameReturn(2)"><span [data-feather]="'settings'"></span>Ad Prov</a>
+            <ng-template ngbNavContent>
+              <form class="auth-login-form mt-2" [formGroup]="AdProvForm" (ngSubmit)="onAdprovSubmit()">
+                <div class="form-group">
+                  <label class="form-label" for="login-email">Usuario:</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><span [data-feather]="'user'"></span></span>
+                    </div>
+                    <input type="text" formControlName="user" class="form-control" placeholder="Ingrese su usuario"
+                      [ngClass]="{ 'is-invalid': submitAdProv && adprov.user.errors }" aria-describedby="login-email"
+                      autofocus="" tabindex="1" />
+                  </div>
+                  <div *ngIf="submitAdProv && adprov.user.errors" class="invalid-feedback"
+                    [ngClass]="{ 'd-block': submitAdProv && adprov.user.errors }">
+                    <div *ngIf="adprov.user.errors.required">Usuario requerido</div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="d-flex justify-content-between">
+                    <label>Contraseña</label>
+                  </div>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="login-password"><span [data-feather]="'lock'"></span></span>
+                    </div>
+                    <input [type]="passwordTextType ? 'text' : 'password'" formControlName="password"
+                      class="form-control form-control-merge"
+                      [ngClass]="{ 'is-invalid error': submitAdProv && adprov.password.errors }"
+                      placeholder="············" aria-describedby="login-password" tabindex="2" />
+                    <div class="input-group-append">
+                      <span class="input-group-text cursor-pointer"><i class="feather font-small-4" [ngClass]="{
+                            'icon-eye-off': passwordTextType,
+                            'icon-eye': !passwordTextType
+                          }" (click)="togglePasswordTextType()"></i></span>
+                    </div>
+                  </div>
+
+                  <div *ngIf="submitAdProv && adprov.password.errors" class="invalid-feedback"
+                    [ngClass]="{ 'd-block': submitAdProv && adprov.password.errors }">
+                    <div *ngIf="adprov.password.errors.required">Contraseña requerida</div>
+                  </div>
+                </div>
+                <button [disabled]="loadingAdprov" class="btn btn-primary btn-block mt-2" tabindex="4" rippleEffect>
+                  <span *ngIf="loadingAdprov == true" class="spinner-border spinner-border-sm mr-1"></span>
+                  <i data-feather="log-in"></i> Iniciar Sesión
+                </button>
+              </form>
+            </ng-template>
+          </li>
+        </ul>
+        <div [ngbNavOutlet]="navWithIcons" class="mt-2"></div>
+      </div>
+    </div>
+  </div>
+</div>

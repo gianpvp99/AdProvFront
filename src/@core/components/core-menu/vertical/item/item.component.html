@@ -1,0 +1,90 @@
+<ng-container *ngIf="!item.hidden">
+  <!-- item with router url -->
+  <a class="d-flex align-items-center" [ngClass]="item.classes" *ngIf="item.url && !item.externalUrl"
+    [routerLink]="[item.url]" [target]="item.openInNewTab ? '_blank' : '_self'">
+    <ng-container *ngTemplateOutlet="itemContent"></ng-container>
+  </a>
+
+  <!-- item with external url -->
+  <a class="d-flex align-items-center" [ngClass]="item.classes" *ngIf="item.url && item.externalUrl" [href]="item.url"
+    [target]="item.openInNewTab ? '_blank' : '_self'">
+    <ng-container *ngTemplateOutlet="itemContent"></ng-container>
+  </a>
+
+  <ng-template #itemContent>
+    <div class="d-flex effects">
+      <img *ngIf="item.icon == 'bar-chart-2'" class="image-active" src="assets/images/ico/estadistica_n.png" alt="s" width="23px"
+      style="margin-left: 2px; margin-top: 2px; margin-right: 2px;"> 
+
+      <img *ngIf="item.icon == 'users'" class="image-active" src="assets/images/ico/clientes_n.png" alt="s" width="23px"
+      style="margin-left: 2px; margin-top: 2px; margin-right: 2px;">
+      
+
+      <img *ngIf="item.icon == 'briefcase'" class="image-active" src="assets/images/ico/contratista_n.png" alt="s" width="23px"
+      style="margin-left: 2px; margin-top: 2px; margin-right: 2px;">      
+
+      <img *ngIf="item.icon == 'message-circle'" class="image-active" src="assets/images/ico/documentos_n.png" alt="s" width="23px"
+      style="margin-left: 2px; margin-top: 2px; margin-right: 2px;">      
+
+      <img *ngIf="item.icon == 'book'" class="image-active" src="assets/images/ico/documentos_n.png" alt="s" width="23px"
+      style="margin-left: 2px; margin-top: 2px; margin-right: 2px;">
+      
+      <img *ngIf="item.icon == 'user'" class="image-active" src="assets/images/ico/usuario_n.png" alt="s" width="23px"
+      style="margin-left: 2px; margin-top: 2px; margin-right: 2px;">
+
+      <img *ngIf="item.icon == 'key'" class="image-active" src="assets/images/ico/usuario_n.png" alt="s" width="23px"
+      style="margin-left: 2px; margin-top: 2px; margin-right: 2px;">
+      
+      <img *ngIf="item.icon == 'roles'" class="image-active" src="assets/images/ico/roles_n.png" alt="s" width="27px"
+      style="margin-left: 2px; margin-top: 2px; margin-right: 2px;">
+
+      <img *ngIf="item.icon == 'sector'" class="image-active" src="assets/images/ico/sector_n.png" alt="s" width="27px"
+      style="margin-left: 2px; margin-top: 2px; margin-right: 2px;">
+
+      <img *ngIf="item.icon == 'auditoria'" class="image-active" src="assets/images/ico/auditoria_n.png" alt="s" width="23px"
+      style="margin-left: 2px; margin-top: 2px; margin-right: 2px;">
+
+      <img *ngIf="item.icon == 'puerta'" class="image-active" src="assets/images/ico/puerta_n.png" alt="s" width="27px"
+      style="margin-left: 2px; margin-top: 2px; margin-right: 2px;">
+
+      <img *ngIf="item.icon == 'qr'" class="image-active" src="assets/images/ico/qr_n.png" alt="s" width="24px"
+      style="margin-left: 2px; margin-top: 2px; margin-right: 2px;">
+      <!-- <img *ngIf="item.icon == 'users'" class="image-active" src="assets/images/ico-2022/exchange.png" alt="s" width="23px"
+      style="margin-left: 2px; margin-top: 2px; margin-right: 2px;">
+      
+
+      <img *ngIf="item.icon == 'briefcase'" class="image-active" src="assets/images/ico-2022/handshake.png" alt="s" width="23px"
+      style="margin-left: 2px; margin-top: 2px; margin-right: 2px;">      
+
+      <img *ngIf="item.icon == 'message-circle'" class="image-active" src="assets/images/ico-2022/speech-bubble.png" alt="s" width="23px"
+      style="margin-left: 2px; margin-top: 2px; margin-right: 2px;">      
+
+      <img *ngIf="item.icon == 'book'" class="image-active" src="assets/images/ico-2022/folder.png" alt="s" width="23px"
+      style="margin-left: 2px; margin-top: 2px; margin-right: 2px;">
+      
+      <img *ngIf="item.icon == 'user'" class="image-active" src="assets/images/ico-2022/profile.png" alt="s" width="23px"
+      style="margin-left: 2px; margin-top: 2px; margin-right: 2px;">
+       -->
+
+      <span class="ml-1 menu-title text-truncate" [translate]="item.translate">{{ item.title }}</span>
+
+    </div>
+
+    <!-- <img *ngIf="item.icon == 'users'" class="gif-active" src="assets/images/ico-2022/exchange.gif" alt="lgbtb" width="28px"> -->
+      <!-- <img *ngIf="item.icon == 'briefcase'" class="gif-active" src="assets/images/ico-2022/handshake.gif" alt="lgbtb" width="28px">       -->
+      <!-- <img *ngIf="item.icon == 'message-circle'" class="gif-active" src="assets/images/ico-2022/speech-bubble.gif" alt="lgbtb" width="28px"> -->
+      <!-- <img *ngIf="item.icon == 'book'" class="gif-active" src="assets/images/ico-2022/folder.gif" alt="lgbtb" width="28px"> -->
+      <!-- <img *ngIf="item.icon == 'user'" class="gif-active" src="assets/images/ico-2022/profile.gif" alt="lgbtb" width="28px"> -->
+
+    <!-- <span [data-feather]="item.icon" *ngIf="item.icon"></span>
+    <span class="menu-title text-truncate" [translate]="item.translate">{{ item.title }}</span> -->
+    
+
+
+
+    <span class="badge ml-auto" *ngIf="item.badge" [translate]="item.badge.translate"
+      [ngClass]="item.badge.classes">
+      {{ item.badge.title }}
+    </span>
+  </ng-template>
+</ng-container>

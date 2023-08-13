@@ -1,0 +1,420 @@
+<div class="content-wrapper">
+    <div class="content-body">
+        <a id="mainTable"></a>
+        <app-content-header [contentHeader]="contentHeader" class="invoice-actions"></app-content-header>
+
+        <section id="ngx-datatable-multi-purpose" class="invoice-actions">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 col-12">
+                            <label class="d-flex align-items-center utble ml-2 mt-1">
+                                <span class="mr-1">Mostrar</span>
+                                <ng-select (change)="onSetDocumento()" [clearable]="false" [items]="forPageOptions"
+                                    [(ngModel)]="documentosSettings.pageSize">
+                                </ng-select>
+                            </label>
+                        </div>
+                        <div class="col-md-6 col-12 d-flex justify-content-md-end">
+                            <div class="d-flex justify-content-end align-items-center m-1">
+                                <button (click)="AgregarDocumento(ADC)" class="btn btn-primary f-w mr-1" rippleEffect>
+                                    <i class="mr-0 mr-sm-1" data-feather="plus-square"></i><span
+                                        class="d-none d-sm-inline-block">Agregar Documento</span>
+                                </button>
+                                <button (click)="onSetDocumento()" class="btn btn-secondary f-w mr-1" rippleEffect>
+                                    <i class="mr-0 mr-sm-1" data-feather="refresh-cw"></i><span
+                                        class="d-none d-sm-inline-block">Refrescar</span>
+                                </button>
+                                <div
+                                    class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0 space-left">
+                                    <label class="d-flex align-items-center">
+                                        <input (keyup)="onSetDocumento()" [(ngModel)]="documentosSettings.searchString"
+                                            class="form-control ml-25" placeholder="Buscar..." type="search">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card card-company-table">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="centerall-header">
+                                    <tr>
+                                        <th class="utble">ACCIÓN</th>
+                                        <th class="utble">MATRIZ</th>
+                                        <th class="utble">NOMBRE</th>
+                                        <th class="utble">TIPO DE EXTENSIÓN</th>
+                                        <th class="utble">HOM.(EMPRESA) {{
+                                            DControls.totalHomEmpresa.value }}</th>
+                                        <th class="utble">HOM.(TRABAJADOR) {{
+                                            DControls.totalHomTrabajador.value }}</th>
+                                        <th class="utble">EMPRESA {{ DControls.totalEmpresa.value }}
+                                        </th>
+                                        <th class="utble">TRABAJADOR {{
+                                            DControls.totalTrabajador.value }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let row of rowsDocumentos" class="cursor-pointer">
+                                        <td class="text-dark">
+                                            <div class="d-flex align-items-center" style="justify-content: center;">
+                                                <div *ngIf="!row.action" class="avatar bg-light-primary mr-1">
+                                                    <button (click)="EditDocumento(row)" ngbTooltip="Editar"
+                                                        placement="top"
+                                                        class="btn btn-icon btn-icon rounded-circle btn-outline-secondary"
+                                                        rippleEffect>
+                                                        <span [data-feather]="'edit'"></span>
+                                                    </button>
+                                                </div>
+                                                <div *ngIf="!row.action" class="avatar bg-light-danger mr-1">
+                                                    <button (click)="onDocumentoDelete(row)" ngbTooltip="Eliminar"
+                                                        placement="top"
+                                                        class="btn btn-icon btn-icon rounded-circle btn-outline-secondary"
+                                                        rippleEffect>
+                                                        <span [data-feather]="'trash-2'"></span>
+                                                    </button>
+                                                </div>
+
+                                                <div *ngIf="row.action" 
+                                                    class="avatar bg-light-warning mr-1">
+                                                    <button (click)="CancelDocumento(row)" ngbTooltip="Cancelar"
+                                                        placement="top"
+                                                        class="btn btn-icon btn-icon rounded-circle btn-outline-secondary"
+                                                        rippleEffect>
+                                                        <span [data-feather]="'delete'"></span>
+                                                    </button>                                                    
+                                                </div>
+                                                <div *ngIf="row.action" class="avatar bg-light-success mr-1">
+                                                    <button (click)="SaveDocumento(row)" ngbTooltip="Guardar"
+                                                        placement="top"
+                                                        class="btn btn-icon btn-icon rounded-circle btn-outline-secondary"
+                                                        rippleEffect>
+                                                        <span [data-feather]="'save'"></span>
+                                                    </button>                                                        
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="badge badge-pill badge-light-dark">{{ row.matriz }}</div>
+                                        </td>
+                                        <td class="c-w">
+                                            <span *ngIf="!row.action" class="text-dark font-weight-bolder">{{
+                                                row.codDocumento }}</span>
+                                            <span *ngIf="!row.action">{{ row.nombreDocumento
+                                                }}</span>
+                                            <div *ngIf="row.action" class="input-group">
+                                                <input class="form-control" type="text" placeholder="Nombre del doc."
+                                                    [(ngModel)]="DControls.nombreDocumento.value">
+                                            </div>
+                                        </td>
+                                        <td class="cent c-w">
+                                            <span *ngIf="!row.action">{{ row.tipoExtension
+                                                }}</span>
+                                            <div *ngIf="row.action" class="input-group">
+                                                <input class="form-control" type="text"
+                                                    placeholder="Ejm: jpg, jpeg, pdf"
+                                                    [(ngModel)]="DControls.tipoExtension.value">
+                                            </div>
+                                        </td>
+                                        <td class="cent">
+                                            <button type="button" *ngIf="row.homEmpresa == true"
+                                                (click)="HomEmpresaEstado(row)" ngbTooltip="Habilitado" placement="top"
+                                                class="btn btn-icon rounded-circle btn-outline-success" rippleEffect>
+                                                <span [data-feather]="'check'"></span></button>
+
+                                            <button type="button" *ngIf="row.homEmpresa == false"
+                                                (click)="HomEmpresaEstado(row)" ngbTooltip="Desabilitado"
+                                                placement="top" class="btn btn-icon rounded-circle btn-outline-danger"
+                                                rippleEffect>
+                                                <span [data-feather]="'x'"></span></button>
+                                        </td>
+                                        <td class="cent">
+                                            <button type="button" *ngIf="row.homTrabajador == true"
+                                                (click)="HomTrabajadorEstado(row)" ngbTooltip="Habilitado"
+                                                placement="top" class="btn btn-icon rounded-circle btn-outline-success"
+                                                rippleEffect>
+                                                <span [data-feather]="'check'"></span></button>
+
+                                            <button type="button" *ngIf="row.homTrabajador == false"
+                                                (click)="HomTrabajadorEstado(row)" ngbTooltip="Desabilitado"
+                                                placement="top" class="btn btn-icon rounded-circle btn-outline-danger"
+                                                rippleEffect>
+                                                <span [data-feather]="'x'"></span></button>
+                                        </td>
+                                        <td class="cent">
+                                            <button type="button" *ngIf="row.empresa == true"
+                                                (click)="EmpresaEstado(row)" ngbTooltip="Habilitado" placement="top"
+                                                class="btn btn-icon rounded-circle btn-outline-success" rippleEffect>
+                                                <span [data-feather]="'check'"></span></button>
+
+                                            <button type="button" *ngIf="row.empresa == false"
+                                                (click)="EmpresaEstado(row)" ngbTooltip="Desabilitado" placement="top"
+                                                class="btn btn-icon rounded-circle btn-outline-danger" rippleEffect>
+                                                <span [data-feather]="'x'"></span></button>
+                                        </td>
+                                        <td class="cent">
+                                            <button type="button" *ngIf="row.trabajador == true"
+                                                (click)="TrabajadorEstado(row)" ngbTooltip="Habilitado" placement="top"
+                                                class="btn btn-icon rounded-circle btn-outline-success" rippleEffect>
+                                                <span [data-feather]="'check'"></span></button>
+
+                                            <button type="button" *ngIf="row.trabajador == false"
+                                                (click)="TrabajadorEstado(row)" ngbTooltip="Desabilitado"
+                                                placement="top" class="btn btn-icon rounded-circle btn-outline-danger"
+                                                rippleEffect>
+                                                <span [data-feather]="'x'"></span></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-12 col-md-5 col-lg-5">
+                                <h6 *ngIf="documentosSettings.colletionSize == 1" class="ml-2 text-muted">{{
+                                    documentosSettings.colletionSize }} Fila</h6>
+                                <h6 *ngIf="documentosSettings.colletionSize > 1" class="ml-2 text-muted">{{
+                                    documentosSettings.colletionSize }} Filas</h6>
+                            </div>
+                            <div class="col-12 col-md-7 col-lg-7 utble">
+                                <ngb-pagination [collectionSize]="documentosSettings.colletionSize"
+                                    [(page)]="documentosSettings.page" (pageChange)="onSetDocumento()" [maxSize]="3"
+                                    [ellipses]="false" [rotate]="true" [boundaryLinks]="true"
+                                    [pageSize]="documentosSettings.pageSize">
+                                    <ng-template ngbPaginationFirst>⠀<span data-feather="skip-back"></span>
+                                    </ng-template>
+                                    <ng-template ngbPaginationPrevious><span [data-feather]="'chevron-left'"
+                                            [class]="'font-weight-bolder'"></span>⠀
+                                    </ng-template>
+                                    <ng-template ngbPaginationNext>⠀<span [data-feather]="'chevron-right'"
+                                            [class]="'font-weight-bolder'"></span>
+                                    </ng-template>
+                                    <ng-template ngbPaginationLast><span data-feather="skip-forward"></span>⠀
+                                    </ng-template>
+                                </ngb-pagination>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <ng-template #modalR let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">Ver Información de Regimen</h4>
+                <button (click)="modal.dismiss('Cross click')" aria-label="Close" class="close" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" ngbAutofocus tabindex="0">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div style="margin-top: 10px">
+                                    <ngx-datatable [columnMode]="ColumnMode.force" [footerHeight]="50"
+                                        [headerHeight]="40" [limit]="10" [rowHeight]="58" [rows]="rows"
+                                        [scrollbarH]="true" [summaryPosition]="'bottom'" [summaryRow]="true"
+                                        class="bootstrap core-bootstrap">
+                                        <!-- <ngx-datatable-column [sortable]="false" [width]="110" name="Acción">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="avatar bg-light-success mr-1">
+                                                        <div class="avatar-content">
+                                                            <a href="javascript:void(0)">
+                                                                <i data-feather="file-plus" class="font-medium-3"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    &nbsp;
+                                                    <div class="avatar bg-light-warning mr-1">
+                                                        <div class="avatar-content">
+                                                            <a href="javascript:void(0)">
+                                                                <i data-feather="edit-2" class="font-medium-3"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                        </ngx-datatable-column> -->
+                                        <!-- <ngx-datatable-column [sortable]="false" [width]="100" name="Alias" prop="alias">
+                                        </ngx-datatable-column> -->
+                                        <ngx-datatable-column [sortable]="false" [width]="250" name="Documento"
+                                            prop="documento">
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column [sortable]="false" [width]="110" name="Activo">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="avatar bg-light-success mr-1">
+                                                        <div class="avatar-content">
+                                                            <a href="javascript:void(0)">
+                                                                <i data-feather="check-circle"
+                                                                    class="font-medium-3"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <span>Habilitado</span>
+                                                </div>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                    </ngx-datatable>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: block !important;">
+                <div class="row">
+                    <div class="col-md-6 col-12" style="margin-bottom: 5px">
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <div style="float: right">
+                            <button (click)="ValidacionDocumento()" class="btn btn-primary" rippleEffect type="submit">
+                                Aceptar
+                            </button>
+                            &nbsp;
+                            <button (click)="modal.dismiss()" class="btn btn-secondary" rippleEffect type="button">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template #ADC let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">Agregando nuevo documento</h4>
+                <button (click)="modal.dismiss('Cross click')" aria-label="Close" class="close" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" ngbAutofocus tabindex="0">
+                <form [formGroup]="DocumentoForm">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12 col-12">
+                                    <div class="form-group">
+                                        <label>Matriz:</label>
+                                        <ng-select [items]="rowsMatriz" [(ngModel)]="idMatriz" [clearable]="false"
+                                            bindLabel="descripcion" bindValue="idColumna" formControlName="idMatriz">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-12">
+                                    <div class="form-group">
+                                        <label>Nombre del Documento:</label>
+                                        <input type="text" class="form-control" formControlName="nombreDocumento">
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-12 mb-1">
+                                    <div class="form-group">
+                                        <label>Tipo de Extensión:</label>
+                                        <input type="text" class="form-control" formControlName="tipoExtension"
+                                            disabled>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12 mb-2">
+                                    <div class="form-group">
+                                        <label class="d-flex justify-content-center">HOM. (EMPRESA):</label>
+                                        <div class="d-flex justify-content-center">
+                                            <button type="button" *ngIf="DControls.homEmpresa.value == true"
+                                                (click)="HomEmpresaAgregar()" ngbTooltip="Habilitado" placement="top"
+                                                class="btn btn-icon rounded-circle btn-outline-success" rippleEffect>
+                                                <span [data-feather]="'check'"></span></button>
+
+                                            <button type="button" *ngIf="DControls.homEmpresa.value == false"
+                                                (click)="HomEmpresaAgregar()" ngbTooltip="Desabilitado" placement="top"
+                                                class="btn btn-icon rounded-circle btn-outline-danger" rippleEffect>
+                                                <span [data-feather]="'x'"></span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12 mb-2">
+                                    <div class="form-group">
+                                        <label class="d-flex justify-content-center">HOM. (TRABAJADOR):</label>
+                                        <div class="d-flex justify-content-center">
+                                            <button type="button" *ngIf="DControls.homTrabajador.value == true"
+                                                (click)="HomTrabajadorAgregar()" ngbTooltip="Habilitado" placement="top"
+                                                class="btn btn-icon rounded-circle btn-outline-success" rippleEffect>
+                                                <span [data-feather]="'check'"></span></button>
+
+                                            <button type="button" *ngIf="DControls.homTrabajador.value == false"
+                                                (click)="HomTrabajadorAgregar()" ngbTooltip="Desabilitado"
+                                                placement="top" class="btn btn-icon rounded-circle btn-outline-danger"
+                                                rippleEffect>
+                                                <span [data-feather]="'x'"></span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12 mb-2">
+                                    <div class="form-group">
+                                        <label class="d-flex justify-content-center">EMPRESA:</label>
+                                        <div class="d-flex justify-content-center">
+                                            <button type="button" *ngIf="DControls.empresa.value == true"
+                                                (click)="EmpresaAgregar()" ngbTooltip="Habilitado" placement="top"
+                                                class="btn btn-icon rounded-circle btn-outline-success" rippleEffect>
+                                                <span [data-feather]="'check'"></span></button>
+
+                                            <button type="button" *ngIf="DControls.empresa.value == false"
+                                                (click)="EmpresaAgregar()" ngbTooltip="Desabilitado" placement="top"
+                                                class="btn btn-icon rounded-circle btn-outline-danger" rippleEffect>
+                                                <span [data-feather]="'x'"></span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12 mb-2">
+                                    <div class="form-group">
+                                        <label class="d-flex justify-content-center">TRABAJADOR:</label>
+                                        <div class="d-flex justify-content-center">
+                                            <button type="button" *ngIf="DControls.trabajador.value == true"
+                                                (click)="TrabajadorAgregar()" ngbTooltip="Habilitado" placement="top"
+                                                class="btn btn-icon rounded-circle btn-outline-success" rippleEffect>
+                                                <span [data-feather]="'check'"></span></button>
+
+                                            <button type="button" *ngIf="DControls.trabajador.value == false"
+                                                (click)="TrabajadorAgregar()" ngbTooltip="Desabilitado" placement="top"
+                                                class="btn btn-icon rounded-circle btn-outline-danger" rippleEffect>
+                                                <span [data-feather]="'x'"></span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer" style="display: block !important;">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <div style="float: right">
+                            <button (click)="SaveDocumentoInAgregar()" class="btn btn-primary" rippleEffect
+                                type="submit">
+                                Agregar
+                            </button>
+                            &nbsp;
+                            <button (click)="modal.dismiss()" class="btn btn-secondary" rippleEffect type="button">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+
+        <block-ui></block-ui>
+    </div>
+</div>

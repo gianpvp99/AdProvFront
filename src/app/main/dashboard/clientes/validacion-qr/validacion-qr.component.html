@@ -1,0 +1,263 @@
+<div class="content-wrapper">
+    <div class="content-body">
+        <app-content-header class="utble" [contentHeader]="contentHeader"></app-content-header>
+        <section id="ngx-datatable-multi-purpose">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class=" d-flex justify-content-md-end">
+                            <div class="d-flex justify-content-end align-items-center m-1">
+
+                                <button class="btn btn-primary f-w mr-1" rippleEffect (click)="empleadoList()">
+                                    <i class="mr-0 mr-sm-1" data-feather="plus-square"></i><span
+                                        class="d-none d-sm-inline-block">Buscar por DNI </span>
+                                </button>
+                                <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0 space-left">
+                                    <label class="d-flex align-items-center">
+                                        <!-- <input (keyup)="onReloadPage()" [(ngModel)]="QRSettings.searchString"
+                                            class="form-control ml-25" placeholder="Ingresar DNI ..." type="search"> -->
+                                        <!-- <input  *ngIf="documentValue == undefined" 
+                                        class="form-control ml-25" placeholder="Ingresar DNI ..." type="search">
+
+                                        <input *ngIf="documentValue" [value]="documentValue"
+                                        class="form-control ml-25" placeholder="Ingresar DNI ..." type="search"> -->
+
+                                        <input [(ngModel)]="documentValue"
+                                        class="form-control ml-25" placeholder="Ingresar DNI ..." type="search">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="app-user-view">
+            <div class="row">
+
+                <div class="col-xl-3 col-lg-4 col-md-5">
+                    <div class="card card-profile">
+                        <div class="card-body">
+                            <div class="profile-image-wrapper">
+                                <div class="">
+                                    <div class="avatar">
+                                        <img *ngIf="empleadoListQr.foto" [src]="empleadoListQr.foto" alt="avatar"  width="250" height="250">
+                                        <img *ngIf="empleadoListQr.foto == ''" src="assets/images/ico/sin-foto.jpg" alt="avatar"  width="250" height="250">
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <h3>{{empleadoListQr.fullName}}</h3>
+                            <h6 class="text-muted">Emplead(a)</h6>
+                            <button *ngIf="empleadoListQr.estado == 'Inclan - APTO'"
+                            class="btn btn-lg my-1 waves-effect btn-outline-success">APTO</button>
+
+                            <button *ngIf="empleadoListQr.estado == 'Inclan - PENDIENTE'"  
+                            class="btn btn-lg my-1 waves-effect btn-outline-danger">NO APTO</button>
+                            <!-- <div class="badge badge-glow  badge-success">APTO</div> -->
+                                <div class="divider divider-info">
+                                    <div class="divider-text">Info</div>
+                                </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="text-muted font-weight-bolder">Ingresos</h6>
+                                    <h3 class="mb-0">0</h3>
+                                </div>
+                                <div>
+                                    <h6 class="text-muted font-weight-bolder"></h6>
+                                    <h3 class="mb-0"></h3>
+                                </div>
+                                <div>
+                                    <h6 class="text-muted font-weight-bolder">Salidas</h6>
+                                    <h3 class="mb-0">0</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="card card-transaction">
+                        <div class="card-header">
+                            <h4 class="card-title">Datos Personales:</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="transaction-item">
+                                <div class="media">
+                                    <div class="avatar bg-light-primary rounded mr-1">
+                                        <div class="avatar-content">
+                                            <span [data-feather]="'credit-card'"></span>
+                                        </div>
+                                    </div>
+                                     <h6 class="align-self-center mb-0" >Dni:  {{empleadoListQr.nroDocumento}}</h6>
+                                    </div>
+                            </div>
+
+                            <div class="transaction-item">
+                                <div class="media">
+                                    <div class="avatar bg-light-primary rounded mr-1">
+                                        <div class="avatar-content">
+                                            <span [data-feather]="'check-circle'"></span>
+                                        </div>
+                                    </div>
+                                    <h6 class="align-self-center mb-0">Nombres:  {{empleadoListQr.nombres}}</h6>
+                                </div>
+                            </div>
+
+                            <div class="transaction-item">                            
+                                <div class="media">
+                                    <div class="avatar bg-light-primary rounded mr-1">
+                                        <div class="avatar-content">
+                                            <span [data-feather]="'check-circle'"></span>
+                                        </div>
+                                    </div>
+                                    <h6 class="align-self-center mb-0">Apellidos:  {{empleadoListQr.apellidoPaterno}} {{empleadoListQr.apellidoMaterno}}</h6>
+                                </div>
+                            </div>
+
+                            <div class="transaction-item">                            
+                                <div class="media">
+                                    <div class="avatar bg-light-warning rounded mr-1">
+                                        <div class="avatar-content">
+                                            <span [data-feather]="'check-square'"></span>
+                                        </div>
+                                    </div>
+                                    <h6 class="align-self-center mb-0">Contratista:  {{empleadoListQr.rsContratista}}</h6>
+                                </div>
+                            </div>
+
+                            <div class="transaction-item">                            
+                                <div class="media">
+                                    <div class="avatar bg-light-warning rounded mr-1">
+                                        <div class="avatar-content">
+                                            <span [data-feather]="'file-text'"></span>
+                                        </div>
+                                    </div>
+                                    <h6 class="align-self-center mb-0">Proyecto:  {{empleadoProyecto}}</h6>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-3 col-lg-4 col-md-10">
+                                <button (click)="lisDocumentEmpleado()" type="button" rippleeffect="" class="btn btn-relief-primary text-center">
+                                    <span [data-feather]="'log-out'"></span> DOCUMENTOS
+                                </button>
+                            </div>
+                                    
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="card ">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h4 class="card-title">Control de Asistencias</h4>
+                        </div>
+                        <div class="card-body p-0">
+                            <div id="goalChartoptions" class="mb-1 mt-1 pt-1" #goalChartRef>
+                                <!-- Apexchart component-->
+                                <!-- <apx-chart
+                                    [chart]="{
+                                    height: 245,
+                                    width: isMenuToggled === false ? goalChartRef.offsetWidth : goalChartoptions.chart.width,
+                                    type: 'radialBar',
+                                    sparkline: {
+                                        enabled: true
+                                    },
+                                    dropShadow: {
+                                        enabled: true,
+                                        blur: 3,
+                                        left: 1,
+                                        top: 1,
+                                        opacity: 0.1
+                                    }
+                                    }"
+                                    [colors]="goalChartoptions.colors"
+                                    [plotOptions]="goalChartoptions.plotOptions"
+                                    [fill]="goalChartoptions.fill"
+                                    [series]="data.goalOverview.series"
+                                    [stroke]="goalChartoptions.stroke"
+                                    [grid]="goalChartoptions.grid"
+                                ></apx-chart> -->
+                                <!-- / Apexchart component-->
+                            </div>
+
+                            <div class="row border-top text-center mx-0">
+                                <div class="col-6 border-right py-1">
+                                    <button type="button" rippleeffect="" class="btn btn-relief-warning">
+                                        <span [data-feather]="'log-in'"></span> INGRESO
+                                    </button>
+                                </div>
+                                
+                                <div class="col-6 border-right py-1">
+                                    <button type="button" rippleeffect="" class="btn btn-relief-primary">
+                                        <span [data-feather]="'log-out'"></span> SALIDA
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="col-xl-9 col-lg-8 col-md-7">
+                    <div class="card user-card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-xl-1 col-lg-12 d-flex justify-content-between border-container-lg"
+                                    style="text-align: center;">
+                                </div>
+                                <div class="col-xl-5 col-lg-12 d-flex flex-column justify-content-between border-container-lg">
+                                    <div class="user-avatar-section">
+
+                                        <div class="d-flex flex-wrap my-50">
+                                            <div class="user-info-title">
+                                                <i class="fa fa-building-o mr-1"></i>
+                                                <span
+                                                    class="card-text user-info-title font-weight-bold mb-0">Dni:</span>
+                                            </div>
+                                            <span class="card-text mb-0 ml-1">73023743</span>
+                                        </div>
+                                        <div class="d-flex flex-wrap my-50">
+                                            <div class="user-info-title">
+                                                <i class="fa fa-building-o mr-1"></i>
+                                                <span
+                                                    class="card-text user-info-title font-weight-bold mb-0">Nombres:</span>
+                                            </div>
+                                            <span class="card-text mb-0 ml-1">Gian Piero</span>
+                                        </div>
+                                        <div class="d-flex flex-wrap my-50">
+                                            <div class="user-info-title">
+                                                <i data-feather="globe" class="mr-1"></i>
+                                                <span class="card-text user-info-title font-weight-bold mb-0">Apellidos: </span>
+                                            </div>
+                                            <p class="card-text mb-0 ml-1"> Vasquez Puente</p>
+                                        </div>
+                                        <div class="d-flex flex-wrap my-50">
+                                            <div class="user-info-title">
+                                                <i data-feather="phone" class="mr-1"></i>
+                                                <span
+                                                    class="card-text user-info-title font-weight-bold mb-0">Contratista: </span>
+                                            </div>
+                                            <p class="card-text mb-0 ml-1"> ISI 101</p>
+                                        </div>
+                                        <div class="d-flex flex-wrap my-50">
+                                            <div class="user-info-title">
+                                                <i data-feather="phone" class="mr-1"></i>
+                                                <span
+                                                    class="card-text user-info-title font-weight-bold mb-0">Proyecto: </span>
+                                            </div>
+                                            <p class="card-text mb-0 ml-1"> Desarrollo Web</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </section>
+        <block-ui></block-ui>
+    </div>
+</div>
+

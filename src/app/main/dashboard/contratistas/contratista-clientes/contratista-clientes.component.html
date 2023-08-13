@@ -1,0 +1,728 @@
+<div class="content-wrapper">
+    <div class="content-body">
+        <a id="mainTable"></a>
+        <app-content-header class="utble" [contentHeader]="contentHeader"></app-content-header>
+        <section id="ngx-datatable-multi-purpose">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 col-12">
+                            <label class="d-flex align-items-center utble ml-2 mt-1">
+                                <span class="mr-1">Mostrar</span>
+                                <ng-select (change)="onContratistaClienteList()" [clearable]="false"
+                                    [items]="forPageOptions" [(ngModel)]="contratistaSettings.pageSize">
+                                </ng-select>
+                                <span class="ml-1">Filas</span>
+                            </label>
+                        </div>
+                        <div class="col-md-9 col-12 d-flex justify-content-md-end">
+                            <div class="d-flex justify-content-end align-items-center m-1">
+                                <button (click)="onContratistaClienteList()" class="btn btn-secondary ml-1">
+                                    <i class="mr-0 mr-sm-1" data-feather="refresh-cw"></i><span
+                                        class="d-none d-sm-inline-block">Refrescar</span>
+                                </button>
+                                <label class="d-flex align-items-center ml-1 utble">
+                                    <span class="d-none d-sm-inline-block mr-1">Buscar:</span>
+                                    <div class="input-group">
+                                        <input type="text" (change)="onContratistaClienteList()" class="form-control"
+                                            placeholder="Texto de búsqueda..." aria-label="Amount"
+                                            [(ngModel)]="contratistaSettings.searchString" />
+                                        <div class="input-group-append">
+                                            <button (click)="onClearFilter()" class="btn btn-outline-primary"
+                                                type="button" rippleEffect>
+                                                <i data-feather="trash-2"></i>
+                                            </button>
+                                            <button (click)="onContratistaClienteList()" class="btn btn-outline-primary"
+                                                type="button" rippleEffect>
+                                                <i data-feather="search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ngx-datatable-multi-purpose">
+            <div class="card">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-md-12 col-12">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead class="centerall-header">
+                                        <tr>
+                                            <th class="utble">ACCIÓN</th>
+                                            <th class="utble">CLIENTE</th>
+                                            <!-- <th class="utble">CONTRATISTA</th> -->
+                                            <!-- <th class="utble">DIRECCIÓN</th> -->
+                                            <th class="utble">TELÉFONO</th>
+                                            <th class="utble">CORREO</th>
+                                            <th class="utble">CUMPLIMIENTO</th>
+                                            <th class="utble">GRUPO - ESTADO</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let row of rowsContratista" class="cursor-pointer">
+                                            <td>
+                                                <div class="d-flex align-items-center justify-content-center">
+                                                    <button (click)="EditContratista(NCT, row)"
+                                                        ngbTooltip="Subir Documentos" placement="top"
+                                                        style="width: 31px;"
+                                                        class="btn btn-icon btn-icon rounded-circle btn-outline-primary mr-1"
+                                                        rippleEffect>
+                                                        <span class="fa fa-folder-open-o"
+                                                            style="margin-left: 1px;"></span>
+                                                    </button>
+                                                    <button *ngIf="row.idEstado == 3"
+                                                        [routerLink]="['/dashboard/contratistas/contratista-empleados']"
+                                                        [queryParams]="{ IdCliente: row.idCliente, IdContratista: row.idContratista, IdProyecto: row.idProyecto,
+                                                        RazonSocial: row.razonSocial }"
+                                                        queryParamsHandling="merge" skipLocationChange
+                                                        ngbTooltip="Empleados" placement="top"
+                                                        class="btn btn-icon btn-icon rounded-circle btn-outline-dark mr-1"
+                                                        rippleEffect>
+                                                        <span [data-feather]="'users'"></span>
+                                                    </button>
+                                                    <button *ngIf="row.idEstado == 3"                                                        
+                                                        ngbTooltip="Certificado" placement="top"
+                                                        class="btn btn-icon btn-icon rounded-circle btn-outline-success mr-1"
+                                                        rippleEffect>
+                                                        <span [data-feather]="'download'"></span>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="cell-line-height c-w">
+                                                        <p class="font-medium-1 font-weight-bold line-height-1 mb-25"
+                                                            style="font-size: small !important;">
+                                                            {{ row.rsCliente}}
+                                                        </p>
+                                                        <span class="text-secondary font-small-2">{{ row.rucCliente }}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <!-- <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="cell-line-height c-w">
+                                                        <p class="font-medium-1 font-weight-bold line-height-1 mb-25"
+                                                            style="font-size: small !important;">
+                                                            {{ row.ruc }}
+                                                        </p>
+                                                        <span class="text-secondary font-small-2"> {{ row.razonSocial
+                                                            }}</span>
+                                                    </div>
+                                                </div>
+                                            </td> -->
+                                            <!-- <td class="f-w">{{row.direccion}}</td> -->
+                                            <td class="c-w utble">{{ row.telefono }}</td>
+                                            <td class="c-w">{{ row.correo }}</td>
+                                            <td class="utble">
+                                                <div class="progress-wrapper" *ngIf="20 >= row.porcentaje">
+                                                    <div class="mb-25 text-danger text-center">
+                                                        Progreso&hellip;{{ row.porcentaje }}%</div>
+                                                    <ngb-progressbar type="danger" [animated]="true" showValue="true"
+                                                        [striped]="true" [value]="row.porcentaje"
+                                                        [height]="progressbarHeight">
+                                                    </ngb-progressbar>
+                                                </div>
+                                                <div class="progress-wrapper"
+                                                    *ngIf="row.porcentaje > 20 && 50 >= row.porcentaje">
+                                                    <!-- &hellip;{{ row.porcentaje }}% -->
+                                                    <div class="mb-25 text-warning text-center">Progreso
+                                                        Total</div>
+                                                    <ngb-progressbar type="warning" [animated]="true" showValue="true"
+                                                        [striped]="true" [value]="row.porcentaje"
+                                                        [height]="progressbarHeight">
+                                                    </ngb-progressbar>
+                                                </div>
+                                                <div class="progress-wrapper"
+                                                    *ngIf="row.porcentaje > 50 && 99 >= row.porcentaje">
+                                                    <!-- &hellip;{{ row.porcentaje }}% -->
+                                                    <div class="mb-25 text-info text-center">Progreso Total
+                                                    </div>
+                                                    <ngb-progressbar type="info" [animated]="true" showValue="true"
+                                                        [striped]="true" [value]="row.porcentaje"
+                                                        [height]="progressbarHeight">
+                                                    </ngb-progressbar>
+                                                </div>
+                                                <div class="progress-wrapper" *ngIf="100 == row.porcentaje">
+                                                    <!-- &hellip;{{ row.porcentaje }}% -->
+                                                    <div class="mb-25 text-success text-center">Progreso
+                                                        Total</div>
+                                                    <ngb-progressbar type="success" [animated]="true" showValue="true"
+                                                        [striped]="true" [value]="row.porcentaje"
+                                                        [height]="progressbarHeight">
+                                                    </ngb-progressbar>
+                                                </div>
+                                            </td>
+                                            <td class="utble">
+                                                <div class="badge badge-pill" [ngClass]="{
+                                                    'badge-light-secondary': row.idEstado == '1',
+                                                    'badge-light-warning': row.idEstado == '2',
+                                                    'badge-light-success': row.idEstado == '3'
+                                                  }">
+                                                    {{ row.estado }}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12 col-md-5 col-lg-5">
+                            <span *ngIf="contratistaSettings.colletionSize == 0" class="ml-2" style="color: #b9b9c3;">
+                                No hay filas
+                            </span>
+                            <span *ngIf="contratistaSettings.colletionSize == 1" class="ml-2" style="color: #b9b9c3;">{{
+                                contratistaSettings.colletionSize }} Fila</span>
+                            <span *ngIf="contratistaSettings.colletionSize > 1" class="ml-2" style="color: #b9b9c3;">{{
+                                contratistaSettings.colletionSize }} Filas</span>
+                        </div>
+                        <div class="col-12 col-md-7 col-lg-7 utble d-flex justify-content-end">
+                            <ngb-pagination [collectionSize]="contratistaSettings.colletionSize"
+                                style="margin-right: 13px;" [(page)]="contratistaSettings.page"
+                                (pageChange)="onContratistaClienteList()" [rotate]="true" [boundaryLinks]="true"
+                                [pageSize]="contratistaSettings.pageSize">
+                                <ng-template ngbPaginationFirst>⠀<span data-feather="skip-back"></span>
+                                </ng-template>
+                                <ng-template ngbPaginationPrevious><span [data-feather]="'chevron-left'"
+                                        [class]="'font-weight-bolder'"></span>⠀
+                                </ng-template>
+                                <ng-template ngbPaginationNext>⠀<span [data-feather]="'chevron-right'"
+                                        [class]="'font-weight-bolder'"></span>
+                                </ng-template>
+                                <ng-template ngbPaginationLast><span data-feather="skip-forward"></span>⠀
+                                </ng-template>
+                            </ngb-pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <ng-template #NCT let-modal>
+            <div class="modal-header utble">
+                <h4 class="modal-title h-w" id="myModalLabel1">Registrar Información complementaria</h4>
+                <button (click)="modal.dismiss('Cross click')" aria-label="Close" class="close" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" ngbAutofocus tabindex="0">
+                <div class="row">
+                    <div class="col-md-6 col-12">
+                        <div class="form-group font-weight-bolder">
+                            <span class="utble"> Estado de cumplimiento</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <span class="font-weight-bolder">Faltan {{dias}} d, {{horas}} H, {{minutos}} m y {{segundos}} s</span>
+                        <!-- <span>4 días y </span>
+                        <countdown [config]="{leftTime: 604800}"></countdown>
+                        <span> horas</span> -->
+                    </div>
+                </div>
+                <ngb-progressbar type="primary" [value]="Controls.porcentaje.value" [animated]="true" [striped]="true"
+                    [height]="progressbarHeight" showValue="true">
+                </ngb-progressbar>
+
+                <ul #navWithIcons="ngbNav" class="nav-tabs" ngbNav>
+                    <li ngbNavItem>
+                        <a ngbNavLink><span [data-feather]="'user'"></span><span class="utble">Datos
+                                Generales</span></a>
+                        <ng-template ngbNavContent>
+                            <div class="col-md-12 col-12">
+                                <div class="divider divider-dotted divider-info">
+                                    <div class="divider-text text-dark utble f-w">Completar datos generales</div>
+                                </div>
+                            </div>
+                            <form [formGroup]="General">
+                                <div class="row">
+                                    <div class="col-md-4 col-12">
+                                        <div class="form-group">
+                                            <label class="utble">RUC:</label>
+                                            <div class="input-group">
+                                                <input class="form-control" type="search" formControlName="ruc"
+                                                    maxlength="11" placeholder="Buscar..."
+                                                    aria-describedby="button-addon2" />
+                                                <div class="input-group-append" id="button-addon2">
+                                                    <button (click)="onDocumentoSearch()" ngbTooltip="Buscar RUC"
+                                                        placement="left" class="btn btn-outline-primary" type="button"
+                                                        rippleEffect>
+                                                        <i data-feather="search"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 col-12">
+                                        <div class="form-group">
+                                            <label class="text-dark utble">Razón Social:</label>
+                                            <input class="form-control" type="text" formControlName="razonSocial"
+                                                [ngClass]="{ 'is-invalid': IDSubmitted && Controls.razonSocial.errors }" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-12">
+                                        <div class="form-group">
+                                            <label class="utble">Dirección:</label>
+                                            <input class="form-control" type="text" formControlName="direccion"
+                                                [ngClass]="{ 'is-invalid': IDSubmitted && Controls.direccion.errors }" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-12">
+                                        <div class="form-group">
+                                            <label class="utble">Actividad Económica / Rubro:</label>
+                                            <ng-select [items]="rowsrubro" [clearable]="false" formControlName="idRubro"
+                                                bindValue="idColumna" bindLabel="descripcion">
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-12">
+                                        <div class="form-group">
+                                            <label class="utble">Grupo:</label>
+                                            <ng-select [items]="rowsGrupos" [clearable]="false"
+                                                formControlName="idGrupo" bindValue="idClienteGrupo"
+                                                bindLabel="nombreGrupo">
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-12">
+                                        <div class="form-group">
+                                            <label class="utble">Provincia:</label>
+                                            <input class="form-control" type="text" formControlName="provincia"
+                                                [ngClass]="{ 'is-invalid': IDSubmitted && Controls.provincia.errors }" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label class="utble">Distrito</label>
+                                            <input class="form-control" type="text" formControlName="distrito"
+                                                [ngClass]="{ 'is-invalid': IDSubmitted && Controls.distrito.errors }" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label class="utble">Página Web</label>
+                                            <div class="input-group input-group-merge">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <i class="font-medium-2" data-feather="aperture"></i>
+                                                    </span>
+                                                </div>
+                                                <input class="form-control" type="text" formControlName="paginaWeb" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label class="utble">Teléfono</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon1">+51</span>
+                                                </div>
+                                                <input class="form-control" type="text" formControlName="telefono"
+                                                    mask="000 000 000"
+                                                    [ngClass]="{ 'is-invalid': IDSubmitted && Controls.telefono.errors }" />
+                                            </div>
+                                            <div *ngIf="Controls.telefono.errors" class="invalid-feedback">
+                                                <div *ngIf="Controls.telefono.errors.required">* Campo obligatorio
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label class="utble">Fecha de constitución de la Empresa</label>
+                                            <div class="input-group">
+                                                <input #basicDP="ngbDatepicker" #i18nDP="ngbDatepicker"
+                                                    [(ngModel)]="fechaEmision" [ngModelOptions]="{standalone: true}"
+                                                    class="form-control" ngbDatepicker placeholder="dd/mm/yyyy"
+                                                    formControlName="fechaConstitucion">
+                                                <div class="input-group-append">
+                                                    <button (click)="basicDP.toggle()"
+                                                        class="btn btn-outline-secondary feather icon-calendar"
+                                                        rippleEffect type="button"></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Núcleo del negocio</label>
+                                            <input class="form-control" type="text" formControlName="nucleoNegocio" />
+                                        </div>
+                                    </div> -->
+                                    <div class="col-md-12 col-12">
+                                        <div class="divider divider-dotted divider-success">
+                                            <div class="divider-text text-dark utble f-w">Cuenta con certificado?</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Certificado de Homologación:</label>
+                                            <div class="d-flex">
+                                                <div class="custom-control custom-control-success custom-checkbox mr-1">
+                                                    <input type="checkbox" class="custom-control-input"
+                                                        formControlName="certificado" (click)="CertificadoCheck()"
+                                                        id="colorCheck1" />
+                                                    <label class="custom-control-label utble"
+                                                        for="colorCheck1">Si</label>
+                                                </div>
+                                                <div class="custom-control custom-control-success custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input"
+                                                        formControlName="certificado2" (click)="CertificadoCheck()"
+                                                        id="colorCheck2" />
+                                                    <label class="custom-control-label utble"
+                                                        for="colorCheck2">No</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-9 col-12" *ngIf="Controls.certificado.value == true">
+                                        <div ng2FileDrop [uploader]="archivosAudEmpresa"
+                                            class="py-5 mb-3 text-center font-medium-5 text-warning text-uppercase file-drop-zone">
+                                            Arrastre aquí los archivos
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-12 align-items-center"
+                                        *ngIf="Controls.certificado.value == true">
+                                        <div class="form-group">
+                                            <label>Fecha Vencimiento del certificado</label>
+                                            <div class="input-group">
+                                                <input #basicDP="ngbDatepicker" #i18nDP="ngbDatepicker"
+                                                    [(ngModel)]="fechaCertificado" [ngModelOptions]="{standalone: true}"
+                                                    class="form-control" ngbDatepicker placeholder="dd/mm/yyyy"
+                                                    formControlName="fechaCertificado">
+                                                <div class="input-group-append">
+                                                    <button (click)="basicDP.toggle()"
+                                                        class="btn btn-outline-secondary feather icon-calendar"
+                                                        rippleEffect type="button"></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </ng-template>
+                    </li>
+                    <li ngbNavItem>
+                        <a ngbNavLink><span [data-feather]="'user'"></span><span class="utble">Datos de
+                                Contacto</span></a>
+                        <ng-template ngbNavContent>
+                            <div class="col-md-12 col-12">
+                                <div class="divider divider-dotted divider-warning">
+                                    <div class="divider-text text-dark font-weight-bolder">Persona Encargada</div>
+                                </div>
+                            </div>
+                            <form [formGroup]="Contact">
+                                <div class="row">
+                                    <div class="col-md-12 col-12">
+                                        <div class="form-group">
+                                            <label class="text-dark">Nombre Completo</label>
+                                            <input class="form-control " type="text" formControlName="personaNombres"
+                                                [ngClass]="{ 'is-invalid': IDSubmitted && PControls.personaNombres.errors }" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-12">
+                                        <div class="form-group">
+                                            <label class="text-dark">Tipo Documento</label>
+                                            <ng-select [items]="rowsTipoDoc" [clearable]="false"
+                                                formControlName="personaIdTipoDoc" bindValue="idColumna"
+                                                bindLabel="descripcion">
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="PControls.personaIdTipoDoc.value != 3" class="col-md-8 col-12">
+                                        <div class="form-group">
+                                            <label class="text-dark">N° Documento de Identidad</label>
+                                            <input class="form-control" type="text" maxlength="20"
+                                                formControlName="personaDoc"
+                                                [ngClass]="{ 'is-invalid': IDSubmitted && PControls.personaDoc.errors }" />
+                                        </div>
+                                    </div>
+                                    <div *ngIf="PControls.personaIdTipoDoc.value == 3" class="col-md-8 col-12">
+                                        <div class="form-group">
+                                            <label class="text-dark">Otro:</label>
+                                            <input class="form-control" type="text" placeholder="Especificar"
+                                                maxlength="20" formControlName="personaDoc" 
+                                                [ngClass]="{ 'is-invalid': IDSubmitted && PControls.personaDoc.errors }"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-12">
+                                        <div class="form-group">
+                                            <label class="text-dark">Nacionalidad y Residencia</label>
+                                            <div class="input-group input-group-merge">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <i class="font-medium-2" data-feather="flag"></i>
+                                                    </span>
+                                                </div>
+                                                <input class="form-control" type="text" formControlName="personaNacyRes"
+                                                    [ngClass]="{ 'is-invalid': IDSubmitted && PControls.personaNacyRes.errors }" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label class="text-dark">Domicilio</label>
+                                            <input class="form-control" type="text" formControlName="personaDom"
+                                                [ngClass]="{ 'is-invalid': IDSubmitted && PControls.personaDom.errors }" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label class="text-dark">Puesto</label>
+                                            <div class="input-group input-group-merge">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <i class="font-medium-2" data-feather="briefcase"></i>
+                                                    </span>
+                                                </div>
+                                                <input class="form-control" type="text" formControlName="personaPuesto"
+                                                    [ngClass]="{ 'is-invalid': IDSubmitted && PControls.personaPuesto.errors }" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label class="text-dark">Teléfono</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon1">+51</span>
+                                                </div>
+                                                <input class="form-control" type="text"
+                                                    formControlName="personaTelefono" mask="000 000 000"
+                                                    [ngClass]="{ 'is-invalid': IDSubmitted && PControls.personaTelefono.errors }" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label class="text-dark">Correo electrónico</label>
+                                            <div class="input-group input-group-merge">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <i class="font-medium-2" data-feather="mail"></i>
+                                                    </span>
+                                                </div>
+                                                <input class="form-control" type="text" formControlName="personaCorreo"
+                                                    [ngClass]="{ 'is-invalid': IDSubmitted && PControls.personaCorreo.errors }" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </ng-template>
+                    </li>
+                    <li ngbNavItem>
+                        <a ngbNavLink><span [data-feather]="'archive'"></span><span class="utble">Matriz de
+                                Documentos</span></a>
+                        <ng-template ngbNavContent>
+                            <div class="col-md-12 col-12">
+                                <div class="divider divider-dotted divider-primary">
+                                    <div class="divider-text text-dark font-weight-bolder utble">Documentos</div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <ul #navWithIcons="ngbNav" class="nav-tabs" ngbNav>
+                                        <li ngbNavItem>
+                                            <a ngbNavLink><span [data-feather]="'award'"></span> <span> Homologación
+                                                    (Empresa)</span></a>
+                                            <ng-template ngbNavContent>
+                                                <div class="row">
+                                                    <div class="col-12 col-md-12">
+                                                        <div class="card card-company-table">
+                                                            <div class="card-body p-0">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-hover">
+                                                                        <thead class="centerall-header">
+                                                                            <tr>
+                                                                                <th class="utble">Nombre</th>
+                                                                                <th class="utble">Aplica (Si/No)</th>
+                                                                                <th class="utble">Tipo</th>
+                                                                                <th class="utble" style="width: 320px;">Subir Archivo</th>
+                                                                                <th class="utble">Archivo</th>
+                                                                                <th class="utble">Tamaño</th>
+                                                                                <th class="utble">Acción</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody *ngFor="let row of rowsDocumentos">
+                                                                            <td class="f-w">{{ row.documentoName }}</td>
+                                                                            <td style="text-align: center;">
+
+                                                                                <div
+                                                                                    class="custom-control custom-switch custom-switch-secondary">
+                                                                                    <p class="mb-50"></p>
+                                                                                    <input type="checkbox"
+                                                                                        [disabled]="row.disabled"
+                                                                                        class="custom-control-input"
+                                                                                        id="{{'d' + row.idHomologacion}}"
+                                                                                        [(ngModel)]="row.aplica" />
+                                                                                    <label class="custom-control-label"
+                                                                                        for="{{'d' + row.idHomologacion}}">
+                                                                                        <span class="switch-icon-left"
+                                                                                            style="font-size: 10px; margin-top: 3px;">SI</span>
+                                                                                        <span class="switch-icon-right"
+                                                                                            style="font-size: 10px; margin-top: 3px;">NO</span>
+                                                                                    </label>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td class="f-w unselect">{{
+                                                                                row.tipoExtension }}</td>
+                                                                            <td>
+                                                                                <div>
+                                                                                    <fieldset class="form-group">
+                                                                                        <div class="custom-file"
+                                                                                            *ngIf="row.aplica != false && row.idEstado != 2">
+                                                                                            <input type="file"
+                                                                                                class="custom-file-input"
+                                                                                                type="file"
+                                                                                                ng2FileSelect
+                                                                                                (change)="fileOverBase(row, 1)"
+                                                                                                accept=".{{row.tipoExtension}}"
+                                                                                                [uploader]="uploader"
+                                                                                                id="file-upload-single" />
+                                                                                            <label
+                                                                                                class="custom-file-label">Elija
+                                                                                                el archivo</label>
+                                                                                        </div>
+                                                                                    </fieldset>
+                                                                                </div>
+                                                                                <div *ngIf="row.idEstado == 1"
+                                                                                    class="d-flex justify-content-center">
+                                                                                    <div
+                                                                                        class="badge d-block badge-secondary">
+                                                                                        <span
+                                                                                            class="f-w unselect">Pendiente</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div *ngIf="row.idEstado == 2"
+                                                                                    class="d-flex justify-content-center">
+                                                                                    <div
+                                                                                        class="badge d-block badge-success">
+                                                                                        <span
+                                                                                            class="f-w unselect">Aprobado</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div *ngIf="row.idEstado == 3"
+                                                                                    class="d-flex justify-content-center">
+                                                                                    <div
+                                                                                        class="badge d-block badge-danger">
+                                                                                        <span
+                                                                                            class="f-w unselect">Observado</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td class="f-w">{{ row.fileName }}</td>
+                                                                            <td class="d-flex justify-content-center number-format"
+                                                                                *ngIf="row.tipoExtension != 'ADPROV'">{{
+                                                                                row.fileTamanio | number: '.2' }} MB
+                                                                            </td>
+                                                                            <td>
+                                                                                <button
+                                                                                    *ngIf="row.fileName !== '' && row.idEstado != 2"
+                                                                                    type="button"
+                                                                                    class="btn btn-raised btn-outline-danger btn-sm"
+                                                                                    ngbTooltip="Remover Archivo"
+                                                                                    placement="top"
+                                                                                    (click)="onRemoveFile(row)"
+                                                                                    rippleEffect>
+                                                                                    <i data-feather="trash"></i>
+                                                                                </button>
+
+                                                                                <button
+                                                                                    *ngIf="row.idEstado == 3 && row.fileName == ''"
+                                                                                    type="button"
+                                                                                    class="btn btn-raised btn-outline-warning btn-sm"
+                                                                                    ngbTooltip="Comentarios"
+                                                                                    placement="top"
+                                                                                    (click)="onComentarios(row, COM)"
+                                                                                    rippleEffect>
+                                                                                    <i
+                                                                                        data-feather="message-circle"></i>
+                                                                                </button>
+                                                                            </td>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                        </li>
+                                    </ul>
+                                    <div [ngbNavOutlet]="navWithIcons" class="mt-2"></div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </li>
+
+                </ul>
+                <div [ngbNavOutlet]="navWithIcons"></div>
+            </div>
+            <div class="modal-footer" style="display: block !important;">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <div style="float: right">
+                            <button (click)="onSave()" class="btn btn-primary f-w mr-1" rippleEffect type="submit">
+                                <i class="mr-0 mr-sm-1" data-feather="save"></i><span
+                                    class="d-none d-sm-inline-block">Guardar</span>
+                            </button>
+                            <button (click)="modal.dismiss()" class="btn btn-secondary f-w" rippleEffect type="button">
+                                <i class="mr-0 mr-sm-1" data-feather="corner-up-right"></i><span
+                                    class="d-none d-sm-inline-block">Cancelar</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template #COM let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">Comentarios (Archivo Desaprobado):</h4>
+                <button (click)="modal.dismiss('Cross click')" aria-label="Close" class="close" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" ngbAutofocus tabindex="0">
+                <form [formGroup]="General">
+                    <div class="row">
+                        <div class="col-md-12 col-12">
+                            <div class="form-group">
+                                <label class="text-dark font-weight-bolder">Motivo:</label>
+                                <textarea rows="5" class="form-control" style="resize: none;"
+                                    formControlName="observacion" disabled></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <div style="float: right">
+                            <button (click)="modal.dismiss()" class="btn btn-secondary" rippleEffect type="button">
+                                Cerrar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <block-ui></block-ui>
+    </div>
+</div>

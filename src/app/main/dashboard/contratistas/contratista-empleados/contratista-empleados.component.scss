@@ -1,0 +1,98 @@
+@import '@core/scss/angular/libs/file-uploader.component.scss';
+
+
+.utble {
+    text-align: center;
+    user-select: none;
+}
+
+.f-w {
+    font-size: 0.925rem;
+    //line-height: 2.25rem;
+    font-weight: 500;
+}
+
+.number-format {
+    font-size: 0.955rem;
+    font-weight: 500;
+    //font-family: 'Courier New', Courier, monospace;
+}
+
+.c-w {
+    font-size: 0.988rem;
+    //line-height: 2rem;
+    font-weight: 500
+}
+
+
+.h-w {
+    font-size: 1.25rem;
+    //line-height: 2rem;
+    font-weight: 500
+}
+
+::ng-deep .opened .modal-dialog {
+    max-width: 90%;
+    width: 90%;
+}
+
+/* carnet.component.css */
+
+.carnet-container {
+    display: flex;
+    border-radius: 20px;
+    overflow: hidden;
+    // background-color: #f4f4f4; /* Color de fondo */
+    box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.1);
+    background-image: url('../../../../../assets/images/logo/PARCONSIL.png');
+    background-repeat: no-repeat;
+  }
+  
+  .qr-code {
+    flex: 1.5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 20px;
+  }
+  
+  .qr-code img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .worker-info {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  // .worker-info p {
+  //   margin-top: -100px;
+  // }
+
+  .info-group {
+    margin-top: 56px;
+    margin-bottom: -12px;
+    color: black !important;
+  }
+  
+  .worker-photo {
+    flex: 2.3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // background-color: #c7c7c7; /* Color de fondo para la foto */
+  }
+  
+  .worker-photo img {
+    max-width: 150px;
+    height: 50;
+    border-radius: 50%;
+    right: 50%;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  }
+  

@@ -1,0 +1,895 @@
+<div class="content-wrapper">
+    <div class="content-body">
+        <app-content-header [contentHeader]="contentHeader"></app-content-header>
+        <section id="ngx-datatable-multi-purpose">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-2 col-12 justify-content-start" style="margin-top: 14px;">
+                            <div class="col-md-12 col-12">
+                                <div
+                                    class="d-flex justify-content-between align-items-center pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+                                    <label class="d-flex align-items-center"><span
+                                            class="d-none d-sm-inline-block">Mostrar⠀</span>
+                                        <ng-select [clearable]="false" [items]="forPageOptions"
+                                            [(ngModel)]="empleadoSettings.pageSize">
+                                        </ng-select>
+                                        <span class="d-none d-sm-inline-block">⠀entradas</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-10 col-12 mb-1">
+                            <div class="d-flex justify-content-end align-items-center">
+                                <button (click)="onEmpleadoNew(NEM)" class="btn btn-primary f-w mr-1" rippleEffect>
+                                    <i class="mr-0 mr-sm-1" data-feather="plus-square"></i><span
+                                        class="d-none d-sm-inline-block">Agregar Empleado</span>
+                                </button>
+                                <!-- <button [routerLink]="['pages/miscellaneous/coming-soon']" [queryParams]=""
+                                    class="btn btn-success mr-1" rippleEffect>
+                                    <i class="mr-0 mr-sm-1" data-feather="bar-chart-2"></i><span
+                                        class="d-none d-sm-inline-block">Reporte / Estadíticos</span>
+                                </button> -->
+                                <button (click)="onSetEmpleadoList()" class="btn btn-secondary f-w mr-1" rippleEffect>
+                                    <i class="mr-0 mr-sm-1" data-feather="refresh-cw"></i><span
+                                        class="d-none d-sm-inline-block">Refrescar</span>
+                                </button>
+                                <div class="btn-group">
+                                    <div ngbDropdown>
+                                        <button class="btn btn-success" id="dropdownMenuButton2" ngbDropdownToggle
+                                            rippleEffect type="button">
+                                            <i class="mr-0 mr-sm-1" data-feather="settings"></i><span
+                                                class="d-none d-sm-inline-block">Excel</span>
+                                        </button>
+                                        <div aria-labelledby="dropdownMenuButton2" ngbDropdownMenu>
+                                            <a ngbDropdownItem>
+                                                <i class="mr-0 mr-sm-1" data-feather="clipboard"></i>
+                                                <span class="sm-inline-block">Exportar</span>
+                                            </a>
+                                            <a ngbDropdownItem>
+                                                <i class="mr-0 mr-sm-1" data-feather="database"></i>
+                                                <span class="sm-inline-block">Importar Carga Masiva</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-12 d-flex justify-content-end">
+                            <label class="d-flex align-items-center ml-1 utble">
+                                <span class="d-none d-sm-inline-block mr-1">Buscar:</span>
+                                <div class="input-group">
+                                    <input type="text" (change)="onSetEmpleadoList()" class="form-control"
+                                        placeholder="Texto de búsqueda..." aria-label="Amount"
+                                        [(ngModel)]="empleadoSettings.searchString" />
+                                    <div class="input-group-append">
+                                        <button (click)="onClearFilter()" class="btn btn-outline-primary" type="button"
+                                            rippleEffect>
+                                            <i data-feather="trash-2"></i>
+                                        </button>
+                                        <button (click)="onSetEmpleadoList()" class="btn btn-outline-primary"
+                                            type="button" rippleEffect>
+                                            <i data-feather="search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </label>
+                            <!-- <button [routerLink]="['pages/miscellaneous/coming-soon']" [queryParams]=""
+                                class="btn btn-success mr-1">
+                                <i class="mr-0 mr-sm-1" data-feather="bar-chart-2"></i><span
+                                    class="d-none d-sm-inline-block">Empleados por Excel</span>
+                            </button> -->
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="Proyectos">
+            <ul #navWithIcons="ngbNav" class="nav-tabs col-12" ngbNav>
+                <li ngbNavItem *ngFor="let row of rowsProyectos">
+                    <a (click)="onProyectoSelect(row.idProyecto, row.proyecto)" ngbNavLink>
+                        <span class="fa fa-folder-open-o" style="margin-right: 8px;"></span> {{ row.proyecto }} </a>
+                    <ng-template ngbNavContent>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card card-company-table">
+                                    <div class="card-body p-0">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead class="centerall-header">
+                                                    <tr>
+                                                        <th class="utble">ACCIÓN</th>
+                                                        <th class="utble">EMPLEADO</th>
+                                                        <!-- <th class="utble">CONTRATISTA</th> -->
+                                                        <th class="utble">DNI</th>
+                                                        <th class="utble">TELÉFONO</th>
+                                                        <th class="utble">CORREO</th>
+                                                        <th class="utble">ESTADO</th>
+                                                        <th class="utble">CUMPLIMIENTO</th>                                                        
+                                                        <th class="utble">CREDENCIAL QR</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let row of rowsEmpleados" class="cursor-pointer">
+                                                        <td>
+                                                            <div
+                                                                class="d-flex align-items-center justify-content-center">
+                                                                <button (click)="onEmpleadoEdit(NEM, row)"
+                                                                    ngbTooltip="Editar" placement="top"
+                                                                    class="btn btn-icon btn-icon rounded-circle btn-outline-primary mr-1"
+                                                                    rippleEffect>
+                                                                    <span [data-feather]="'edit'"></span>
+                                                                </button>
+                                                                <button (click)="onDeleteEmpleado(row)"
+                                                                    ngbTooltip="Eliminar" placement="top"
+                                                                    class="btn btn-icon btn-icon rounded-circle btn-outline-danger mr-1"
+                                                                    rippleEffect>
+                                                                    <span [data-feather]="'trash-2'"></span>
+                                                                </button>
+                                                                <button (click)="onDocEmpleados(DEM, row)"
+                                                                    ngbTooltip="Subir Documentos" placement="top"
+                                                                    style="width: 31px;"
+                                                                    class="btn btn-icon btn-icon rounded-circle btn-outline-secondary mr-1"
+                                                                    rippleEffect>
+                                                                    <span class="fa fa-folder-open-o"
+                                                                        style="margin-left: 1px;"></span>
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="avatar mr-1 ml-0 bg-light-primary">
+                                                                    <div class="avatar-content">{{ row.fullName |
+                                                                        initials }}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="cell-line-height">
+                                                                    <p class="mb-25 c-w">
+                                                                        {{ row.fullName }}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <!-- <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="cell-line-height c-w">
+                                                                    <p class="font-medium-1 font-weight-bold line-height-1 mb-25"
+                                                                        style="font-size: small !important;">
+                                                                        {{ row.rcContratista }}
+                                                                    </p>
+                                                                    <span class="text-secondary font-small-2"> {{
+                                                                        row.rsContratista
+                                                                        }}</span>
+                                                                </div>
+                                                            </div>
+                                                        </td> -->
+
+                                                        <td class="c-w utble">{{ row.nroDocumento}}</td>
+                                                        <td class="c-w">{{ row.telefono }}</td>
+                                                        <td class="c-w">{{ row.direccion}}</td>
+                                                        <td class="c-w utble">
+                                                            <div class="badge badge-pill" [ngClass]="{
+                                                                'badge-light-secondary': row.idEstado == '1',
+                                                                'badge-light-warning': row.idEstado == '2',
+                                                                'badge-light-primary': row.idEstado == '3'
+                                                              }">
+                                                                {{ row.estado }}
+                                                            </div>
+                                                        </td>
+                                                        <td class="utble">
+                                                            <div class="" *ngIf="row.idRegimen == 1">
+                                                                <div class="progress-wrapper"
+                                                                    *ngIf="20 >= row.porcentajeRGeneral">
+                                                                    <div class="mb-25 text-danger text-center">
+                                                                        Progreso&hellip;{{ row.porcentajeRGeneral }}%
+                                                                    </div>
+                                                                    <ngb-progressbar type="danger" [animated]="true"
+                                                                        showValue="true" [striped]="true"
+                                                                        [value]="row.porcentajeRGeneral"
+                                                                        [height]="progressbarHeight">
+                                                                    </ngb-progressbar>
+                                                                </div>
+                                                                <div class="progress-wrapper"
+                                                                    *ngIf="row.porcentaje > 20 && 50 >= row.porcentajeRGeneral">
+                                                                    <!-- &hellip;{{ row.porcentaje }}% -->
+                                                                    <div class="mb-25 text-warning text-center">Progreso
+                                                                        Total</div>
+                                                                    <ngb-progressbar type="warning" [animated]="true"
+                                                                        showValue="true" [striped]="true"
+                                                                        [value]="row.porcentajeRGeneral"
+                                                                        [height]="progressbarHeight">
+                                                                    </ngb-progressbar>
+                                                                </div>
+                                                                <div class="progress-wrapper"
+                                                                    *ngIf="row.porcentaje > 50 && 99 >= row.porcentajeRGeneral">
+                                                                    <!-- &hellip;{{ row.porcentaje }}% -->
+                                                                    <div class="mb-25 text-info text-center">Progreso
+                                                                        Total
+                                                                    </div>
+                                                                    <ngb-progressbar type="info" [animated]="true"
+                                                                        showValue="true" [striped]="true"
+                                                                        [value]="row.porcentajeRGeneral"
+                                                                        [height]="progressbarHeight">
+                                                                    </ngb-progressbar>
+                                                                </div>
+                                                                <div class="progress-wrapper"
+                                                                    *ngIf="100 == row.porcentajeRGeneral">
+                                                                    <!-- &hellip;{{ row.porcentaje }}% -->
+                                                                    <div class="mb-25 text-success text-center">Progreso
+                                                                        Total</div>
+                                                                    <ngb-progressbar type="success" [animated]="true"
+                                                                        showValue="true" [striped]="true"
+                                                                        [value]="row.porcentajeRGeneral"
+                                                                        [height]="progressbarHeight">
+                                                                    </ngb-progressbar>
+                                                                </div>
+                                                            </div>
+                                                            <div class="" *ngIf="row.idRegimen == 2">
+                                                                <div class="progress-wrapper"
+                                                                    *ngIf="20 >= row.porcentajeRMype">
+                                                                    <div class="mb-25 text-danger text-center">
+                                                                        Progreso&hellip;{{ row.porcentajeRMype }}%</div>
+                                                                    <ngb-progressbar type="danger" [animated]="true"
+                                                                        showValue="true" [striped]="true"
+                                                                        [value]="row.porcentajeRMype"
+                                                                        [height]="progressbarHeight">
+                                                                    </ngb-progressbar>
+                                                                </div>
+                                                                <div class="progress-wrapper"
+                                                                    *ngIf="row.porcentaje > 20 && 50 >= row.PorcentajeRMype">
+                                                                    <!-- &hellip;{{ row.porcentaje }}% -->
+                                                                    <div class="mb-25 text-warning text-center">Progreso
+                                                                        Total</div>
+                                                                    <ngb-progressbar type="warning" [animated]="true"
+                                                                        showValue="true" [striped]="true"
+                                                                        [value]="row.porcentajeRMype"
+                                                                        [height]="progressbarHeight">
+                                                                    </ngb-progressbar>
+                                                                </div>
+                                                                <div class="progress-wrapper"
+                                                                    *ngIf="row.porcentaje > 50 && 99 >= row.porcentajeRMype">
+                                                                    <!-- &hellip;{{ row.porcentaje }}% -->
+                                                                    <div class="mb-25 text-info text-center">Progreso
+                                                                        Total
+                                                                    </div>
+                                                                    <ngb-progressbar type="info" [animated]="true"
+                                                                        showValue="true" [striped]="true"
+                                                                        [value]="row.porcentajeRMype"
+                                                                        [height]="progressbarHeight">
+                                                                    </ngb-progressbar>
+                                                                </div>
+                                                                <div class="progress-wrapper"
+                                                                    *ngIf="100 == row.porcentajeRMype">
+                                                                    <!-- &hellip;{{ row.porcentaje }}% -->
+                                                                    <div class="mb-25 text-success text-center">Progreso
+                                                                        Total</div>
+                                                                    <ngb-progressbar type="success" [animated]="true"
+                                                                        showValue="true" [striped]="true"
+                                                                        [value]="row.porcentajeRMype"
+                                                                        [height]="progressbarHeight">
+                                                                    </ngb-progressbar>
+                                                                </div>
+                                                            </div>
+                                                            <div class="" *ngIf="row.idRegimen == 3">
+                                                                <div class="progress-wrapper"
+                                                                    *ngIf="20 >= row.porcentajeRAgrario">
+                                                                    <div class="mb-25 text-danger text-center">
+                                                                        Progreso&hellip;{{ row.porcentajeRAgrario }}%
+                                                                    </div>
+                                                                    <ngb-progressbar type="danger" [animated]="true"
+                                                                        showValue="true" [striped]="true"
+                                                                        [value]="row.porcentajeRAgrario"
+                                                                        [height]="progressbarHeight">
+                                                                    </ngb-progressbar>
+                                                                </div>
+                                                                <div class="progress-wrapper"
+                                                                    *ngIf="row.porcentaje > 20 && 50 >= row.porcentajeRAgrario">
+                                                                    <!-- &hellip;{{ row.porcentaje }}% -->
+                                                                    <div class="mb-25 text-warning text-center">Progreso
+                                                                        Total</div>
+                                                                    <ngb-progressbar type="warning" [animated]="true"
+                                                                        showValue="true" [striped]="true"
+                                                                        [value]="row.porcentajeRAgrario"
+                                                                        [height]="progressbarHeight">
+                                                                    </ngb-progressbar>
+                                                                </div>
+                                                                <div class="progress-wrapper"
+                                                                    *ngIf="row.porcentaje > 50 && 99 >= row.porcentajeRAgrario">
+                                                                    <!-- &hellip;{{ row.porcentaje }}% -->
+                                                                    <div class="mb-25 text-info text-center">Progreso
+                                                                        Total
+                                                                    </div>
+                                                                    <ngb-progressbar type="info" [animated]="true"
+                                                                        showValue="true" [striped]="true"
+                                                                        [value]="row.porcentajeRAgrario"
+                                                                        [height]="progressbarHeight">
+                                                                    </ngb-progressbar>
+                                                                </div>
+                                                                <div class="progress-wrapper"
+                                                                    *ngIf="100 == row.porcentajeRAgrario">
+                                                                    <!-- &hellip;{{ row.porcentaje }}% -->
+                                                                    <div class="mb-25 text-success text-center">Progreso
+                                                                        Total</div>
+                                                                    <ngb-progressbar type="success" [animated]="true"
+                                                                        showValue="true" [striped]="true"
+                                                                        [value]="row.porcentajeRAgrario"
+                                                                        [height]="progressbarHeight">
+                                                                    </ngb-progressbar>
+                                                                </div>
+                                                            </div>
+                                                            <div class="" *ngIf="row.idRegimen == 4">
+                                                                <div class="progress-wrapper"
+                                                                    *ngIf="20 >= row.porcentajeCCivil">
+                                                                    <div class="mb-25 text-danger text-center">
+                                                                        Progreso&hellip;{{ row.porcentajeCCivil }}%
+                                                                    </div>
+                                                                    <ngb-progressbar type="danger" [animated]="true"
+                                                                        showValue="true" [striped]="true"
+                                                                        [value]="row.porcentajeCCivil"
+                                                                        [height]="progressbarHeight">
+                                                                    </ngb-progressbar>
+                                                                </div>
+                                                                <div class="progress-wrapper"
+                                                                    *ngIf="row.porcentaje > 20 && 50 >= row.porcentajeCCivil">
+                                                                    <!-- &hellip;{{ row.porcentaje }}% -->
+                                                                    <div class="mb-25 text-warning text-center">Progreso
+                                                                        Total</div>
+                                                                    <ngb-progressbar type="warning" [animated]="true"
+                                                                        showValue="true" [striped]="true"
+                                                                        [value]="row.porcentajeCCivil"
+                                                                        [height]="progressbarHeight">
+                                                                    </ngb-progressbar>
+                                                                </div>
+                                                                <div class="progress-wrapper"
+                                                                    *ngIf="row.porcentaje > 50 && 99 >= row.porcentajeCCivil">
+                                                                    <!-- &hellip;{{ row.porcentaje }}% -->
+                                                                    <div class="mb-25 text-info text-center">Progreso
+                                                                        Total
+                                                                    </div>
+                                                                    <ngb-progressbar type="info" [animated]="true"
+                                                                        showValue="true" [striped]="true"
+                                                                        [value]="row.porcentajeCCivil"
+                                                                        [height]="progressbarHeight">
+                                                                    </ngb-progressbar>
+                                                                </div>
+                                                                <div class="progress-wrapper"
+                                                                    *ngIf="100 == row.porcentajeCCivil">
+                                                                    <!-- &hellip;{{ row.porcentaje }}% -->
+                                                                    <div class="mb-25 text-success text-center">Progreso
+                                                                        Total</div>
+                                                                    <ngb-progressbar type="success" [animated]="true"
+                                                                        showValue="true" [striped]="true"
+                                                                        [value]="row.porcentajeRAgrario"
+                                                                        [height]="progressbarHeight">
+                                                                    </ngb-progressbar>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="c-w utble">
+                                                            <div class="d-flex align-items-center justify-content-center">
+                                                                <button ngbTooltip="Visualizar QR" placement="top" (click)="onQR(QR,row); generatePDF(qrCodeSection)"
+                                                                    class="btn btn-icon btn-icon rounded-circle btn-outline-warning mr-1"
+                                                                    rippleEffect>
+                                                                <span ><img src="assets/images/ico/qr_n.png" alt="s" width="16px"></span>
+                                                                </button>
+
+                                                                <button ngbTooltip="Descargar QR" placement="top" 
+                                                                    class="btn btn-icon btn-icon rounded-circle btn-outline-success mr-1"
+                                                                    rippleEffect>
+                                                                <span data-feather="download"></span>
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-12 col-md-5 col-lg-5">
+                                            <span *ngIf="empleadoSettings.colletionSize == 0" class="ml-2"
+                                                style="color: #b9b9c3;">
+                                                No hay filas
+                                            </span>
+                                            <span *ngIf="empleadoSettings.colletionSize == 1" class="ml-2"
+                                                style="color: #b9b9c3;">{{
+                                                empleadoSettings.colletionSize }} Fila</span>
+                                            <span *ngIf="empleadoSettings.colletionSize > 1" class="ml-2"
+                                                style="color: #b9b9c3;">{{
+                                                empleadoSettings.colletionSize }} Filas</span>
+                                        </div>
+                                        <div class="col-12 col-md-7 col-lg-7 utble d-flex justify-content-end">
+                                            <ngb-pagination [collectionSize]="empleadoSettings.colletionSize"
+                                                style="margin-right: 13px;" [(page)]="empleadoSettings.page"
+                                                (pageChange)="onSetEmpleadoList()" [rotate]="true"
+                                                [boundaryLinks]="true" [pageSize]="empleadoSettings.pageSize">
+                                                <ng-template ngbPaginationFirst>⠀<span data-feather="skip-back"></span>
+                                                </ng-template>
+                                                <ng-template ngbPaginationPrevious><span [data-feather]="'chevron-left'"
+                                                        [class]="'font-weight-bolder'"></span>⠀
+                                                </ng-template>
+                                                <ng-template ngbPaginationNext>⠀<span [data-feather]="'chevron-right'"
+                                                        [class]="'font-weight-bolder'"></span>
+                                                </ng-template>
+                                                <ng-template ngbPaginationLast><span
+                                                        data-feather="skip-forward"></span>⠀
+                                                </ng-template>
+                                            </ngb-pagination>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </li>
+            </ul>
+            <div [ngbNavOutlet]="navWithIcons" class="mt-2"></div>
+        </section>
+
+        <ng-template #NEM let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">{{ EControls.title.value }}</h4>
+                <button (click)="modal.dismiss('Cross click')" aria-label="Close" class="close" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" ngbAutofocus tabindex="0">
+                <form [formGroup]="EmpForm">
+                    <!-- <div class="row">
+                    <div class="col-md-6 col-12">
+                        <div class="form-group">
+                            <span> Estado del Empleado</span>
+                        </div>
+                    </div>
+
+                    </div> -->
+                    <!-- <ngb-progressbar type="primary" [value]="45">45%</ngb-progressbar> -->
+                    <!-- <div class="col-md-12 col-12">
+                        <div class="divider divider-secondary">
+                            <div class="divider-text">Empleado</div>
+                        </div>
+                    </div> -->
+                    <div class="row">
+                        <div class="col-md-12 col-12">
+                            <div class="form-group">
+                                <label class="utble">Contratista:</label>
+                                <div class="input-group-append utble">
+                                    <input class="form-control utble" type="text" formControlName="contratista" readonly
+                                        [ngClass]="{ 'is-invalid': IDSubmitted && EControls.contratista.errors }">
+                                    <div *ngIf="EControls.contratista.errors" class="invalid-feedback">
+                                        <div *ngIf="EControls.contratista.errors.required">* Campo obligatorio
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-12">
+                            <div class="form-group">
+                                <label class="utble">Nombres:</label>
+                                <input class="form-control" type="text" formControlName="nombres" maxlength="80"
+                                    [ngClass]="{ 'is-invalid': IDSubmitted && EControls.nombres.errors }" />
+                                <div *ngIf="EControls.nombres.errors" class="invalid-feedback">
+                                    <div *ngIf="EControls.nombres.errors.required">* Campo obligatorio
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label class="utble">Apellido Paterno:</label>
+                                <input class="form-control" type="text" formControlName="apellidoPaterno"
+                                    [ngClass]="{ 'is-invalid': IDSubmitted && EControls.apellidoPaterno.errors }" />
+                                <div *ngIf="EControls.apellidoPaterno.errors" class="invalid-feedback">
+                                    <div *ngIf="EControls.apellidoPaterno.errors.required">* Campo obligatorio
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label class="utble">Apellido Materno:</label>
+                                <input class="form-control" type="text" formControlName="apellidoMaterno"
+                                    [ngClass]="{ 'is-invalid': IDSubmitted && EControls.apellidoMaterno.errors }" />
+                                <div *ngIf="EControls.apellidoMaterno.errors" class="invalid-feedback">
+                                    <div *ngIf="EControls.apellidoMaterno.errors.required">* Campo obligatorio
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label class="utble">DNI:</label>
+                                <input class="form-control" type="text" formControlName="nroDocumento"
+                                    [ngClass]="{ 'is-invalid': IDSubmitted && EControls.nroDocumento.errors }"
+                                    mask="00000000" />
+                                <div *ngIf="EControls.nroDocumento.errors" class="invalid-feedback">
+                                    <div *ngIf="EControls.nroDocumento.errors.required">* Campo obligatorio
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label class="utble">Teléfono:</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">+51</span>
+                                    </div>
+                                    <input class="form-control" type="text" formControlName="telefono"
+                                        mask="000 000 000"
+                                        [ngClass]="{ 'is-invalid': IDSubmitted && EControls.telefono.errors }" />
+                                    <div *ngIf="EControls.telefono.errors" class="invalid-feedback">
+                                        <div *ngIf="EControls.telefono.errors.required">* Campo obligatorio
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-12">
+                            <div class="form-group">
+                                <label class="utble">Correo:</label>
+                                <input class="form-control" type="text" formControlName="direccion" required email
+                                    maxlength="150"
+                                    [ngClass]="{ 'is-invalid': IDSubmitted && EControls.direccion.errors }" />
+                                <div *ngIf="EControls.direccion.errors" class="invalid-feedback">
+                                    <div *ngIf="EControls.direccion.errors.required">* Campo obligatorio
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label class="utble">Proyecto:</label>
+                                <input class="form-control" type="text" formControlName="nameProyect" readonly
+                                    [ngClass]="{ 'is-invalid': IDSubmitted && EControls.nameProyect.errors }"
+                                    maxlength="150" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label>Fecha Inicio trabajo</label>
+                                <div class="input-group">
+                                    <input #basicDP="ngbDatepicker" #i18nDP="ngbDatepicker" [(ngModel)]="fechaTrabajo"
+                                        class="form-control" formControlName="fechaTrabajo" ngbDatepicker
+                                        placeholder="dd/mm/yyyy">
+                                    <div class="input-group-append">
+                                        <button (click)="basicDP.toggle()"
+                                            class="btn btn-outline-secondary feather icon-calendar" rippleEffect
+                                            type="button"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label>Regimen</label>
+                                <ng-select [items]="rowsRegimen" [clearable]="false" formControlName="idRegimen"
+                                    bindLabel="descripcion" [disabled]="untouch" placeholder="Seleccionar"
+                                    bindValue="idColumna">
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer" style="display: block !important;">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <div style="float: right">
+                            <button (click)="onSaveEmpleado()" class="btn btn-primary mr-1" rippleEffect type="submit">
+                                Aceptar
+                            </button>
+                            <button (click)="modal.dismiss()" class="btn btn-secondary" rippleEffect type="button">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template #DEM let-modal>
+            <div class="modal-header" style="text-align: center;">
+                <h4 class="modal-title" id="myModalLabel1" style="flex: auto;">{{ EControls.title.value }}</h4>
+                <button (click)="modal.dismiss('Cross click')" aria-label="Close" class="close" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" ngbAutofocus tabindex="0">
+                <div class="row">
+                    <div class="col-md-6 col-12">
+                        <div class="form-group font-weight-bolder">
+                            <span> Estado de cumplimiento</span>
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-6 col-12">
+                        <countdown [config]="{leftTime: 604800}"></countdown>
+                    </div> -->
+                </div>
+                <!-- <ngb-progressbar type="primary" [value]="Controls.porcentaje.value" [animated]="true" [striped]="true"
+                    [height]="progressbarHeight" showValue="true">
+                </ngb-progressbar> -->
+
+                <div class="col-md-12 col-12">
+                    <div class="divider divider-dotted divider-primary">
+                        <div class="divider-text text-dark font-weight-bolder">Documentos</div>
+                    </div>
+                </div>
+
+                <div class="card card-company-table">
+                    <div class="card-body p-0">
+                        <ul #navWithIcons="ngbNav" class="nav-tabs" ngbNav>
+                            <li ngbNavItem>
+                                <a ngbNavLink><span [data-feather]="'award'"></span> Homologación
+                                    (Empleado)</a>
+                                <ng-template ngbNavContent>
+                                    <div class="row">
+                                        <div class="col-12 col-md-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover">
+                                                    <thead class="centerall-header">
+                                                        <tr>
+                                                            <th class="utble">Nombre</th>
+                                                            <th class="utble">Tipo</th>
+                                                            <th class="utble">Subir Archivo</th>
+                                                            <th class="utble">Archivo</th>
+                                                            <th class="utble">Tamaño</th>
+                                                            <th class="utble">Acción</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody *ngFor="let row of rowsDocumentosHomTrabajador">
+                                                        <td class="f-w">{{ row.documentoName }}</td>
+                                                        <td class="f-w">{{ row.tipoExtension }}</td>
+                                                        <td>
+                                                            <div>
+                                                                <fieldset class="form-group">
+                                                                    <div class="custom-file" *ngIf="row.idEstado != 2">
+                                                                        <input type="file" class="custom-file-input"
+                                                                            type="file" ng2FileSelect
+                                                                            (change)="fileOverBase(row)"
+                                                                            accept=".{{row.tipoExtension}}"
+                                                                            [uploader]="uploader"
+                                                                            id="file-upload-single" />
+                                                                        <label class="custom-file-label">Elija
+                                                                            el archivo</label>
+                                                                    </div>
+                                                                </fieldset>
+                                                            </div>
+                                                            <div *ngIf="row.idEstado == 1"
+                                                                class="d-flex justify-content-center">
+                                                                <div class="badge d-block badge-secondary">
+                                                                    <span class="f-w">Pendiente</span>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="row.idEstado == 2"
+                                                                class="d-flex justify-content-center">
+                                                                <div class="badge d-block badge-success">
+                                                                    <span class="f-w">Aprobado</span>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="row.idEstado == 3 && row.aplica != true"
+                                                                class="d-flex justify-content-center">
+                                                                <div class="badge d-block badge-danger">
+                                                                    <span class="f-w">Observado</span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="f-w">{{ row.fileName }}</td>
+                                                        <td *ngIf="row.tipoExtension != 'ADPROV'">{{
+                                                            row.fileTamanio | number: '.2' }} MB
+                                                        </td>
+                                                        <td>
+                                                            <button *ngIf="row.fileName !== '' && row.idEstado != 2"
+                                                                type="button"
+                                                                class="btn btn-raised btn-outline-danger btn-sm"
+                                                                ngbTooltip="Remover Archivo" placement="top"
+                                                                (click)="onRemoveFile(row)" rippleEffect>
+                                                                <i data-feather="trash"></i>
+                                                            </button>
+
+                                                            <button *ngIf="row.idEstado == 3 && row.fileName == ''"
+                                                                type="button"
+                                                                class="btn btn-raised btn-outline-warning btn-sm"
+                                                                ngbTooltip="Comentarios" placement="top"
+                                                                (click)="onComentarios(row, COM)" rippleEffect>
+                                                                <i data-feather="message-circle"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </li>
+                        </ul>
+                        <div [ngbNavOutlet]="navWithIcons" class="mt-2"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: block !important;">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <div style="float: right">
+                            <button (click)="onSave()" class="btn btn-primary f-w mr-1" rippleEffect type="submit">
+                                <i class="mr-0 mr-sm-1" data-feather="save"></i><span
+                                    class="d-none d-sm-inline-block">Guardar</span>
+                            </button>
+                            <button (click)="modal.dismiss()" class="btn btn-secondary f-w" rippleEffect type="button">
+                                <i class="mr-0 mr-sm-1" data-feather="corner-up-right"></i><span
+                                    class="d-none d-sm-inline-block">Cancelar</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template #COM let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">Comentarios (Archivo Desaprobado):</h4>
+                <button (click)="modal.dismiss('Cross click')" aria-label="Close" class="close" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" ngbAutofocus tabindex="0">
+                <form [formGroup]="EmpForm">
+                    <div class="row">
+                        <div class="col-md-12 col-12">
+                            <div class="form-group">
+                                <label class="text-dark font-weight-bolder">Motivo:</label>
+                                <textarea rows="5" class="form-control" style="resize: none;"
+                                    formControlName="observacion" disabled></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <div style="float: right">
+                            <button (click)="modal.dismiss()" class="btn btn-secondary" rippleEffect type="button">
+                                Cerrar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        
+        <ng-template #QR let-modal>
+            
+            <div class="modal-header" style="text-align: center;">
+                <h4 class="modal-title" id="myModalLabel1" style="flex: auto;">{{ EControls.title.value }}</h4>
+                <button (click)="modal.dismiss('Cross click')" aria-label="Close" class="close" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            
+            <div class="modal-body" ngbAutofocus tabindex="0">
+                <section id="card-text-alignment">
+                    <div class="row" style="justify-content: center;">
+                        <!-- <div class="d-flex justify-content-center">
+                            <button  (click)="generatePDF(qrCodeSection)"
+                            ngbTooltip="Descargar en PDF" class="btn btn-success mr-1" rippleEffect type="submit">
+                                Descargar PDF
+                            </button>
+                        </div> -->
+                        
+                        <div class="col-md-6 col-lg-6">
+                            <div class="card text-center mb-3">
+                                <div class="card-body">
+                                    <!-- <img
+                                        [src]="featuredImage"
+                                        id="blog-feature-image"
+                                        class="rounded mr-2 mb-1 mb-md-0"
+                                        width="170"
+                                        height="170"
+                                        alt="Blog Featured Image"
+                                    /> -->
+
+                                    <!-- <p class="my-50">
+                                        <a href="javascript:void(0);" id="blog-image-text"
+                                            >C:\fakepath\{{ fileName === undefined ? 'anonymous.jpg' : fileName }}</a>
+                                    </p> -->
+                                    <div class="d-flex justify-content-center">
+                                        <div class="badge d-block badge-secondary">
+                                            <span class="f-w">SOLO FORMATOS PNG Y JPG</span>
+                                        </div>  
+                                    </div>
+                                    <fieldset class="form-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input"
+                                                type="file" ng2FileSelect
+                                                (change)="uploadImage($event)"
+                                                accept=".png, .jpg, jpeg"
+                                                [uploader]="uploader"
+                                                id="file-upload-single" />
+                                            <label class="custom-file-label">{{ selectedFileName }}</label>
+                                        </div>
+                                    </fieldset>
+                                  
+                                    <div class="d-flex justify-content-center">
+                                        <button  (click)="generateQR(rowsEmpleadoQR)"
+                                        ngbTooltip="Generar QR" class="btn btn-success mr-1" rippleEffect type="submit">
+                                            Generar código QR
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div >
+                            <div #qrCodeSection>
+                                <div class="col-md-6 col-lg-9 ">
+                                    <div class="carnet-container">
+                                        
+                                        <div class="qr-code">
+                                            <!-- <div class="logo-wrapper">
+                                                <span class="brand-logo">
+                                                    <img src="assets/images/logo/LogoMenu.png" alt="brand-logo" width="200" height="200">
+                                                </span>
+                                            </div> -->
+        
+                                            <img *ngIf="rowsEmpleadoQR.cadenaQr == ''" src="assets/images/ico/images/on-time.png" alt="Código QR" class="carnet-qrcode">
+                                            <img *ngIf="rowsEmpleadoQR.cadenaQr !== ''" [src]="base64QR" alt="Código QR" class="carnet-qrcode">
+                                        </div>
+                                            <div class="worker-info">
+                                                <div class="info-group">
+                                                    <h5 class="text-info">Identificación: </h5>
+                                                    <p class="">NOMBRES: {{rowsEmpleadoQR.nombres}}</p>
+                                                    <p class="">APELLIDOS: {{rowsEmpleadoQR.apellidoPaterno}} {{rowsEmpleadoQR.apellidoMaterno}}</p>
+                                                    <p class="">TELEFONO: {{rowsEmpleadoQR.telefono}}</p>
+                                                    <p class="">DNI: {{rowsEmpleadoQR.nroDocumento}}</p>
+                                                </div>
+                                                
+                                            </div>
+                                            
+                                        <div class="worker-photo">
+                                            <img *ngIf="rowsEmpleadoQR.foto == ''"
+                                                [src]="featuredImage"
+                                            />
+                                            <img *ngIf="rowsEmpleadoQR.foto !== ''"
+                                                [src]="rowsEmpleadoQR.foto"
+                                            />
+        
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                        </div>      
+
+                    </div>
+                </section>
+            </div>
+            <div class="modal-footer" style="display: block !important;">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <div style="float: right">
+                            <!-- <button  class="btn btn-primary mr-1" rippleEffect type="submit">
+                                Aceptar
+                            </button> -->
+                            <button (click)="modal.dismiss()" class="btn btn-secondary" rippleEffect type="button">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        <!-- <div #probando>
+            <p>holitas</p>
+        </div> -->
+        <block-ui></block-ui>
+
+    </div>
+</div>

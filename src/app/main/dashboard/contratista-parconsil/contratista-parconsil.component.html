@@ -1,0 +1,849 @@
+<div class="content-wrapper">
+    <div class="content-body">
+        <app-content-header class="utble" [contentHeader]="contentHeader"></app-content-header>
+        <section id="ngx-datatable-multi-purpose">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 col-12">
+                            <label class="d-flex align-items-center utble ml-2 mt-1">
+                                <span class="mr-1">Mostrar</span>
+                                <ng-select (change)="onContratistaList()" [clearable]="false" [items]="forPageOptions"
+                                    [(ngModel)]="contratistaSettings.pageSize">
+                                </ng-select>
+                                <span class="ml-1">Filas</span>
+                            </label>
+                        </div>
+                        <div class="col-md-8 col-12 d-flex justify-content-md-end">
+                            <div class="d-flex justify-content-end align-items-center">
+                                <button [hidden]="displayable" (click)="onNewContratista(NCT)"
+                                    class="btn btn-primary ml-1">
+                                    <i class="mr-0 mr-sm-1" data-feather="plus-square"></i><span
+                                        class="d-none d-sm-inline-block">Agregar Contratista</span>
+                                </button>
+                                <button (click)="onContratistaList()" class="btn btn-secondary ml-1">
+                                    <i class="mr-0 mr-sm-1" data-feather="refresh-cw"></i><span
+                                        class="d-none d-sm-inline-block">Refrescar</span>
+                                </button>
+                                <label class="d-flex align-items-center ml-1 utble">
+                                    <span class="d-none d-sm-inline-block mr-1">Buscar:</span>
+                                    <div class="input-group">
+                                        <input (change)="onContratistaList()"
+                                            [(ngModel)]="contratistaSettings.searchString" class="form-control"
+                                            placeholder="Texto de búsqueda..." type="text" />
+                                        <div class="input-group-append">
+                                            <button (click)="onClearFilter()" class="btn btn-outline-primary"
+                                                type="button" rippleEffect>
+                                                <i data-feather="trash-2"></i>
+                                            </button>
+                                            <button (click)="onContratistaList()" class="btn btn-outline-primary"
+                                                type="button" rippleEffect>
+                                                <i data-feather="search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card card-company-table">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="centerall-header">
+                                    <tr>
+                                        <th class="utble">ACCIÓN</th>
+                                        <th class="utble">USUARIO</th>
+                                        <th class="utble">CONTRATISTA</th>
+                                        <th class="utble">DIRECCIÓN</th>
+                                        <th class="utble">CORREO</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let row of rowsContratista" class="cursor-pointer">
+                                        <td *ngIf="this.sesionPerfil != 3">
+                                            <div class="d-flex align-items-center"
+                                                style="text-align: center; align-items: center; justify-content:center;">
+                                                <!-- <div (click)="EditContratista(NCT, row)"
+                                                    class="avatar bg-light-primary mr-1">
+                                                    <div class="avatar-content">
+                                                        <a ngbTooltip="Editar" placement="top"
+                                                            href="javascript:void(0)">
+                                                            <i data-feather="edit" class="font-medium-3"></i>
+                                                        </a>
+                                                    </div>
+                                                </div> -->
+                                                <button *ngIf="row.idEstado == 3"
+                                                    [routerLink]="['/dashboard/empleados']" [queryParams]="{ Contratista: row.razonSocial, Direccion: row.direccion,
+                                                        Ruc: row.ruc, Telefono: row.telefono, Correo: row.correo, PaginaWeb: row.paginaWeb,
+                                                        IdContratista: row.idContratista }" queryParamsHandling="merge"
+                                                    skipLocationChange ngbTooltip="Ver empleados" placement="top"
+                                                    class="btn btn-icon btn-icon rounded-circle btn-outline-secondary mr-1"
+                                                    rippleEffect>
+                                                    <span [data-feather]="'users'"></span>
+                                                </button>
+
+                                                <button (click)="onDeleteContratista(row)" ngbTooltip="Eliminar"
+                                                    placement="top"
+                                                    class="btn btn-icon btn-icon rounded-circle btn-outline-info"
+                                                    rippleEffect>
+                                                    <span [data-feather]="'trash-2'"></span>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td style="text-align: center;"><span (click)="onContratistaEdit(CDT, row)"
+                                                class="badge badge-pill badge-light-primary">{{
+                                                row.contratistaUser
+                                                }}</span></td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="cell-line-height c-w">
+                                                    <p class="font-medium-1 font-weight-bold line-height-1 mb-25"
+                                                        style="font-size: small !important;">
+                                                        {{row.ruc }}
+                                                    </p>
+                                                    <span class="text-muted font-small-2"> {{ row.razonSocial
+                                                        }}</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="c-w">{{ row.direccion }}</td>
+                                        <td class="c-w">{{ row.correo }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12 col-md-5 col-lg-5">
+                            <span *ngIf="contratistaSettings.colletionSize == 0" class="ml-2" style="color: #b9b9c3;">
+                                No hay filas
+                            </span>
+                            <span *ngIf="contratistaSettings.colletionSize == 1" class="ml-2" style="color: #b9b9c3;">{{
+                                contratistaSettings.colletionSize }} Fila</span>
+                            <span *ngIf="contratistaSettings.colletionSize > 1" class="ml-2" style="color: #b9b9c3;">{{
+                                contratistaSettings.colletionSize }} Filas</span>
+                        </div>
+                        <div class="col-12 col-md-7 col-lg-7 utble d-flex justify-content-end">
+                            <ngb-pagination [collectionSize]="contratistaSettings.colletionSize"
+                                style="margin-right: 13px;" [(page)]="contratistaSettings.page"
+                                (pageChange)="onContratistaList()" [rotate]="true" [boundaryLinks]="true"
+                                [pageSize]="contratistaSettings.pageSize">
+                                <ng-template ngbPaginationFirst>⠀<span data-feather="skip-back"></span>
+                                </ng-template>
+                                <ng-template ngbPaginationPrevious><span [data-feather]="'chevron-left'"
+                                        [class]="'font-weight-bolder'"></span>⠀
+                                </ng-template>
+                                <ng-template ngbPaginationNext>⠀<span [data-feather]="'chevron-right'"
+                                        [class]="'font-weight-bolder'"></span>
+                                </ng-template>
+                                <ng-template ngbPaginationLast><span data-feather="skip-forward"></span>⠀
+                                </ng-template>
+                            </ngb-pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <ng-template #CDT let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">Detalle del Contratista</h4>
+                <button (click)="modal.dismiss('Cross click')" aria-label="Close" class="close" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" ngbAutofocus tabindex="0">
+                <div id="stepper3" class="bs-stepper wizard-modern modern-wizard-example">
+                    <div class="bs-stepper-header">
+                        <div class="step" data-target="#account-details-modern">
+                            <button type="button" class="step-trigger">
+                                <span class="bs-stepper-box">
+                                    <i data-feather="file-text" class="font-medium-3"></i>
+                                </span>
+                                <span class="bs-stepper-label">
+                                    <span class="bs-stepper-title">Info. Contratista</span>
+                                    <span class="bs-stepper-subtitle">Detalle</span>
+                                </span>
+                            </button>
+                        </div>
+                        <div class="line">
+                            <i data-feather="chevron-right" class="font-medium-2"></i>
+                        </div>
+                        <div class="step" data-target="#personal-info-modern">
+                            <button type="button" class="step-trigger">
+                                <span class="bs-stepper-box">
+                                    <i data-feather="user" class="font-medium-3"></i>
+                                </span>
+                                <span class="bs-stepper-label">
+                                    <span class="bs-stepper-title">Info. Contacto</span>
+                                    <span class="bs-stepper-subtitle">Detalle</span>
+                                </span>
+                            </button>
+                        </div>
+                        <div class="line">
+                            <i data-feather="chevron-right" class="font-medium-2"></i>
+                        </div>
+                        <div class="step" data-target="#address-step-modern">
+                            <button type="button" class="step-trigger">
+                                <span class="bs-stepper-box">
+                                    <i data-feather="map-pin" class="font-medium-3"></i>
+                                </span>
+                                <span class="bs-stepper-label">
+                                    <span class="bs-stepper-title">Clientes</span>
+                                    <span class="bs-stepper-subtitle">Asociados</span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="bs-stepper-content">
+                        <div id="account-details-modern" class="content">
+                            <div class="content-header">
+                                <h5 class="mb-0">Información del Contratista</h5>
+                                <small class="text-muted">Detalle general del contratista</small>
+                            </div>
+
+                            <form [formGroup]="General">
+                                <div class="row">
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label style="font-size: small;">RUC</label>
+                                            <div class="input-group mb-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i data-feather="user"></i>
+                                                    </span>
+                                                </div>
+                                                <input type="text" class="form-control" formControlName="ruc" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Contraseña</label>
+                                            <div class="input-group">
+                                                <input formControlName="clave"
+                                                    [type]="passwordTextTypeOld ? 'text' : 'password'"
+                                                    class="form-control" id="account-old-password" name="password"
+                                                    placeholder="Digité una contraseña">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text cursor-pointer"><i
+                                                            class="feather font-small-4" [ngClass]="{
+                                                        'icon-eye-off': passwordTextTypeOld,
+                                                        'icon-eye': !passwordTextTypeOld
+                                                }" (click)="mostrarClave(1)"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label class="utble">Fecha Ingreso</label>
+                                            <div class="input-group">
+                                                <input #basicDP="ngbDatepicker" #i18nDP="ngbDatepicker"
+                                                    [readonly]="true" [(ngModel)]="fechaIngreso"
+                                                    [ngModelOptions]="{standalone: true}" class="form-control"
+                                                    ngbDatepicker placeholder="dd/mm/yyyy">
+                                                <div class="input-group-append">
+                                                    <button (click)="basicDP.toggle()"
+                                                        class="btn btn-outline-secondary feather icon-calendar"
+                                                        rippleEffect type="button"></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label class="utble">Fecha Cierre</label>
+                                            <div class="input-group">
+                                                <input #dateFin="ngbDatepicker" #i18nDP="ngbDatepicker"
+                                                    [(ngModel)]="fechaCierre" [ngModelOptions]="{standalone: true}"
+                                                    class="form-control" ngbDatepicker placeholder="dd/mm/yyyy">
+                                                <div class="input-group-append">
+                                                    <button (click)="dateFin.toggle()"
+                                                        class="btn btn-outline-secondary feather icon-calendar"
+                                                        rippleEffect type="button"></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 col-12">
+                                        <div class="form-group">
+                                            <label>Razón Social:</label>
+                                            <input type="text" class="form-control" formControlName="razonSocial">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-12">
+                                        <div class="form-group">
+                                            <label>Dirección:</label>
+                                            <input type="text" class="form-control" formControlName="direccion">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Provincia:</label>
+                                            <input class="form-control" type="text" formControlName="provincia" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Distrito:</label>
+                                            <input class="form-control" type="text" formControlName="distrito" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-7 col-12">
+                                        <div class="form-group">
+                                            <label>Página Web:</label>
+                                            <input class="form-control" type="text" formControlName="paginaWeb" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-5 col-12">
+                                        <div class="form-group">
+                                            <label>Teléfono</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon1">+51</span>
+                                                </div>
+                                                <input class="form-control" type="text" formControlName="telefono"
+                                                    mask="000 000 000" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </form>
+
+                            <div class="d-flex justify-content-between">
+                                <button class="btn btn-outline-secondary btn-prev" disabled rippleEffect>
+                                    <i data-feather="arrow-left" class="align-middle mr-sm-25 mr-0"></i>
+                                    <span class="align-middle d-sm-inline-block d-none">Previous</span>
+                                </button>
+                                <button class="btn btn-primary btn-next" (click)="modernHorizontalNext()" rippleEffect>
+                                    <span class="align-middle d-sm-inline-block d-none">Next</span>
+                                    <i data-feather="arrow-right" class="align-middle ml-sm-25 ml-0"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div id="personal-info-modern" class="content">
+                            <div class="content-header">
+                                <h5 class="mb-0">Persona de Contacto</h5>
+                                <small>Detalle</small>
+                            </div>
+                            <form [formGroup]="ConForm">
+                                <div class="row">
+                                    <div class="col-md-12 col-12">
+                                        <div class="form-group">
+                                            <label class="text-dark">Nombre Completo</label>
+                                            <input class="form-control" type="text" formControlName="personaNombres"
+                                                disabled />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-12">
+                                        <div class="form-group">
+                                            <label class="text-dark">Tipo Documento</label>                                            
+                                            <ng-select [(ngModel)]="personaIdTipoDoc" [ngModelOptions]="{standalone: true}" [items]="rowsTipoDoc" [clearable]="false"
+                                                [disabled]="true" bindValue="idColumna" bindLabel="descripcion">
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="personaIdTipoDoc != 3" class="col-md-8 col-12">
+                                        <div class="form-group">
+                                            <label class="text-dark">N° Documento de Identidad</label>
+                                            <input class="form-control" type="text" mask="00000000"
+                                                formControlName="personaDoc" disabled />
+                                        </div>
+                                    </div>
+                                    <div *ngIf="personaIdTipoDoc == 3" class="col-md-8 col-12">
+                                        <div class="form-group">
+                                            <label class="text-dark">Otro:</label>
+                                            <input class="form-control" type="text" placeholder="Especificar"
+                                                formControlName="personaDoc" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-12">
+                                        <div class="form-group">
+                                            <label class="text-dark">Nacionalidad y Residencia</label>
+                                            <div class="input-group input-group-merge">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <i class="font-medium-2" data-feather="flag"></i>
+                                                    </span>
+                                                </div>
+                                                <input class="form-control" type="text" formControlName="personaNacyRes"
+                                                    disabled />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label class="text-dark">Domicilio</label>
+                                            <input class="form-control" type="text" formControlName="personaDom"
+                                                disabled />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label class="text-dark">Puesto</label>
+                                            <div class="input-group input-group-merge">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <i class="font-medium-2" data-feather="briefcase"></i>
+                                                    </span>
+                                                </div>
+                                                <input class="form-control" type="text" formControlName="personaPuesto"
+                                                    disabled />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label class="text-dark">Teléfono</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon1">+51</span>
+                                                </div>
+                                                <input class="form-control" type="text"
+                                                    formControlName="personaTelefono" disabled />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label class="text-dark">Correo electrónico</label>
+                                            <div class="input-group input-group-merge">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <i class="font-medium-2" data-feather="mail"></i>
+                                                    </span>
+                                                </div>
+                                                <input class="form-control" type="text" formControlName="personaCorreo"
+                                                    disabled />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <div class="d-flex justify-content-between">
+                                <button class="btn btn-primary btn-prev" (click)="modernHorizontalPrevious()"
+                                    rippleEffect>
+                                    <i data-feather="arrow-left" class="align-middle mr-sm-25 mr-0"></i>
+                                    <span class="align-middle d-sm-inline-block d-none">Previous</span>
+                                </button>
+                                <button class="btn btn-primary btn-next" (click)="modernHorizontalNext()" rippleEffect>
+                                    <span class="align-middle d-sm-inline-block d-none">Next</span>
+                                    <i data-feather="arrow-right" class="align-middle ml-sm-25 ml-0"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div id="address-step-modern" class="content">
+                            <div class="row mb-2">
+                                <div class="table-responsive">
+                                    <ngx-datatable [rows]="rowsCliente" [rowHeight]="58"
+                                        class="bootstrap core-bootstrap ngx-none" [limit]="10"
+                                        [columnMode]="ColumnMode.force" [headerHeight]="40" [footerHeight]="50"
+                                        [scrollbarH]="true" [selectionType]="SelectionType.checkbox"
+                                        [limit]="basicSelectedOption" (activate)="onActivate($event)"
+                                        (select)="onSelect($event)">
+                                        <ngx-datatable-column [width]="50" [sortable]="false" [canAutoResize]="false"
+                                            [draggable]="false" [resizeable]="false">
+                                            <ng-template ngx-datatable-header-template let-value="value" let-row="row"
+                                                let-allRowsSelected="allRowsSelected" let-selectFn="selectFn">
+                                                <div (change)="MultiS(allRowsSelected)"
+                                                    class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input"
+                                                        [checked]="allRowsSelected"
+                                                        (change)="selectFn(!allRowsSelected)" id="headerChkbxRef" />
+                                                    <label class="custom-control-label" for="headerChkbxRef"></label>
+                                                </div>
+                                            </ng-template>
+                                            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                let-value="value" let-row="row" let-isSelected="row.active"
+                                                let-onCheckboxChangeFn="onCheckboxChangeFn">
+                                                <div class="custom-control custom-checkbox">
+                                                    <!-- (change)="onCheckboxChangeFn($event)" -->
+                                                    <input type="checkbox" class="custom-control-input"
+                                                        [(ngModel)]="row.active" [checked]="row.active"
+                                                        (click)="onContratistaCheckBox(row, AGP)"
+                                                        [disabled]="!row.docsConfigurados"
+                                                        id="rowChkbxRef{{ rowIndex }}" />
+                                                    <label class="custom-control-label"
+                                                        for="rowChkbxRef{{ rowIndex }}"></label>
+                                                </div>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="Name" [width]="300">
+                                            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="cell-line-height">
+                                                        <p class="font-medium-1 font-weight-bold line-height-1 mb-25"
+                                                            style="font-size: small !important;">
+                                                            {{ row.razonSocial }}
+                                                        </p>
+                                                        <span class="text-secondary font-small-2">
+                                                            {{ row.grupo }} - {{ row.ruc }}</span>
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="CORREO" prop="correo"
+                                            [width]="200"></ngx-datatable-column>
+                                        <ngx-datatable-column name="ENCARGADO" [width]="120">
+                                            <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="cell-line-height">
+                                                        <p class="font-medium-1 font-weight-bold line-height-1 mb-25"
+                                                            style="font-size: small !important;">
+                                                            {{ row.nombres }}
+                                                        </p>
+                                                        <span class="text-secondary font-small-2"> {{
+                                                            row.fechaCreacion }}</span>
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                    </ngx-datatable>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <button class="btn btn-primary btn-prev" (click)="modernHorizontalPrevious()"
+                                    rippleEffect>
+                                    <i data-feather="arrow-left" class="align-middle mr-sm-25 mr-0"></i>
+                                    <span class="align-middle d-sm-inline-block d-none">Previous</span>
+                                </button>
+                                <button class="btn btn-outline-secondary btn-next" (click)="modernHorizontalNext()"
+                                    disabled rippleEffect>
+                                    <span class="align-middle d-sm-inline-block d-none">Next</span>
+                                    <i data-feather="arrow-right" class="align-middle ml-sm-25 ml-0"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: block !important;">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <div style="float: right">
+                            <button (click)="onContratistaUpdate()" class="btn btn-primary mr-1" rippleEffect
+                                type="submit">
+                                Aceptar
+                            </button>
+                            <button (click)="modal.dismiss()" class="btn btn-secondary" rippleEffect type="button">
+                                <i data-feather="x" class="mr-0 mr-sm-1"></i>
+                                <span class="d-none d-sm-inline-block">Cerrar</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template #NCT let-modal>
+            <div class="modal-header utble" style="text-align: center;">
+                <h4 class="modal-title" id="myModalLabel1" style="flex: auto;">Registrar Información complementaria</h4>
+                <button (click)="modal.dismiss('Cross click')" aria-label="Close" class="close" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" ngbAutofocus tabindex="0">
+                <div class="bs-stepper wizard-modern" id="stepper1">
+                    <div class="bs-stepper-header">
+                        <div class="step" data-target="#contratista">
+                            <button class="step-trigger" type="button">
+                                <span class="bs-stepper-box">
+                                    <i class="font-medium-3" data-feather="file-text"></i>
+                                </span>
+                                <span class="bs-stepper-label">
+                                    <span class="bs-stepper-title">Contratista</span>
+                                    <span class="bs-stepper-subtitle">Info. Complementaria</span>
+                                </span>
+                            </button>
+                        </div>
+                        <div class="line">
+                            <i class="font-medium-2" data-feather="chevron-right"></i>
+                        </div>
+                        <div class="step" data-target="#clientes">
+                            <button class="step-trigger" type="button">
+                                <span class="bs-stepper-box">
+                                    <i class="font-medium-3" data-feather="user"></i>
+                                </span>
+                                <span class="bs-stepper-label">
+                                    <span class="bs-stepper-title">Clientes</span>
+                                    <span class="bs-stepper-subtitle">Asignación</span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="bs-stepper-content">
+                        <div class="content" id="contratista">
+                            <form [formGroup]="ConForm">
+                                <div class="row">
+                                    <div class="col-md-12 col-12 utble">
+                                        <ngb-alert [type]="'secondary'" [dismissible]="false">
+                                            <div class="alert-body"><strong>Info!</strong> Al correo que se digite se le
+                                                enviará un E-MAIL.</div>
+                                        </ngb-alert>
+                                    </div>
+                                    <div class="col-md-12 col-12">
+                                        <div class="form-group">
+                                            <label class="utble">Usuario:</label>
+                                            <!-- <div class="input-group mb-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i data-feather="user"></i>
+                                                    </span>
+                                                </div>
+                                                <input type="text" class="form-control"
+                                                    formControlName="contratistaUser" placeholder="Digité un usuario"
+                                                    [ngClass]="{ 'is-invalid': IDSubmitted && CControls.contratistaUser.errors }" />
+                                            </div> -->
+                                            <div class="input-group mb-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i data-feather="user"></i>
+                                                    </span>
+                                                </div>
+                                                <input type="text" class="form-control"
+                                                    formControlName="contratistaUser" maxlength="11"
+                                                    [ngClass]="{ 'is-invalid': IDSubmitted && CControls.contratistaUser.errors }"
+                                                    placeholder="Buscar..." aria-describedby="button-addon2" />
+                                                <div class="input-group-append">
+                                                    <button (click)="onDocumentoSearch()"
+                                                        class="btn btn-outline-primary" type="button">
+                                                        <i data-feather="search"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-12" hidden>
+                                        <div class="form-group">
+                                            <label class="utble">Cliente:</label>
+                                            <!-- (focus)="focus$.next($any($event).target.value)" -->
+                                            <!-- (click)="click$.next($any($event).target.value)" -->
+                                            <!-- (selectItem)="onAutoCompleteChange($event)" -->
+                                            <!-- [ngbTypeahead]="search" -->
+                                            <!-- #instance="ngbTypeahead" -->
+                                            <input class="form-control" type="text" formControlName="razonSocial">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-12" hidden>
+                                        <div class="form-group">
+                                            <label>Dirección:</label>
+                                            <input class="form-control" type="text" formControlName="direccion">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-12">
+                                        <div class="form-group">
+                                            <label class="utble">Correo:</label>
+                                            <div class="input-group mb-2">
+                                                <input type="text" class="form-control" formControlName="correo"
+                                                    placeholder="Digité un correo" maxlength="60" required email
+                                                    [ngClass]="{ 'is-invalid': IDSubmitted && CControls.correo.errors }" />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">user@mail.com</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label class="utble">Fecha Ingreso</label>
+                                            <div class="input-group">
+                                                <input #basicDP="ngbDatepicker" #i18nDP="ngbDatepicker"
+                                                    [readonly]="true" [(ngModel)]="fechaIngreso"
+                                                    [ngModelOptions]="{standalone: true}" class="form-control"
+                                                    ngbDatepicker placeholder="dd/mm/yyyy"
+                                                    formControlName="fechaIngreso">
+                                                <div class="input-group-append">
+                                                    <button (click)="basicDP.toggle()" [disabled]="true"
+                                                        class="btn btn-outline-secondary feather icon-calendar"
+                                                        rippleEffect type="button"></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label class="utble">Fecha Cierre</label>
+                                            <div class="input-group">
+                                                <input #dateFin="ngbDatepicker" #i18nDP="ngbDatepicker"
+                                                    [(ngModel)]="fechaCierre" [ngModelOptions]="{standalone: true}"
+                                                    class="form-control" ngbDatepicker placeholder="dd/mm/yyyy"
+                                                    formControlName="fechaCierre">
+                                                <div class="input-group-append">
+                                                    <button (click)="dateFin.toggle()"
+                                                        class="btn btn-outline-secondary feather icon-calendar"
+                                                        rippleEffect type="button"></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="content" id="clientes">
+                            <div class="row">
+                                <div class="col-md-12 col-12">
+                                    <div class="card card-company-table">
+                                        <div class="card-body p-0">
+                                            <!-- <div class="col-md-12 col-12 d-flex justify-content-md-end mb-1">
+                                                    <label class="d-flex align-items-center ml-1 utble">
+                                                        <span class="d-none d-sm-inline-block mr-1">Buscar:</span>
+                                                        <input (keyup)="onSetCliente()" [(ngModel)]="clienteSettings.searchString"
+                                                            class="form-control" placeholder="Texto de búsqueda..." type="search" />
+                                                    </label>
+                                                </div> -->
+                                            <div class="table-responsive">
+                                                <ngx-datatable [rows]="rowsCliente" [rowHeight]="58"
+                                                    class="bootstrap core-bootstrap ngx-none" [limit]="10"
+                                                    [columnMode]="ColumnMode.force" [headerHeight]="40"
+                                                    [footerHeight]="50" [scrollbarH]="true"
+                                                    [selectionType]="SelectionType.checkbox"
+                                                    [limit]="basicSelectedOption" (activate)="onActivate($event)"
+                                                    (select)="onSelect($event)">
+                                                    <ngx-datatable-column [width]="50" [sortable]="false"
+                                                        [canAutoResize]="false" [draggable]="false"
+                                                        [resizeable]="false">
+                                                        <ng-template ngx-datatable-header-template let-value="value"
+                                                            let-row="row" let-allRowsSelected="allRowsSelected"
+                                                            let-selectFn="selectFn">
+                                                            <div (change)="MultiS(allRowsSelected)"
+                                                                class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                    [checked]="allRowsSelected"
+                                                                    (change)="selectFn(!allRowsSelected)"
+                                                                    id="headerChkbxRef" />
+                                                                <label class="custom-control-label"
+                                                                    for="headerChkbxRef"></label>
+                                                            </div>
+                                                        </ng-template>
+                                                        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                                                            let-value="value" let-row="row" let-isSelected="row.active"
+                                                            let-onCheckboxChangeFn="onCheckboxChangeFn">
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                    [(ngModel)]="row.active" [checked]="row.active"
+                                                                    (click)="onContratistaCheckBox(row, AGP)"
+                                                                    [disabled]="!row.docsConfigurados"
+                                                                    id="rowChkbxRef{{ rowIndex }}" />
+                                                                <label class="custom-control-label"
+                                                                    for="rowChkbxRef{{ rowIndex }}"></label>
+                                                            </div>
+                                                        </ng-template>
+                                                    </ngx-datatable-column>
+                                                    <ngx-datatable-column name="Name" [width]="250">
+                                                        <ng-template let-value="value" let-row="row"
+                                                            ngx-datatable-cell-template>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="cell-line-height">
+                                                                    <p class="font-medium-1 font-weight-bold line-height-1 mb-25"
+                                                                        style="font-size: small !important;">
+                                                                        {{ row.razonSocial }}
+                                                                    </p>
+                                                                    <span class="text-secondary font-small-2"> {{
+                                                                        row.ruc }}</span>
+                                                                </div>
+                                                            </div>
+                                                        </ng-template>
+                                                    </ngx-datatable-column>
+                                                    <ngx-datatable-column name="CORREO" prop="correo"
+                                                        [width]="200"></ngx-datatable-column>
+                                                    <ngx-datatable-column name="ENCARGADO" [width]="120">
+                                                        <ng-template let-value="value" let-row="row"
+                                                            ngx-datatable-cell-template>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="cell-line-height">
+                                                                    <p class="font-medium-1 font-weight-bold line-height-1 mb-25"
+                                                                        style="font-size: small !important;">
+                                                                        {{ row.nombres }}
+                                                                    </p>
+                                                                    <span class="text-secondary font-small-2"> {{
+                                                                        row.fechaCreacion }}</span>
+                                                                </div>
+                                                            </div>
+                                                        </ng-template>
+                                                    </ngx-datatable-column>
+                                                </ngx-datatable>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: block !important;">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <div style="float: right">
+                            <button (click)="SaveContratista()" class="btn btn-primary mr-1" rippleEffect type="submit">
+                                Aceptar
+                            </button>
+                            <button (click)="modal.dismiss()" class="btn btn-secondary" rippleEffect type="button">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template #AGP let-modal>
+            <div class="modal-header utble" style="text-align: center;">
+                <h4 class="modal-title" id="myModalLabel1" style="flex: auto;">Asignando Grupo</h4>
+                <button (click)="modal.dismiss('Cross click')" aria-label="Close" class="close" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" ngbAutofocus tabindex="0">
+                <!-- active -->
+                <div class="list-group">
+                    <a *ngFor="let row of rowsGrupo" (click)="onContratistaGrupoValue(row)"
+                        (click)="modal.dismiss('Cross click')" class="list-group-item list-group-item-action" [ngClass]="{                            
+                            'disabled': row.documentoConfiguradoGrupo <= 0}">
+                        <div class="d-flex w-100 justify-content-center">
+                            <p class="float-left mb-0 mr-1 utble">
+                                Asignar
+                            </p>
+                            <h5 class="text-primary utble"> {{ row.nombreGrupo }}</h5>
+                            <!-- <small>3 days ago</small> -->
+                        </div>
+                        <p class="mb-1 d-flex justify-content-center">
+                            <span class="mr-1 utble"> de:</span>
+                            <span class="f-w utble"> {{ CControls.razonSocial.value }} </span>
+                        </p>
+                        <p class="mb-0 d-flex justify-content-center">
+                            <span class="mr-1 utble"> a:</span>
+                            <span class="f-w utble" *ngIf="Controls.razonSocial.value != ''"> {{
+                                Controls.razonSocial.value
+                                }}</span>
+                            <span class="f-w utble" *ngIf="Controls.razonSocial.value == ''"> [SIN RAZON SOCIAL]</span>
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </ng-template>
+
+        <block-ui></block-ui>
+    </div>
+</div>

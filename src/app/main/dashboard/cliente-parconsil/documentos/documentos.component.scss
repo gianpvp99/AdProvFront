@@ -1,0 +1,208 @@
+@import '@core/scss/angular/libs/file-uploader.component.scss';
+
+.width-column {
+    border: solid 1px #CCC;
+    border-top: solid 1px #CCC;
+}
+
+.table.sticky th {
+    position: sticky;
+    top: 0;
+    text-align: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.table.sticky th::after {
+    content: "";
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    bottom: 38px;
+    left: 0;
+    background: #CCC;
+}
+
+.left-column {
+    border-left: solid 1px #CCC
+}
+
+.top-column {
+    border-top: solid 1px #CCC
+}
+
+.simple-column {
+    border: solid 1px #CCC;
+}
+
+.centerall-header tr th {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table-class {
+    border: solid 1px #CCC;
+    border-top: solid 1px #CCC;
+}
+
+.bk {
+    text-align: center;
+}
+
+.lft {
+    text-align: right;
+}
+
+.utble {
+    text-align: center;
+    user-select: none;
+}
+
+.utble-user {    
+    user-select: none;
+}
+
+.top {
+    margin-top: 20px;
+}
+
+.mg-6 {
+    margin-top: 6px;
+}
+
+.ygcolor {
+    color: rgb(65, 225, 97)
+}
+
+.dsg {
+    color: rgba($color: #353232, $alpha: 1.0)
+}
+
+.background-grey{
+    background-color: #efefef;
+}
+
+.border-red {
+    border: 2px solid red;
+}
+
+.border-green {
+    border: 2px solid lightgreen;
+}
+
+.background-aliceblue {
+    background-color: aliceblue;
+    padding: 8px;
+    border-radius: 10px;
+}
+
+.border-aliceblue {
+    border: 1px solid aliceblue;
+    background-color: aliceblue;
+}
+
+.background-paleturquoise {
+    background-color: paleturquoise;
+    padding: 8px;
+    border-radius: 10px;
+}
+
+.border-paleturquoise {
+    border: 1px solid paleturquoise;
+    background-color: paleturquoise;
+}
+
+.background-darkorange {
+    background-color: ivory;
+    padding: 8px;
+    border-radius: 10px;
+}
+
+.border-darkorange {
+    border: 1px solid ivory;
+    background-color: ivory ;
+}
+
+.background-lightgreen {
+    background-color: lightgreen;
+    padding: 8px;
+    border-radius: 10px;
+}
+
+.border-lightgreen {
+    border: 1px solid lightgreen;
+    background-color: lightgreen;
+}
+
+.background-lavender {
+    background-color: lavender;
+    padding: 8px;
+    border-radius: 10px;
+}
+
+.border-lavender {
+    border: 1px solid lavender;
+    background-color: lavender;
+}
+
+.background-antiquewhite {
+    background-color: antiquewhite;
+    padding: 8px;
+    border-radius: 10px;
+}
+
+.border-antiquewhite {
+    border: 1px solid antiquewhite;
+    background-color: antiquewhite;
+}
+
+.background-gold {
+    background-color: lavenderblush;
+    padding: 8px;
+    border-radius: 10px;
+}
+
+.border-gold {
+    border: 1px solid lavenderblush;
+    background-color: lavenderblush;
+}
+
+.background-mediumslateblue {
+    background-color: lightgoldenrodyellow;
+    padding: 8px;
+    border-radius: 10px;
+}
+
+.border-mediumslateblue {
+    border: 1px solid lightgoldenrodyellow;
+    background-color: lightgoldenrodyellow;
+}
+
+.background-yellow {
+    background-color: whitesmoke;
+    padding: 8px;
+    border-radius: 10px;
+}
+
+.border-yellow {
+    background-color: whitesmoke;
+}
+
+.background-blue {
+    background-color: #BEC7DB;
+    padding: 8px;
+    border-radius: 10px;
+}
+
+.border-blue {
+    background-color: #BEC7DB;
+}
+
+
+.image-active, .effects:hover .gif-active {
+    display: flex;
+}
+
+.gif-active, .effects:hover .image-active {
+    display: none;
+}

@@ -1,0 +1,154 @@
+@import '@core/scss/base/pages/page-misc.scss';
+@import '@core/scss/base/pages/app-invoice.scss';
+@import '@core/scss/angular/libs/flatpickr.component.scss';
+
+// Preview
+// Windows Print Dialogue
+@media print {
+  @page {
+    margin: 0;
+  }
+
+  .invoice-actions,
+  .main-menu,
+  .buy-now {
+    visibility: hidden;
+  }
+
+  .printRef {
+    //padding: 0;
+    // margin-top: -60px;
+    max-height: 500px !important;    
+    //height: 900px !important;
+    max-width: 1200px !important;
+    flex: 0 0 100%;
+  }
+
+  footer {
+    background-color: #999999;
+    color: #F1F1F1;
+    text-align: center;
+  }
+  
+  .footer {
+    position: absolute;
+    bottom: 0;
+    height: 60px;
+    width: 100%;
+  }
+
+  .input::placeholder {
+    color: black !important;
+  }
+}
+
+.centerall-header tr th {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.esc-empresa-bg {
+  background-color: rgba(245,163,163, 0.5) !important;
+}
+
+.esc-sucursal-bg {
+  background-color: rgba(163,245,235,0.5) !important;
+}
+
+.esc-contacto-bg {
+  background-color: rgba(178,245,163,0.5) !important;
+}
+
+.mtop {
+  margin-top: 5px;
+}
+
+.mbot {
+  margin-bottom: 5px;
+}
+
+.row-color {
+  background-color: lightgreen !important;
+
+  p, strong {
+    color: white;
+  }
+}
+
+.black {
+  color: black;
+}
+
+
+.design-planning {
+  padding: 0.5rem;
+  margin-bottom: 0.7rem;
+  text-align: center;
+  background-color: #e3ffd3;
+  border-radius: $border-radius;
+  min-width: 6.4rem;
+  &:not(:last-child) {
+    margin-right: 0.7rem;
+  }
+}
+
+.customtable-styles th {
+  color: white !important;
+  background-color: $primary !important;
+}
+
+.orange{
+  background-color: #FEDEAE;
+}
+
+.withComprobante {
+  background-color: rgb(255, 215, 165, 0.3);
+  font-weight: bold;
+}
+
+.table-class {    
+    border: solid 1px #CCC;
+    border-top: solid 1px #CCC;
+}
+
+.width-column {
+    border: solid 1px #CCC;
+}
+
+.left-column {
+    border-left: solid 1px #CCC
+}
+
+.top-column {
+    border-top: solid 1px #CCC
+}
+
+.utble {
+    text-align: center;
+    user-select: none;
+}
+
+.f-w {
+  font-size: 0.925rem;
+  //line-height: 2.25rem;
+  font-weight: 500;
+}
+
+.number-format {
+  font-size: 0.955rem;
+  font-weight: 500;
+  //font-family: 'Courier New', Courier, monospace;
+}
+
+.c-w {
+  font-size: 0.988rem;
+  //line-height: 2rem;
+  font-weight: 500
+}
+
+
+.h-w {
+  font-size: 1.25rem;
+  //line-height: 2rem;
+  font-weight: 500
+}

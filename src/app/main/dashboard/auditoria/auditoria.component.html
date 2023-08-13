@@ -1,0 +1,1901 @@
+<div class="content-wrapper">
+    <div class="content-body">
+        <a id="mainTable"></a>
+        <app-content-header [contentHeader]="contentHeader" class="invoice-actions"></app-content-header>
+        <section id="ngx-datatable-multi-purpose" class="invoice-actions">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-2 col-12 d-flex justify-content-md-start">
+                            <div class="form-group">
+                                <label for="desde"> Contratista </label>
+                                <input class="form-control" style="height: 38px !important;" type="text"
+                                    value="Tyrel Lehner" disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12 d-flex justify-content-md-start">
+                            <div class="form-group">
+                                <label for="desde"> Regimen </label>
+                                <ng-select [clearable]="false" [items]="regimens" bindLabel="value"
+                                    bindValue="value" placeholder="Seleccione Misión">
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12 d-flex justify-content-md-end">
+                            <div class="d-flex justify-content-end align-items-center m-1">
+                                <!-- <button (click)="Mantenimiento()" class="btn btn-primary mr-1" rippleEffect>
+                                    <i class="mr-0 mr-sm-1" data-feather="settings"></i><span
+                                        class="d-none d-sm-inline-block">Mantenimiento</span>
+                                </button> -->
+                                <button class="btn btn-secondary mr-1" rippleEffect>
+                                    <i class="mr-0 mr-sm-1" data-feather="refresh-cw"></i><span
+                                        class="d-none d-sm-inline-block">Refrescar</span>
+                                </button>
+                                <div
+                                    class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0 space-left">
+                                    <label class="d-flex align-items-center">Buscar
+                                        <input class="form-control ml-25" placeholder="Texto de búsqueda..."
+                                            type="search">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-12 justify-content-start" style="margin-top: 14px;">
+                            <div class="col-md-12 col-12">
+                                <div
+                                    class="d-flex justify-content-between align-items-center pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+                                    <label class="d-flex align-items-center"><span
+                                            class="d-none d-sm-inline-block">Mostrar⠀</span>
+                                        <ng-select [clearable]="false" [items]="forPageOptions" [(ngModel)]="page">
+                                        </ng-select>
+                                        <span class="d-none d-sm-inline-block">⠀entradas</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <div *ngIf="this.flagVista == true" class="row">
+            <div class="col-md-12 col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div style="margin-top: 10px">
+                            <ngx-datatable [columnMode]="ColumnMode.force" [footerHeight]="50" [headerHeight]="40"
+                                [limit]="10" [rowHeight]="58" [rows]="rows" [scrollbarH]="true"
+                                [summaryPosition]="'bottom'" [summaryRow]="true" class="bootstrap core-bootstrap">
+                                <ngx-datatable-column [sortable]="false" [width]="100" name="Item" prop="item">
+                                </ngx-datatable-column>
+                                <!-- <ngx-datatable-column [sortable]="true" [width]="180" name="Cliente">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        <div class="d-flex align-items-center">
+                                            <div *ngIf="false; else customAvatar">
+                                                <img alt="datatable-avatar" class="rounded-circle mr-1" height="32"
+                                                    width="32" />                                                
+                                            </div>
+                                            <ng-template #customAvatar>
+                                                <div class="avatar mr-1 ml-0 bg-light-primary">
+                                                    <div class="avatar-content">{{ row.cliente | initials }}                                                        
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                            <div class="cell-line-height">
+                                                <p class="line-height-1 mb-25">
+                                                    {{ row.cliente }} 
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </ngx-datatable-column> -->
+                                <!-- <ngx-datatable-column [sortable]="false" [width]="100" name="Alcance" prop="alcance">
+                                </ngx-datatable-column>                                                                
+                                <ngx-datatable-column [sortable]="false" [width]="100" name="Periocidad"
+                                    prop="periocidad">
+                                </ngx-datatable-column> -->
+                                <ngx-datatable-column [sortable]="false" [width]="250" name="Documento"
+                                    prop="documento">
+                                </ngx-datatable-column>
+                                <ngx-datatable-column [sortable]="false" [width]="250" name="Estado">
+                                    <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                        <div class="badge badge-pill" [ngClass]="{
+                                            'badge-light-success': row.audit == 'Auditado',
+                                            'badge-light-warning': row.audit == 'No Auditado'
+                                          }">
+                                            {{ row.audit }}
+                                        </div>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <!-- <ngx-datatable-column [sortable]="false" [width]="160" name="Documentos">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar bg-light-primary mr-1">
+                                                <div class="avatar-content">
+                                                    <a (click)="EditarCliente(modaledit, false)" href="javascript:void(0)">
+                                                        <i data-feather="folder" class="font-medium-3"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>                                        
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column [sortable]="false" [width]="160" name="Homologar">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        <div class="d-flex align-items-center">
+                                            <div class="custom-control custom-switch">
+                                                <p class="mb-50">Mostrar⠀</p>
+                                                <input type="checkbox" class="custom-control-input" id="customSwitch10" />
+                                                <label class="custom-control-label" for="customSwitch10">
+                                                    <span class="switch-icon-left"><i data-feather="check"></i></span>
+                                                    <span class="switch-icon-right"><i data-feather="x"></i></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column [sortable]="false" [width]="220" name="Homologado por terceros">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        <div class="d-flex align-items-center">
+                                            <div class="custom-control custom-switch">
+                                                <p class="mb-50">Mostrar⠀</p>
+                                                <input type="checkbox" class="custom-control-input" id="customSwitch11" />
+                                                <label class="custom-control-label" for="customSwitch11">
+                                                    <span class="switch-icon-left"><i data-feather="check"></i></span>
+                                                    <span class="switch-icon-right"><i data-feather="x"></i></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </ngx-datatable-column> -->
+                                <!-- <ngx-datatable-column [sortable]="false" [width]="150" name="Regimen">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar bg-light-danger mr-1">
+                                                <div class="avatar-content">
+                                                    <a (click)="EditarCliente(modaledit, false)"
+                                                        href="javascript:void(0)">
+                                                        <i data-feather="edit" class="font-medium-3"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </ngx-datatable-column> -->
+                            </ngx-datatable>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div *ngIf="this.flagVista == false" class="row">
+            <div class="col-md-12 col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div style="margin-top: 10px">
+                            <ngx-datatable [columnMode]="ColumnMode.force" [footerHeight]="50" [headerHeight]="40"
+                                [limit]="10" [rowHeight]="58" [rows]="rows" [scrollbarH]="true"
+                                [summaryPosition]="'bottom'" [summaryRow]="true" class="bootstrap core-bootstrap">
+                                <ngx-datatable-column [sortable]="false" [width]="100" name="Item" prop="item">
+                                </ngx-datatable-column>
+                                <!-- <ngx-datatable-column [sortable]="true" [width]="180" name="Cliente">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        <div class="d-flex align-items-center">
+                                            <div *ngIf="false; else customAvatar">
+                                                <img alt="datatable-avatar" class="rounded-circle mr-1" height="32"
+                                                    width="32" />                                                
+                                            </div>
+                                            <ng-template #customAvatar>
+                                                <div class="avatar mr-1 ml-0 bg-light-primary">
+                                                    <div class="avatar-content">{{ row.cliente | initials }}                                                        
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                            <div class="cell-line-height">
+                                                <p class="line-height-1 mb-25">
+                                                    {{ row.cliente }} 
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </ngx-datatable-column> -->
+                                <!-- <ngx-datatable-column [sortable]="false" [width]="100" name="Alcance" prop="alcance">
+                                </ngx-datatable-column>                                                                
+                                <ngx-datatable-column [sortable]="false" [width]="100" name="Periocidad"
+                                    prop="periocidad">
+                                </ngx-datatable-column> -->
+                                <ngx-datatable-column [sortable]="false" [width]="250" name="Documento"
+                                    prop="documento">
+                                </ngx-datatable-column>
+                                <ngx-datatable-column [sortable]="false" [width]="250" name="asdasdd">
+                                    <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                        <div class="badge badge-pill" [ngClass]="{
+                                            'badge-light-success': row.audit == 'Auditado',
+                                            'badge-light-warning': row.audit == 'No Auditado'
+                                          }">
+                                            {{ row.audit }}
+                                        </div>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <!-- <ngx-datatable-column [sortable]="false" [width]="160" name="Documentos">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar bg-light-primary mr-1">
+                                                <div class="avatar-content">
+                                                    <a (click)="EditarCliente(modaledit, false)" href="javascript:void(0)">
+                                                        <i data-feather="folder" class="font-medium-3"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>                                        
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column [sortable]="false" [width]="160" name="Homologar">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        <div class="d-flex align-items-center">
+                                            <div class="custom-control custom-switch">
+                                                <p class="mb-50">Mostrar⠀</p>
+                                                <input type="checkbox" class="custom-control-input" id="customSwitch10" />
+                                                <label class="custom-control-label" for="customSwitch10">
+                                                    <span class="switch-icon-left"><i data-feather="check"></i></span>
+                                                    <span class="switch-icon-right"><i data-feather="x"></i></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column [sortable]="false" [width]="220" name="Homologado por terceros">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        <div class="d-flex align-items-center">
+                                            <div class="custom-control custom-switch">
+                                                <p class="mb-50">Mostrar⠀</p>
+                                                <input type="checkbox" class="custom-control-input" id="customSwitch11" />
+                                                <label class="custom-control-label" for="customSwitch11">
+                                                    <span class="switch-icon-left"><i data-feather="check"></i></span>
+                                                    <span class="switch-icon-right"><i data-feather="x"></i></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </ngx-datatable-column> -->
+                                <ngx-datatable-column [sortable]="false" [width]="150" name="Acción">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar bg-light-danger mr-1">
+                                                <div class="avatar-content">
+                                                    <a (click)="EditarCliente(modaledit, false)"
+                                                        href="javascript:void(0)">
+                                                        <i data-feather="edit" class="font-medium-3"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                            </ngx-datatable>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <ng-template #modaledit let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">Información complementaria</h4>
+                <button (click)="modal.dismiss('Cross click')" aria-label="Close" class="close" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" ngbAutofocus tabindex="0">
+                <!-- <div class="row">
+                    <div class="col-md-6 col-12">
+                        <div class="form-group">
+                            <span> Estado del Contratista</span>
+                        </div>
+                    </div>
+
+                </div>
+                <ngb-progressbar type="primary" [value]="75">75%</ngb-progressbar>
+                <div class="col-md-12 col-12">
+                    <div class="divider divider-secondary">
+                        <div class="divider-text">Contratista</div>
+                    </div>
+                </div> -->
+                <!-- <div class="row">
+                    <div class="col-md-6 col-12">
+                        <div class="form-group">
+                            <label>Especialista encargado</label>
+                            <ng-select [clearable]="false" [items]="Especialista" bindLabel="despecialista"
+                                bindValue="idColumna" [(ngModel)]="this.Value">
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <div class="form-group">
+                            <label>Cliente</label>
+                            <input class="form-control" type="text" [(ngModel)]="cliente" />
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-12">
+                        <div class="form-group">
+                            <label>Contratista</label>
+                            <input class="form-control" type="text" value="Tyrel Lehner"/>
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-12">
+                        <div class="form-group">
+                            <label>Razón Social</label>
+                            <input class="form-control" type="text" value="DMG DRILLING E.I.R.L."/>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label>RUC</label>
+                            <input class="form-control" type="text" value="20547825781"/>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-12">
+                        <div class="form-group">
+                            <label>Concepto</label>
+                            <input class="form-control" type="text" value="Empleados a constr.civil" />
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-12">
+                        <div class="form-group">
+                            <label>Observaciones</label>
+                            <textarea name="" id="" rows="5" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div> -->
+
+                <div class="col-md-12 col-12">
+                    <div class="divider divider-secondary">
+                        <div class="divider-text">Regimen</div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-12 lg-6">
+                    <ngb-accordion>
+                        <ngb-panel>
+                            <ng-template ngbPanelTitle>
+                                <span class="lead collapse-title "><i class="mr-0 mr-sm-1"
+                                        data-feather="arrow-down-circle"></i>Categorías </span>
+                                <span class="ml-3 text-secondary">Mensual</span>
+                                <span class="ml-3 text-secondary">
+                                    <div class="badge badge-glow badge-info">Documento Cargado</div>
+                                </span>
+                            </ng-template>
+                            <ng-template ngbPanelContent>
+                                <div ng2FileDrop [ngClass]="{'file-drop-over': hasBaseDropZoneOver }"
+                                    (fileOver)="fileOverBase($event)" [uploader]="uploader"
+                                    class="py-5 mb-3 text-center font-medium-5 text-uppercase file-drop-zone">
+                                    Arrastre sus archivos aquí
+                                </div>
+
+                                <div class="row">
+                                    <!-- <div class="col-lg-3">
+                                      <h4>Seleccionar archivos</h4>
+                                      <fieldset class="form-group">
+                                        <label for="file-upload-multiple">Multiple:</label>
+                                        <div class="custom-file">
+                                          <input
+                                            type="file"
+                                            class="custom-file-input"
+                                            type="file"
+                                            ng2FileSelect
+                                            [uploader]="uploader"
+                                            multiple
+                                            id="file-upload-multiple"
+                                          />
+                                          <label class="custom-file-label">Escoger archivo:</label>
+                                        </div>
+                                      </fieldset>
+                        
+                                      <fieldset class="form-group">
+                                        <label for="file-upload-single">Individual:</label>
+                                        <div class="custom-file">
+                                          <input
+                                            type="file"
+                                            class="custom-file-input"
+                                            type="file"
+                                            ng2FileSelect
+                                            [uploader]="uploader"
+                                            id="file-upload-single"
+                                          />
+                                          <label class="custom-file-label">Escoger archivo:</label>
+                                        </div>
+                                      </fieldset>
+                                    </div> -->
+
+                                    <div class="col-lg-12 overflow-auto">
+                                        <div class="d-flex justify-content-between">
+                                            <h4></h4>
+                                            <p>archivos subidos: {{ uploader?.queue?.length }}</p>
+                                        </div>
+
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th width="50%">Nombre</th>
+                                                    <th>Tamaño</th>
+                                                    <th>Progreso</th>
+                                                    <th>Estado</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of uploader.queue">
+                                                    <td>
+                                                        <strong>{{ item?.file?.name }}</strong>
+                                                    </td>
+                                                    <td *ngIf="uploader.options.isHTML5" nowrap>
+                                                        {{ item?.file?.size / 1024 / 1024 | number: '.2' }} MB
+                                                    </td>
+                                                    <td *ngIf="uploader.options.isHTML5">
+                                                        <ngb-progressbar type="primary" [value]="item.progress">
+                                                        </ngb-progressbar>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span *ngIf="item.isSuccess"><i data-feather="check"></i></span>
+                                                        <span *ngIf="item.isCancel"><i data-feather="slash"></i></span>
+                                                        <span *ngIf="item.isError"><i
+                                                                data-feather="x-circle"></i></span>
+                                                    </td>
+                                                    <td nowrap>
+                                                        <button type="button"
+                                                            class="btn btn-raised btn-outline-success btn-sm mr-50"
+                                                            (click)="item.upload()"
+                                                            [disabled]="item.isReady || item.isUploading || item.isSuccess"
+                                                            rippleEffect>
+                                                            <span data-feather="upload"></span>
+                                                        </button>
+                                                        <button type="button"
+                                                            class="btn btn-raised btn-outline-warning btn-sm mr-50"
+                                                            (click)="item.cancel()" [disabled]="!item.isUploading"
+                                                            rippleEffect>
+                                                            <i data-feather="slash"></i>
+                                                        </button>
+                                                        <button type="button"
+                                                            class="btn btn-raised btn-outline-danger btn-sm"
+                                                            (click)="item.remove()" rippleEffect>
+                                                            <i data-feather="trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <div id="">
+                                            <p class="mt-1">Archivo progreso:</p>
+                                            <ngb-progressbar class="mb-1" type="primary" [value]="uploader.progress">
+                                            </ngb-progressbar>
+                                            <button type="button" class="btn mr-1 btn-primary mb-1 mb-sm-0"
+                                                (click)="uploader.uploadAll()"
+                                                [disabled]="!uploader.getNotUploadedItems().length" rippleEffect>
+                                                <span data-feather="upload" class="mr-25"></span> Subir todos
+                                            </button>
+                                            <button type="button" class="btn mr-1 btn-outline-warning mb-1 mb-sm-0"
+                                                (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading"
+                                                rippleEffect>
+                                                <span data-feather="slash" class="mr-25"></span> Cancelar todos
+                                            </button>
+                                            <button type="button" class="btn btn-outline-danger mb-1 mb-sm-0"
+                                                (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length"
+                                                rippleEffect>
+                                                <span data-feather="trash" class="mr-25"></span> Remover todos
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </ngb-panel>
+                    </ngb-accordion>
+                </div>
+                <div class="col-md-12 col-12 lg-6">
+                    <ngb-accordion>
+                        <ngb-panel>
+                            <ng-template ngbPanelTitle>
+                                <span class="lead collapse-title "><i class="mr-0 mr-sm-1"
+                                        data-feather="arrow-down-circle"></i>SubCategorías por empresa</span>
+                                <span class="ml-3 text-secondary">Mensual</span>
+                                <span class="ml-3 text-secondary">
+                                    <div class="badge badge-glow badge-info">Documento Cargado</div>
+                                </span>
+
+                            </ng-template>
+                            <ng-template ngbPanelContent>
+                                <div ng2FileDrop [ngClass]="{'file-drop-over': hasBaseDropZoneOver }"
+                                    (fileOver)="fileOverBase($event)" [uploader]="uploader"
+                                    class="py-5 mb-3 text-center font-medium-5 text-uppercase file-drop-zone">
+                                    Arrastre sus archivos aquí
+                                </div>
+
+                                <div class="row">
+                                    <!-- <div class="col-lg-3">
+                                      <h4>Seleccionar archivos</h4>
+                                      <fieldset class="form-group">
+                                        <label for="file-upload-multiple">Multiple:</label>
+                                        <div class="custom-file">
+                                          <input
+                                            type="file"
+                                            class="custom-file-input"
+                                            type="file"
+                                            ng2FileSelect
+                                            [uploader]="uploader"
+                                            multiple
+                                            id="file-upload-multiple"
+                                          />
+                                          <label class="custom-file-label">Escoger archivo:</label>
+                                        </div>
+                                      </fieldset>
+                        
+                                      <fieldset class="form-group">
+                                        <label for="file-upload-single">Individual:</label>
+                                        <div class="custom-file">
+                                          <input
+                                            type="file"
+                                            class="custom-file-input"
+                                            type="file"
+                                            ng2FileSelect
+                                            [uploader]="uploader"
+                                            id="file-upload-single"
+                                          />
+                                          <label class="custom-file-label">Escoger archivo:</label>
+                                        </div>
+                                      </fieldset>
+                                    </div> -->
+
+                                    <div class="col-lg-12 overflow-auto">
+                                        <div class="d-flex justify-content-between">
+                                            <h4></h4>
+                                            <p>archivos subidos: {{ uploader?.queue?.length }}</p>
+                                        </div>
+
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th width="50%">Nombre</th>
+                                                    <th>Tamaño</th>
+                                                    <th>Progreso</th>
+                                                    <th>Estado</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of uploader.queue">
+                                                    <td>
+                                                        <strong>{{ item?.file?.name }}</strong>
+                                                    </td>
+                                                    <td *ngIf="uploader.options.isHTML5" nowrap>
+                                                        {{ item?.file?.size / 1024 / 1024 | number: '.2' }} MB
+                                                    </td>
+                                                    <td *ngIf="uploader.options.isHTML5">
+                                                        <ngb-progressbar type="primary" [value]="item.progress">
+                                                        </ngb-progressbar>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span *ngIf="item.isSuccess"><i data-feather="check"></i></span>
+                                                        <span *ngIf="item.isCancel"><i data-feather="slash"></i></span>
+                                                        <span *ngIf="item.isError"><i
+                                                                data-feather="x-circle"></i></span>
+                                                    </td>
+                                                    <td nowrap>
+                                                        <button type="button"
+                                                            class="btn btn-raised btn-outline-success btn-sm mr-50"
+                                                            (click)="item.upload()"
+                                                            [disabled]="item.isReady || item.isUploading || item.isSuccess"
+                                                            rippleEffect>
+                                                            <span data-feather="upload"></span>
+                                                        </button>
+                                                        <button type="button"
+                                                            class="btn btn-raised btn-outline-warning btn-sm mr-50"
+                                                            (click)="item.cancel()" [disabled]="!item.isUploading"
+                                                            rippleEffect>
+                                                            <i data-feather="slash"></i>
+                                                        </button>
+                                                        <button type="button"
+                                                            class="btn btn-raised btn-outline-danger btn-sm"
+                                                            (click)="item.remove()" rippleEffect>
+                                                            <i data-feather="trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <div id="">
+                                            <p class="mt-1">Archivo progreso:</p>
+                                            <ngb-progressbar class="mb-1" type="primary" [value]="uploader.progress">
+                                            </ngb-progressbar>
+                                            <button type="button" class="btn mr-1 btn-primary mb-1 mb-sm-0"
+                                                (click)="uploader.uploadAll()"
+                                                [disabled]="!uploader.getNotUploadedItems().length" rippleEffect>
+                                                <span data-feather="upload" class="mr-25"></span> Subir todos
+                                            </button>
+                                            <button type="button" class="btn mr-1 btn-outline-warning mb-1 mb-sm-0"
+                                                (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading"
+                                                rippleEffect>
+                                                <span data-feather="slash" class="mr-25"></span> Cancelar todos
+                                            </button>
+                                            <button type="button" class="btn btn-outline-danger mb-1 mb-sm-0"
+                                                (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length"
+                                                rippleEffect>
+                                                <span data-feather="trash" class="mr-25"></span> Remover todos
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+
+                        </ngb-panel>
+
+
+                    </ngb-accordion>
+
+                </div>
+                <div class="col-md-12 col-12 lg-6">
+                    <ngb-accordion>
+                        <ngb-panel>
+                            <ng-template ngbPanelTitle>
+                                <span class="lead collapse-title "><i class="mr-0 mr-sm-1"
+                                        data-feather="arrow-down-circle"></i>Contrato o servicio</span>
+                                <span class="ml-3 text-secondary">Mensual</span>
+                                <span class="ml-3 text-secondary">
+                                    <div class="badge badge-glow badge-info">Documento Cargado</div>
+                                </span>
+
+                            </ng-template>
+                            <ng-template ngbPanelContent>
+                                <div ng2FileDrop [ngClass]="{'file-drop-over': hasBaseDropZoneOver }"
+                                    (fileOver)="fileOverBase($event)" [uploader]="uploader"
+                                    class="py-5 mb-3 text-center font-medium-5 text-uppercase file-drop-zone">
+                                    Arrastre sus archivos aquí
+                                </div>
+
+                                <div class="row">
+                                    <!-- <div class="col-lg-3">
+                                      <h4>Seleccionar archivos</h4>
+                                      <fieldset class="form-group">
+                                        <label for="file-upload-multiple">Multiple:</label>
+                                        <div class="custom-file">
+                                          <input
+                                            type="file"
+                                            class="custom-file-input"
+                                            type="file"
+                                            ng2FileSelect
+                                            [uploader]="uploader"
+                                            multiple
+                                            id="file-upload-multiple"
+                                          />
+                                          <label class="custom-file-label">Escoger archivo:</label>
+                                        </div>
+                                      </fieldset>
+                        
+                                      <fieldset class="form-group">
+                                        <label for="file-upload-single">Individual:</label>
+                                        <div class="custom-file">
+                                          <input
+                                            type="file"
+                                            class="custom-file-input"
+                                            type="file"
+                                            ng2FileSelect
+                                            [uploader]="uploader"
+                                            id="file-upload-single"
+                                          />
+                                          <label class="custom-file-label">Escoger archivo:</label>
+                                        </div>
+                                      </fieldset>
+                                    </div> -->
+
+                                    <div class="col-lg-12 overflow-auto">
+                                        <div class="d-flex justify-content-between">
+                                            <h4></h4>
+                                            <p>archivos subidos: {{ uploader?.queue?.length }}</p>
+                                        </div>
+
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th width="50%">Nombre</th>
+                                                    <th>Tamaño</th>
+                                                    <th>Progreso</th>
+                                                    <th>Estado</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of uploader.queue">
+                                                    <td>
+                                                        <strong>{{ item?.file?.name }}</strong>
+                                                    </td>
+                                                    <td *ngIf="uploader.options.isHTML5" nowrap>
+                                                        {{ item?.file?.size / 1024 / 1024 | number: '.2' }} MB
+                                                    </td>
+                                                    <td *ngIf="uploader.options.isHTML5">
+                                                        <ngb-progressbar type="primary" [value]="item.progress">
+                                                        </ngb-progressbar>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span *ngIf="item.isSuccess"><i data-feather="check"></i></span>
+                                                        <span *ngIf="item.isCancel"><i data-feather="slash"></i></span>
+                                                        <span *ngIf="item.isError"><i
+                                                                data-feather="x-circle"></i></span>
+                                                    </td>
+                                                    <td nowrap>
+                                                        <button type="button"
+                                                            class="btn btn-raised btn-outline-success btn-sm mr-50"
+                                                            (click)="item.upload()"
+                                                            [disabled]="item.isReady || item.isUploading || item.isSuccess"
+                                                            rippleEffect>
+                                                            <span data-feather="upload"></span>
+                                                        </button>
+                                                        <button type="button"
+                                                            class="btn btn-raised btn-outline-warning btn-sm mr-50"
+                                                            (click)="item.cancel()" [disabled]="!item.isUploading"
+                                                            rippleEffect>
+                                                            <i data-feather="slash"></i>
+                                                        </button>
+                                                        <button type="button"
+                                                            class="btn btn-raised btn-outline-danger btn-sm"
+                                                            (click)="item.remove()" rippleEffect>
+                                                            <i data-feather="trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <div id="">
+                                            <p class="mt-1">Archivo progreso:</p>
+                                            <ngb-progressbar class="mb-1" type="primary" [value]="uploader.progress">
+                                            </ngb-progressbar>
+                                            <button type="button" class="btn mr-1 btn-primary mb-1 mb-sm-0"
+                                                (click)="uploader.uploadAll()"
+                                                [disabled]="!uploader.getNotUploadedItems().length" rippleEffect>
+                                                <span data-feather="upload" class="mr-25"></span> Subir todos
+                                            </button>
+                                            <button type="button" class="btn mr-1 btn-outline-warning mb-1 mb-sm-0"
+                                                (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading"
+                                                rippleEffect>
+                                                <span data-feather="slash" class="mr-25"></span> Cancelar todos
+                                            </button>
+                                            <button type="button" class="btn btn-outline-danger mb-1 mb-sm-0"
+                                                (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length"
+                                                rippleEffect>
+                                                <span data-feather="trash" class="mr-25"></span> Remover todos
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </ngb-panel>
+                    </ngb-accordion>
+                </div>
+                <div class="col-md-12 col-12 lg-6">
+                    <ngb-accordion>
+                        <ngb-panel>
+                            <ng-template ngbPanelTitle>
+                                <span class="lead collapse-title "><i class="mr-0 mr-sm-1"
+                                        data-feather="arrow-down-circle"></i>Tipo de recurso </span>
+                                <span class="ml-3 text-secondary">Mensual</span>
+                                <span class="ml-3 text-secondary">
+                                    <div class="badge badge-glow badge-info">Documento Cargado</div>
+                                </span>
+
+                            </ng-template>
+                            <ng-template ngbPanelContent>
+                                <div ng2FileDrop [ngClass]="{'file-drop-over': hasBaseDropZoneOver }"
+                                    (fileOver)="fileOverBase($event)" [uploader]="uploader"
+                                    class="py-5 mb-3 text-center font-medium-5 text-uppercase file-drop-zone">
+                                    Arrastre sus archivos aquí
+                                </div>
+
+                                <div class="row">
+                                    <!-- <div class="col-lg-3">
+                                      <h4>Seleccionar archivos</h4>
+                                      <fieldset class="form-group">
+                                        <label for="file-upload-multiple">Multiple:</label>
+                                        <div class="custom-file">
+                                          <input
+                                            type="file"
+                                            class="custom-file-input"
+                                            type="file"
+                                            ng2FileSelect
+                                            [uploader]="uploader"
+                                            multiple
+                                            id="file-upload-multiple"
+                                          />
+                                          <label class="custom-file-label">Escoger archivo:</label>
+                                        </div>
+                                      </fieldset>
+                        
+                                      <fieldset class="form-group">
+                                        <label for="file-upload-single">Individual:</label>
+                                        <div class="custom-file">
+                                          <input
+                                            type="file"
+                                            class="custom-file-input"
+                                            type="file"
+                                            ng2FileSelect
+                                            [uploader]="uploader"
+                                            id="file-upload-single"
+                                          />
+                                          <label class="custom-file-label">Escoger archivo:</label>
+                                        </div>
+                                      </fieldset>
+                                    </div> -->
+
+                                    <div class="col-lg-12 overflow-auto">
+                                        <div class="d-flex justify-content-between">
+                                            <h4></h4>
+                                            <p>archivos subidos: {{ uploader?.queue?.length }}</p>
+                                        </div>
+
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th width="50%">Nombre</th>
+                                                    <th>Tamaño</th>
+                                                    <th>Progreso</th>
+                                                    <th>Estado</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of uploader.queue">
+                                                    <td>
+                                                        <strong>{{ item?.file?.name }}</strong>
+                                                    </td>
+                                                    <td *ngIf="uploader.options.isHTML5" nowrap>
+                                                        {{ item?.file?.size / 1024 / 1024 | number: '.2' }} MB
+                                                    </td>
+                                                    <td *ngIf="uploader.options.isHTML5">
+                                                        <ngb-progressbar type="primary" [value]="item.progress">
+                                                        </ngb-progressbar>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span *ngIf="item.isSuccess"><i data-feather="check"></i></span>
+                                                        <span *ngIf="item.isCancel"><i data-feather="slash"></i></span>
+                                                        <span *ngIf="item.isError"><i
+                                                                data-feather="x-circle"></i></span>
+                                                    </td>
+                                                    <td nowrap>
+                                                        <button type="button"
+                                                            class="btn btn-raised btn-outline-success btn-sm mr-50"
+                                                            (click)="item.upload()"
+                                                            [disabled]="item.isReady || item.isUploading || item.isSuccess"
+                                                            rippleEffect>
+                                                            <span data-feather="upload"></span>
+                                                        </button>
+                                                        <button type="button"
+                                                            class="btn btn-raised btn-outline-warning btn-sm mr-50"
+                                                            (click)="item.cancel()" [disabled]="!item.isUploading"
+                                                            rippleEffect>
+                                                            <i data-feather="slash"></i>
+                                                        </button>
+                                                        <button type="button"
+                                                            class="btn btn-raised btn-outline-danger btn-sm"
+                                                            (click)="item.remove()" rippleEffect>
+                                                            <i data-feather="trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <div id="">
+                                            <p class="mt-1">Archivo progreso:</p>
+                                            <ngb-progressbar class="mb-1" type="primary" [value]="uploader.progress">
+                                            </ngb-progressbar>
+                                            <button type="button" class="btn mr-1 btn-primary mb-1 mb-sm-0"
+                                                (click)="uploader.uploadAll()"
+                                                [disabled]="!uploader.getNotUploadedItems().length" rippleEffect>
+                                                <span data-feather="upload" class="mr-25"></span> Subir todos
+                                            </button>
+                                            <button type="button" class="btn mr-1 btn-outline-warning mb-1 mb-sm-0"
+                                                (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading"
+                                                rippleEffect>
+                                                <span data-feather="slash" class="mr-25"></span> Cancelar todos
+                                            </button>
+                                            <button type="button" class="btn btn-outline-danger mb-1 mb-sm-0"
+                                                (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length"
+                                                rippleEffect>
+                                                <span data-feather="trash" class="mr-25"></span> Remover todos
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </ngb-panel>
+                    </ngb-accordion>
+                </div>
+                <div class="col-md-12 col-12 lg-6">
+                    <ngb-accordion>
+                        <ngb-panel>
+                            <ng-template ngbPanelTitle>
+                                <span class="lead collapse-title "><i class="mr-0 mr-sm-1"
+                                        data-feather="arrow-down-circle"></i>Recurso </span>
+                                <span class="ml-3 text-secondary">Mensual</span>
+                                <span class="ml-3 text-secondary">
+                                    <div class="badge badge-glow badge-info">Enviado</div>
+                                </span>
+                            </ng-template>
+                            <ng-template ngbPanelContent>
+                                <div ng2FileDrop [ngClass]="{'file-drop-over': hasBaseDropZoneOver }"
+                                    (fileOver)="fileOverBase($event)" [uploader]="uploader"
+                                    class="py-5 mb-3 text-center font-medium-5 text-uppercase file-drop-zone">
+                                    Arrastre sus archivos aquí
+                                </div>
+
+                                <div class="row">
+                                    <!-- <div class="col-lg-3">
+                                      <h4>Seleccionar archivos</h4>
+                                      <fieldset class="form-group">
+                                        <label for="file-upload-multiple">Multiple:</label>
+                                        <div class="custom-file">
+                                          <input
+                                            type="file"
+                                            class="custom-file-input"
+                                            type="file"
+                                            ng2FileSelect
+                                            [uploader]="uploader"
+                                            multiple
+                                            id="file-upload-multiple"
+                                          />
+                                          <label class="custom-file-label">Escoger archivo:</label>
+                                        </div>
+                                      </fieldset>
+                        
+                                      <fieldset class="form-group">
+                                        <label for="file-upload-single">Individual:</label>
+                                        <div class="custom-file">
+                                          <input
+                                            type="file"
+                                            class="custom-file-input"
+                                            type="file"
+                                            ng2FileSelect
+                                            [uploader]="uploader"
+                                            id="file-upload-single"
+                                          />
+                                          <label class="custom-file-label">Escoger archivo:</label>
+                                        </div>
+                                      </fieldset>
+                                    </div> -->
+
+                                    <div class="col-lg-12 overflow-auto">
+                                        <div class="d-flex justify-content-between">
+                                            <h4></h4>
+                                            <p>archivos subidos: {{ uploader?.queue?.length }}</p>
+                                        </div>
+
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th width="50%">Nombre</th>
+                                                    <th>Tamaño</th>
+                                                    <th>Progreso</th>
+                                                    <th>Estado</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of uploader.queue">
+                                                    <td>
+                                                        <strong>{{ item?.file?.name }}</strong>
+                                                    </td>
+                                                    <td *ngIf="uploader.options.isHTML5" nowrap>
+                                                        {{ item?.file?.size / 1024 / 1024 | number: '.2' }} MB
+                                                    </td>
+                                                    <td *ngIf="uploader.options.isHTML5">
+                                                        <ngb-progressbar type="primary" [value]="item.progress">
+                                                        </ngb-progressbar>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span *ngIf="item.isSuccess"><i data-feather="check"></i></span>
+                                                        <span *ngIf="item.isCancel"><i data-feather="slash"></i></span>
+                                                        <span *ngIf="item.isError"><i
+                                                                data-feather="x-circle"></i></span>
+                                                    </td>
+                                                    <td nowrap>
+                                                        <button type="button"
+                                                            class="btn btn-raised btn-outline-success btn-sm mr-50"
+                                                            (click)="item.upload()"
+                                                            [disabled]="item.isReady || item.isUploading || item.isSuccess"
+                                                            rippleEffect>
+                                                            <span data-feather="upload"></span>
+                                                        </button>
+                                                        <button type="button"
+                                                            class="btn btn-raised btn-outline-warning btn-sm mr-50"
+                                                            (click)="item.cancel()" [disabled]="!item.isUploading"
+                                                            rippleEffect>
+                                                            <i data-feather="slash"></i>
+                                                        </button>
+                                                        <button type="button"
+                                                            class="btn btn-raised btn-outline-danger btn-sm"
+                                                            (click)="item.remove()" rippleEffect>
+                                                            <i data-feather="trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <div id="">
+                                            <p class="mt-1">Archivo progreso:</p>
+                                            <ngb-progressbar class="mb-1" type="primary" [value]="uploader.progress">
+                                            </ngb-progressbar>
+                                            <button type="button" class="btn mr-1 btn-primary mb-1 mb-sm-0"
+                                                (click)="uploader.uploadAll()"
+                                                [disabled]="!uploader.getNotUploadedItems().length" rippleEffect>
+                                                <span data-feather="upload" class="mr-25"></span> Subir todos
+                                            </button>
+                                            <button type="button" class="btn mr-1 btn-outline-warning mb-1 mb-sm-0"
+                                                (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading"
+                                                rippleEffect>
+                                                <span data-feather="slash" class="mr-25"></span> Cancelar todos
+                                            </button>
+                                            <button type="button" class="btn btn-outline-danger mb-1 mb-sm-0"
+                                                (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length"
+                                                rippleEffect>
+                                                <span data-feather="trash" class="mr-25"></span> Remover todos
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </ngb-panel>
+                    </ngb-accordion>
+                </div>
+
+            </div>
+            <div class="modal-footer" style="display: block !important;">
+                <div class="row">
+                    <div class="col-md-6 col-12" style="margin-bottom: 5px">
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <div style="float: right">
+                            <button (click)="ValidacionDocumento()" class="btn btn-primary" rippleEffect type="submit">
+                                Aceptar
+                            </button>
+                            &nbsp;
+                            <button (click)="CancelModal()" class="btn btn-secondary" rippleEffect type="button">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template #modalx let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">Registrar Información complementaria</h4>
+                <button (click)="modal.dismiss('Cross click')" aria-label="Close" class="close" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" ngbAutofocus tabindex="0">
+                <!-- <div class="row">
+                    <div class="col-md-6 col-12">
+                        <div class="form-group">
+                            <span> Estado del Empleado</span>
+                        </div>
+                    </div>
+
+                </div> -->
+                <!-- <ngb-progressbar type="primary" [value]="45">45%</ngb-progressbar> -->
+                <!-- <div class="col-md-12 col-12">
+                    <div class="divider divider-secondary">
+                        <div class="divider-text">Empleado</div>
+                    </div>
+                </div> -->
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <div class="form-group">
+                            <label>Contratista</label>
+                            <input class="form-control" type="text" value=" " />
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-12">
+                        <div class="form-group">
+                            <label>Empleado</label>
+                            <input class="form-control" type="text" value="" />
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <div class="form-group">
+                            <label>Rubro</label>
+                            <ng-select [clearable]="false" [items]="Especialista" bindLabel="despecialista"
+                                bindValue="idColumna" [(ngModel)]="this.Value">
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <div class="form-group">
+                            <label>Teléfono</label>
+                            <input class="form-control" type="text" value="" />
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-12">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input class="form-control" type="text" value="" />
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label>DNI</label>
+                            <input class="form-control" type="text" value="" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-12">
+                    <div class="divider divider-secondary">
+                        <div class="divider-text">Matriz de documentos</div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-12 lg-6">
+                    <ngb-accordion>
+                        <ngb-panel>
+                            <ng-template ngbPanelTitle>
+                                <span class="lead collapse-title "><i class="mr-0 mr-sm-1"
+                                        data-feather="arrow-down-circle"></i>Categorías </span>
+                                <span class="ml-3 text-secondary">Mensual</span>
+                                <span class="ml-3 text-secondary">
+                                    <div class="badge badge-glow badge-danger">No enviado</div>
+                                </span>
+                            </ng-template>
+                            <ng-template ngbPanelContent>
+                                <div ng2FileDrop [ngClass]="{'file-drop-over': hasBaseDropZoneOver }"
+                                    (fileOver)="fileOverBase($event)" [uploader]="uploader"
+                                    class="py-5 mb-3 text-center font-medium-5 text-uppercase file-drop-zone">
+                                    Arrastre sus archivos aquí
+                                </div>
+
+                                <div class="row">
+                                    <!-- <div class="col-lg-3">
+                                      <h4>Seleccionar archivos</h4>
+                                      <fieldset class="form-group">
+                                        <label for="file-upload-multiple">Multiple:</label>
+                                        <div class="custom-file">
+                                          <input
+                                            type="file"
+                                            class="custom-file-input"
+                                            type="file"
+                                            ng2FileSelect
+                                            [uploader]="uploader"
+                                            multiple
+                                            id="file-upload-multiple"
+                                          />
+                                          <label class="custom-file-label">Escoger archivo:</label>
+                                        </div>
+                                      </fieldset>
+                        
+                                      <fieldset class="form-group">
+                                        <label for="file-upload-single">Individual:</label>
+                                        <div class="custom-file">
+                                          <input
+                                            type="file"
+                                            class="custom-file-input"
+                                            type="file"
+                                            ng2FileSelect
+                                            [uploader]="uploader"
+                                            id="file-upload-single"
+                                          />
+                                          <label class="custom-file-label">Escoger archivo:</label>
+                                        </div>
+                                      </fieldset>
+                                    </div> -->
+
+                                    <div class="col-lg-12 overflow-auto">
+                                        <div class="d-flex justify-content-between">
+                                            <h4></h4>
+                                            <p>archivos subidos: {{ uploader?.queue?.length }}</p>
+                                        </div>
+
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th width="50%">Nombre</th>
+                                                    <th>Tamaño</th>
+                                                    <th>Progreso</th>
+                                                    <th>Estado</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of uploader.queue">
+                                                    <td>
+                                                        <strong>{{ item?.file?.name }}</strong>
+                                                    </td>
+                                                    <td *ngIf="uploader.options.isHTML5" nowrap>
+                                                        {{ item?.file?.size / 1024 / 1024 | number: '.2' }} MB
+                                                    </td>
+                                                    <td *ngIf="uploader.options.isHTML5">
+                                                        <ngb-progressbar type="primary" [value]="item.progress">
+                                                        </ngb-progressbar>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span *ngIf="item.isSuccess"><i data-feather="check"></i></span>
+                                                        <span *ngIf="item.isCancel"><i data-feather="slash"></i></span>
+                                                        <span *ngIf="item.isError"><i
+                                                                data-feather="x-circle"></i></span>
+                                                    </td>
+                                                    <td nowrap>
+                                                        <button type="button"
+                                                            class="btn btn-raised btn-outline-success btn-sm mr-50"
+                                                            (click)="item.upload()"
+                                                            [disabled]="item.isReady || item.isUploading || item.isSuccess"
+                                                            rippleEffect>
+                                                            <span data-feather="upload"></span>
+                                                        </button>
+                                                        <button type="button"
+                                                            class="btn btn-raised btn-outline-warning btn-sm mr-50"
+                                                            (click)="item.cancel()" [disabled]="!item.isUploading"
+                                                            rippleEffect>
+                                                            <i data-feather="slash"></i>
+                                                        </button>
+                                                        <button type="button"
+                                                            class="btn btn-raised btn-outline-danger btn-sm"
+                                                            (click)="item.remove()" rippleEffect>
+                                                            <i data-feather="trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <div id="">
+                                            <p class="mt-1">Archivo progreso:</p>
+                                            <ngb-progressbar class="mb-1" type="primary" [value]="uploader.progress">
+                                            </ngb-progressbar>
+                                            <button type="button" class="btn mr-1 btn-primary mb-1 mb-sm-0"
+                                                (click)="uploader.uploadAll()"
+                                                [disabled]="!uploader.getNotUploadedItems().length" rippleEffect>
+                                                <span data-feather="upload" class="mr-25"></span> Subir todos
+                                            </button>
+                                            <button type="button" class="btn mr-1 btn-outline-warning mb-1 mb-sm-0"
+                                                (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading"
+                                                rippleEffect>
+                                                <span data-feather="slash" class="mr-25"></span> Cancelar todos
+                                            </button>
+                                            <button type="button" class="btn btn-outline-danger mb-1 mb-sm-0"
+                                                (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length"
+                                                rippleEffect>
+                                                <span data-feather="trash" class="mr-25"></span> Remover todos
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </ngb-panel>
+                    </ngb-accordion>
+                </div>
+                <div class="col-md-12 col-12 lg-6">
+                    <ngb-accordion>
+                        <ngb-panel>
+                            <ng-template ngbPanelTitle>
+                                <span class="lead collapse-title "><i class="mr-0 mr-sm-1"
+                                        data-feather="arrow-down-circle"></i>SubCategorías por empresa</span>
+                                <span class="ml-3 text-secondary">Mensual</span>
+                                <span class="ml-3 text-secondary">
+                                    <div class="badge badge-glow badge-danger">No enviado</div>
+                                </span>
+
+                            </ng-template>
+                            <ng-template ngbPanelContent>
+                                <div ng2FileDrop [ngClass]="{'file-drop-over': hasBaseDropZoneOver }"
+                                    (fileOver)="fileOverBase($event)" [uploader]="uploader"
+                                    class="py-5 mb-3 text-center font-medium-5 text-uppercase file-drop-zone">
+                                    Arrastre sus archivos aquí
+                                </div>
+
+                                <div class="row">
+                                    <!-- <div class="col-lg-3">
+                                      <h4>Seleccionar archivos</h4>
+                                      <fieldset class="form-group">
+                                        <label for="file-upload-multiple">Multiple:</label>
+                                        <div class="custom-file">
+                                          <input
+                                            type="file"
+                                            class="custom-file-input"
+                                            type="file"
+                                            ng2FileSelect
+                                            [uploader]="uploader"
+                                            multiple
+                                            id="file-upload-multiple"
+                                          />
+                                          <label class="custom-file-label">Escoger archivo:</label>
+                                        </div>
+                                      </fieldset>
+                        
+                                      <fieldset class="form-group">
+                                        <label for="file-upload-single">Individual:</label>
+                                        <div class="custom-file">
+                                          <input
+                                            type="file"
+                                            class="custom-file-input"
+                                            type="file"
+                                            ng2FileSelect
+                                            [uploader]="uploader"
+                                            id="file-upload-single"
+                                          />
+                                          <label class="custom-file-label">Escoger archivo:</label>
+                                        </div>
+                                      </fieldset>
+                                    </div> -->
+
+                                    <div class="col-lg-12 overflow-auto">
+                                        <div class="d-flex justify-content-between">
+                                            <h4></h4>
+                                            <p>archivos subidos: {{ uploader?.queue?.length }}</p>
+                                        </div>
+
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th width="50%">Nombre</th>
+                                                    <th>Tamaño</th>
+                                                    <th>Progreso</th>
+                                                    <th>Estado</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of uploader.queue">
+                                                    <td>
+                                                        <strong>{{ item?.file?.name }}</strong>
+                                                    </td>
+                                                    <td *ngIf="uploader.options.isHTML5" nowrap>
+                                                        {{ item?.file?.size / 1024 / 1024 | number: '.2' }} MB
+                                                    </td>
+                                                    <td *ngIf="uploader.options.isHTML5">
+                                                        <ngb-progressbar type="primary" [value]="item.progress">
+                                                        </ngb-progressbar>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span *ngIf="item.isSuccess"><i data-feather="check"></i></span>
+                                                        <span *ngIf="item.isCancel"><i data-feather="slash"></i></span>
+                                                        <span *ngIf="item.isError"><i
+                                                                data-feather="x-circle"></i></span>
+                                                    </td>
+                                                    <td nowrap>
+                                                        <button type="button"
+                                                            class="btn btn-raised btn-outline-success btn-sm mr-50"
+                                                            (click)="item.upload()"
+                                                            [disabled]="item.isReady || item.isUploading || item.isSuccess"
+                                                            rippleEffect>
+                                                            <span data-feather="upload"></span>
+                                                        </button>
+                                                        <button type="button"
+                                                            class="btn btn-raised btn-outline-warning btn-sm mr-50"
+                                                            (click)="item.cancel()" [disabled]="!item.isUploading"
+                                                            rippleEffect>
+                                                            <i data-feather="slash"></i>
+                                                        </button>
+                                                        <button type="button"
+                                                            class="btn btn-raised btn-outline-danger btn-sm"
+                                                            (click)="item.remove()" rippleEffect>
+                                                            <i data-feather="trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <div id="">
+                                            <p class="mt-1">Archivo progreso:</p>
+                                            <ngb-progressbar class="mb-1" type="primary" [value]="uploader.progress">
+                                            </ngb-progressbar>
+                                            <button type="button" class="btn mr-1 btn-primary mb-1 mb-sm-0"
+                                                (click)="uploader.uploadAll()"
+                                                [disabled]="!uploader.getNotUploadedItems().length" rippleEffect>
+                                                <span data-feather="upload" class="mr-25"></span> Subir todos
+                                            </button>
+                                            <button type="button" class="btn mr-1 btn-outline-warning mb-1 mb-sm-0"
+                                                (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading"
+                                                rippleEffect>
+                                                <span data-feather="slash" class="mr-25"></span> Cancelar todos
+                                            </button>
+                                            <button type="button" class="btn btn-outline-danger mb-1 mb-sm-0"
+                                                (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length"
+                                                rippleEffect>
+                                                <span data-feather="trash" class="mr-25"></span> Remover todos
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+
+                        </ngb-panel>
+
+
+                    </ngb-accordion>
+
+                </div>
+                <div class="col-md-12 col-12 lg-6">
+                    <ngb-accordion>
+                        <ngb-panel>
+                            <ng-template ngbPanelTitle>
+                                <span class="lead collapse-title "><i class="mr-0 mr-sm-1"
+                                        data-feather="arrow-down-circle"></i>Contrato o servicio</span>
+                                <span class="ml-3 text-secondary">Mensual</span>
+                                <span class="ml-3 text-secondary">
+                                    <div class="badge badge-glow badge-danger">No enviado</div>
+                                </span>
+
+                            </ng-template>
+                            <ng-template ngbPanelContent>
+                                <div ng2FileDrop [ngClass]="{'file-drop-over': hasBaseDropZoneOver }"
+                                    (fileOver)="fileOverBase($event)" [uploader]="uploader"
+                                    class="py-5 mb-3 text-center font-medium-5 text-uppercase file-drop-zone">
+                                    Arrastre sus archivos aquí
+                                </div>
+
+                                <div class="row">
+                                    <!-- <div class="col-lg-3">
+                                      <h4>Seleccionar archivos</h4>
+                                      <fieldset class="form-group">
+                                        <label for="file-upload-multiple">Multiple:</label>
+                                        <div class="custom-file">
+                                          <input
+                                            type="file"
+                                            class="custom-file-input"
+                                            type="file"
+                                            ng2FileSelect
+                                            [uploader]="uploader"
+                                            multiple
+                                            id="file-upload-multiple"
+                                          />
+                                          <label class="custom-file-label">Escoger archivo:</label>
+                                        </div>
+                                      </fieldset>
+                        
+                                      <fieldset class="form-group">
+                                        <label for="file-upload-single">Individual:</label>
+                                        <div class="custom-file">
+                                          <input
+                                            type="file"
+                                            class="custom-file-input"
+                                            type="file"
+                                            ng2FileSelect
+                                            [uploader]="uploader"
+                                            id="file-upload-single"
+                                          />
+                                          <label class="custom-file-label">Escoger archivo:</label>
+                                        </div>
+                                      </fieldset>
+                                    </div> -->
+
+                                    <div class="col-lg-12 overflow-auto">
+                                        <div class="d-flex justify-content-between">
+                                            <h4></h4>
+                                            <p>archivos subidos: {{ uploader?.queue?.length }}</p>
+                                        </div>
+
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th width="50%">Nombre</th>
+                                                    <th>Tamaño</th>
+                                                    <th>Progreso</th>
+                                                    <th>Estado</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of uploader.queue">
+                                                    <td>
+                                                        <strong>{{ item?.file?.name }}</strong>
+                                                    </td>
+                                                    <td *ngIf="uploader.options.isHTML5" nowrap>
+                                                        {{ item?.file?.size / 1024 / 1024 | number: '.2' }} MB
+                                                    </td>
+                                                    <td *ngIf="uploader.options.isHTML5">
+                                                        <ngb-progressbar type="primary" [value]="item.progress">
+                                                        </ngb-progressbar>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span *ngIf="item.isSuccess"><i data-feather="check"></i></span>
+                                                        <span *ngIf="item.isCancel"><i data-feather="slash"></i></span>
+                                                        <span *ngIf="item.isError"><i
+                                                                data-feather="x-circle"></i></span>
+                                                    </td>
+                                                    <td nowrap>
+                                                        <button type="button"
+                                                            class="btn btn-raised btn-outline-success btn-sm mr-50"
+                                                            (click)="item.upload()"
+                                                            [disabled]="item.isReady || item.isUploading || item.isSuccess"
+                                                            rippleEffect>
+                                                            <span data-feather="upload"></span>
+                                                        </button>
+                                                        <button type="button"
+                                                            class="btn btn-raised btn-outline-warning btn-sm mr-50"
+                                                            (click)="item.cancel()" [disabled]="!item.isUploading"
+                                                            rippleEffect>
+                                                            <i data-feather="slash"></i>
+                                                        </button>
+                                                        <button type="button"
+                                                            class="btn btn-raised btn-outline-danger btn-sm"
+                                                            (click)="item.remove()" rippleEffect>
+                                                            <i data-feather="trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <div id="">
+                                            <p class="mt-1">Archivo progreso:</p>
+                                            <ngb-progressbar class="mb-1" type="primary" [value]="uploader.progress">
+                                            </ngb-progressbar>
+                                            <button type="button" class="btn mr-1 btn-primary mb-1 mb-sm-0"
+                                                (click)="uploader.uploadAll()"
+                                                [disabled]="!uploader.getNotUploadedItems().length" rippleEffect>
+                                                <span data-feather="upload" class="mr-25"></span> Subir todos
+                                            </button>
+                                            <button type="button" class="btn mr-1 btn-outline-warning mb-1 mb-sm-0"
+                                                (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading"
+                                                rippleEffect>
+                                                <span data-feather="slash" class="mr-25"></span> Cancelar todos
+                                            </button>
+                                            <button type="button" class="btn btn-outline-danger mb-1 mb-sm-0"
+                                                (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length"
+                                                rippleEffect>
+                                                <span data-feather="trash" class="mr-25"></span> Remover todos
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </ngb-panel>
+                    </ngb-accordion>
+                </div>
+                <div class="col-md-12 col-12 lg-6">
+                    <ngb-accordion>
+                        <ngb-panel>
+                            <ng-template ngbPanelTitle>
+                                <span class="lead collapse-title "><i class="mr-0 mr-sm-1"
+                                        data-feather="arrow-down-circle"></i>Tipo de recurso </span>
+                                <span class="ml-3 text-secondary">Mensual</span>
+                                <span class="ml-3 text-secondary">
+                                    <div class="badge badge-glow badge-danger">No enviado</div>
+                                </span>
+
+                            </ng-template>
+                            <ng-template ngbPanelContent>
+                                <div ng2FileDrop [ngClass]="{'file-drop-over': hasBaseDropZoneOver }"
+                                    (fileOver)="fileOverBase($event)" [uploader]="uploader"
+                                    class="py-5 mb-3 text-center font-medium-5 text-uppercase file-drop-zone">
+                                    Arrastre sus archivos aquí
+                                </div>
+
+                                <div class="row">
+                                    <!-- <div class="col-lg-3">
+                                      <h4>Seleccionar archivos</h4>
+                                      <fieldset class="form-group">
+                                        <label for="file-upload-multiple">Multiple:</label>
+                                        <div class="custom-file">
+                                          <input
+                                            type="file"
+                                            class="custom-file-input"
+                                            type="file"
+                                            ng2FileSelect
+                                            [uploader]="uploader"
+                                            multiple
+                                            id="file-upload-multiple"
+                                          />
+                                          <label class="custom-file-label">Escoger archivo:</label>
+                                        </div>
+                                      </fieldset>
+                        
+                                      <fieldset class="form-group">
+                                        <label for="file-upload-single">Individual:</label>
+                                        <div class="custom-file">
+                                          <input
+                                            type="file"
+                                            class="custom-file-input"
+                                            type="file"
+                                            ng2FileSelect
+                                            [uploader]="uploader"
+                                            id="file-upload-single"
+                                          />
+                                          <label class="custom-file-label">Escoger archivo:</label>
+                                        </div>
+                                      </fieldset>
+                                    </div> -->
+
+                                    <div class="col-lg-12 overflow-auto">
+                                        <div class="d-flex justify-content-between">
+                                            <h4></h4>
+                                            <p>archivos subidos: {{ uploader?.queue?.length }}</p>
+                                        </div>
+
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th width="50%">Nombre</th>
+                                                    <th>Tamaño</th>
+                                                    <th>Progreso</th>
+                                                    <th>Estado</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of uploader.queue">
+                                                    <td>
+                                                        <strong>{{ item?.file?.name }}</strong>
+                                                    </td>
+                                                    <td *ngIf="uploader.options.isHTML5" nowrap>
+                                                        {{ item?.file?.size / 1024 / 1024 | number: '.2' }} MB
+                                                    </td>
+                                                    <td *ngIf="uploader.options.isHTML5">
+                                                        <ngb-progressbar type="primary" [value]="item.progress">
+                                                        </ngb-progressbar>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span *ngIf="item.isSuccess"><i data-feather="check"></i></span>
+                                                        <span *ngIf="item.isCancel"><i data-feather="slash"></i></span>
+                                                        <span *ngIf="item.isError"><i
+                                                                data-feather="x-circle"></i></span>
+                                                    </td>
+                                                    <td nowrap>
+                                                        <button type="button"
+                                                            class="btn btn-raised btn-outline-success btn-sm mr-50"
+                                                            (click)="item.upload()"
+                                                            [disabled]="item.isReady || item.isUploading || item.isSuccess"
+                                                            rippleEffect>
+                                                            <span data-feather="upload"></span>
+                                                        </button>
+                                                        <button type="button"
+                                                            class="btn btn-raised btn-outline-warning btn-sm mr-50"
+                                                            (click)="item.cancel()" [disabled]="!item.isUploading"
+                                                            rippleEffect>
+                                                            <i data-feather="slash"></i>
+                                                        </button>
+                                                        <button type="button"
+                                                            class="btn btn-raised btn-outline-danger btn-sm"
+                                                            (click)="item.remove()" rippleEffect>
+                                                            <i data-feather="trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <div id="">
+                                            <p class="mt-1">Archivo progreso:</p>
+                                            <ngb-progressbar class="mb-1" type="primary" [value]="uploader.progress">
+                                            </ngb-progressbar>
+                                            <button type="button" class="btn mr-1 btn-primary mb-1 mb-sm-0"
+                                                (click)="uploader.uploadAll()"
+                                                [disabled]="!uploader.getNotUploadedItems().length" rippleEffect>
+                                                <span data-feather="upload" class="mr-25"></span> Subir todos
+                                            </button>
+                                            <button type="button" class="btn mr-1 btn-outline-warning mb-1 mb-sm-0"
+                                                (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading"
+                                                rippleEffect>
+                                                <span data-feather="slash" class="mr-25"></span> Cancelar todos
+                                            </button>
+                                            <button type="button" class="btn btn-outline-danger mb-1 mb-sm-0"
+                                                (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length"
+                                                rippleEffect>
+                                                <span data-feather="trash" class="mr-25"></span> Remover todos
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </ngb-panel>
+                    </ngb-accordion>
+                </div>
+                <div class="col-md-12 col-12 lg-6">
+                    <ngb-accordion>
+                        <ngb-panel>
+                            <ng-template ngbPanelTitle>
+                                <span class="lead collapse-title "><i class="mr-0 mr-sm-1"
+                                        data-feather="arrow-down-circle"></i>Recurso </span>
+                                <span class="ml-3 text-secondary">Mensual</span>
+                                <span class="ml-3 text-secondary">
+                                    <div class="badge badge-glow badge-danger">No enviado</div>
+                                </span>
+                            </ng-template>
+                            <ng-template ngbPanelContent>
+                                <div ng2FileDrop [ngClass]="{'file-drop-over': hasBaseDropZoneOver }"
+                                    (fileOver)="fileOverBase($event)" [uploader]="uploader"
+                                    class="py-5 mb-3 text-center font-medium-5 text-uppercase file-drop-zone">
+                                    Arrastre sus archivos aquí
+                                </div>
+
+                                <div class="row">
+                                    <!-- <div class="col-lg-3">
+                                      <h4>Seleccionar archivos</h4>
+                                      <fieldset class="form-group">
+                                        <label for="file-upload-multiple">Multiple:</label>
+                                        <div class="custom-file">
+                                          <input
+                                            type="file"
+                                            class="custom-file-input"
+                                            type="file"
+                                            ng2FileSelect
+                                            [uploader]="uploader"
+                                            multiple
+                                            id="file-upload-multiple"
+                                          />
+                                          <label class="custom-file-label">Escoger archivo:</label>
+                                        </div>
+                                      </fieldset>
+                        
+                                      <fieldset class="form-group">
+                                        <label for="file-upload-single">Individual:</label>
+                                        <div class="custom-file">
+                                          <input
+                                            type="file"
+                                            class="custom-file-input"
+                                            type="file"
+                                            ng2FileSelect
+                                            [uploader]="uploader"
+                                            id="file-upload-single"
+                                          />
+                                          <label class="custom-file-label">Escoger archivo:</label>
+                                        </div>
+                                      </fieldset>
+                                    </div> -->
+
+                                    <div class="col-lg-12 overflow-auto">
+                                        <div class="d-flex justify-content-between">
+                                            <h4></h4>
+                                            <p>archivos subidos: {{ uploader?.queue?.length }}</p>
+                                        </div>
+
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th width="50%">Nombre</th>
+                                                    <th>Tamaño</th>
+                                                    <th>Progreso</th>
+                                                    <th>Estado</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of uploader.queue">
+                                                    <td>
+                                                        <strong>{{ item?.file?.name }}</strong>
+                                                    </td>
+                                                    <td *ngIf="uploader.options.isHTML5" nowrap>
+                                                        {{ item?.file?.size / 1024 / 1024 | number: '.2' }} MB
+                                                    </td>
+                                                    <td *ngIf="uploader.options.isHTML5">
+                                                        <ngb-progressbar type="primary" [value]="item.progress">
+                                                        </ngb-progressbar>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span *ngIf="item.isSuccess"><i data-feather="check"></i></span>
+                                                        <span *ngIf="item.isCancel"><i data-feather="slash"></i></span>
+                                                        <span *ngIf="item.isError"><i
+                                                                data-feather="x-circle"></i></span>
+                                                    </td>
+                                                    <td nowrap>
+                                                        <button type="button"
+                                                            class="btn btn-raised btn-outline-success btn-sm mr-50"
+                                                            (click)="item.upload()"
+                                                            [disabled]="item.isReady || item.isUploading || item.isSuccess"
+                                                            rippleEffect>
+                                                            <span data-feather="upload"></span>
+                                                        </button>
+                                                        <button type="button"
+                                                            class="btn btn-raised btn-outline-warning btn-sm mr-50"
+                                                            (click)="item.cancel()" [disabled]="!item.isUploading"
+                                                            rippleEffect>
+                                                            <i data-feather="slash"></i>
+                                                        </button>
+                                                        <button type="button"
+                                                            class="btn btn-raised btn-outline-danger btn-sm"
+                                                            (click)="item.remove()" rippleEffect>
+                                                            <i data-feather="trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <div id="">
+                                            <p class="mt-1">Archivo progreso:</p>
+                                            <ngb-progressbar class="mb-1" type="primary" [value]="uploader.progress">
+                                            </ngb-progressbar>
+                                            <button type="button" class="btn mr-1 btn-primary mb-1 mb-sm-0"
+                                                (click)="uploader.uploadAll()"
+                                                [disabled]="!uploader.getNotUploadedItems().length" rippleEffect>
+                                                <span data-feather="upload" class="mr-25"></span> Subir todos
+                                            </button>
+                                            <button type="button" class="btn mr-1 btn-outline-warning mb-1 mb-sm-0"
+                                                (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading"
+                                                rippleEffect>
+                                                <span data-feather="slash" class="mr-25"></span> Cancelar todos
+                                            </button>
+                                            <button type="button" class="btn btn-outline-danger mb-1 mb-sm-0"
+                                                (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length"
+                                                rippleEffect>
+                                                <span data-feather="trash" class="mr-25"></span> Remover todos
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </ngb-panel>
+                    </ngb-accordion>
+                </div>
+                <div class="col-md-12 col-12">
+                    <div class="divider divider-secondary">
+                        <div class="divider-text">Carga de archivos base</div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-12">
+                    <div class="custom-control custom-control-success custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="colorCheck3" />
+                        <label class="custom-control-label" for="colorCheck3">AFP Net</label>
+                    </div>
+                </div>
+                <div class="col-md-6 col-12">
+                    <div class="custom-control custom-control-danger custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="colorCheck5" />
+                        <label class="custom-control-label" for="colorCheck5">PLAME</label>
+                    </div>
+                </div>
+                <div class="col-md-6 col-12">
+                    <div class="custom-control custom-control-warning custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="colorCheck4" />
+                        <label class="custom-control-label" for="colorCheck4">Formatos de altas y bajas</label>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-12">
+                    <div class="custom-control custom-control-info custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="colorCheck6" />
+                        <label class="custom-control-label" for="colorCheck6">Planillas adicionales</label>
+                    </div>
+                </div>
+                <!-- <div *ngIf="notification != true" class="col-md-12 col-12">
+                    <div class="divider divider-secondary">
+                        <div class="divider-text">Auditoría</div>
+                    </div>
+                </div>
+                <div *ngIf="notification != true" class="col-md-6 col-12">
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input"  />
+                        <label class="custom-control-label" for="customRadio1">Cumple con los requisitos</label>
+                    </div>
+                </div>
+                <div *ngIf="notification != true" class="col-md-6 col-12">
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input" checked     />
+                        <label class="custom-control-label" for="customRadio2">No cumple con los requisitos</label>
+                    </div>
+                </div> -->
+
+            </div>
+            <div class="modal-footer" style="display: block !important;">
+                <div class="row">
+                    <div class="col-md-6 col-12" style="margin-bottom: 5px">
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <div style="float: right">
+                            <button (click)="ValidacionDocumento()" class="btn btn-primary" rippleEffect type="submit">
+                                Aceptar
+                            </button>
+                            &nbsp;
+                            <button (click)="CancelModal()" class="btn btn-secondary" rippleEffect type="button">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        <block-ui></block-ui>
+    </div>
+</div>

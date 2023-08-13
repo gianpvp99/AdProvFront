@@ -1,0 +1,1235 @@
+<div class="content-wrapper">
+    <div class="content-body">
+        <a id="mainTable"></a>
+        <app-content-header class="utble" [contentHeader]="contentHeader"></app-content-header>
+        <section id="ngx-datatable-multi-purpose">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 col-12">
+                            <label class="d-flex align-items-center utble ml-2 mt-1">
+                                <span class="mr-1">Mostrar</span>
+                                <ng-select (change)="onReloadChanged()" [clearable]="false" [items]="forPageOptions"
+                                    [(ngModel)]="contratistaSettings.pageSize">
+                                </ng-select>
+                                <span *ngIf="contratistaSettings.colletionSize == 1" class="ml-1">de {{
+                                    contratistaSettings.colletionSize }} Fila</span>
+                                <span *ngIf="contratistaSettings.colletionSize > 1" class="ml-1">de {{
+                                    contratistaSettings.colletionSize }} Filas</span>
+                            </label>
+                        </div>
+                        <div class="col-md-9 col-12 d-flex justify-content-md-end">
+                            <div class="d-flex justify-content-end align-items-center m-1">
+                                <button *ngIf="flagVista == true" (click)="NewEmpleado(NEM, true)"
+                                    class="btn btn-primary ml-1">
+                                    <i class="mr-0 mr-sm-1" data-feather="plus-square"></i><span
+                                        class="d-none d-sm-inline-block">Agregar Empleado</span>
+                                </button>
+                                <button [hidden]="displayable" *ngIf="flagVista == false"
+                                    (click)="NewContratista(NCT, true)" class="btn btn-primary ml-1">
+                                    <i class="mr-0 mr-sm-1" data-feather="plus-square"></i><span
+                                        class="d-none d-sm-inline-block">Agregar Contratista</span>
+                                </button>
+                                <button (click)="onReloadChanged()" class="btn btn-secondary ml-1">
+                                    <i class="mr-0 mr-sm-1" data-feather="refresh-cw"></i><span
+                                        class="d-none d-sm-inline-block">Refrescar</span>
+                                </button>
+                                <label class="d-flex align-items-center ml-1 utble">
+                                    <span class="d-none d-sm-inline-block mr-1">Buscar:</span>
+                                    <input (keyup)="onReloadChanged()" [(ngModel)]="contratistaSettings.searchString"
+                                        class="form-control" placeholder="Texto de búsqueda..." type="search" />
+                                </label>
+                            </div>
+                        </div>
+                        <div *ngIf="flagVista == true" class="col-md-12 col-12 d-flex justify-content-end">
+                            <div class="btn-group">
+                                <div ngbDropdown>
+                                    <button class="btn btn-success mr-1" id="dropdownMenuButton2" ngbDropdownToggle
+                                        rippleEffect type="button">
+                                        <i class="mr-0 mr-sm-1" data-feather="settings"></i><span
+                                            class="d-none d-sm-inline-block">Excel</span>
+                                    </button>
+                                    <div aria-labelledby="dropdownMenuButton2" ngbDropdownMenu>
+                                        <a ngbDropdownItem>
+                                            <i class="mr-0 mr-sm-1" data-feather="clipboard"></i>
+                                            <span class="sm-inline-block">Exportar</span>
+                                        </a>
+                                        <a ngbDropdownItem>
+                                            <i class="mr-0 mr-sm-1" data-feather="database"></i>
+                                            <span class="sm-inline-block">Importar Carga Masiva</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <button [routerLink]="['pages/miscellaneous/coming-soon']" [queryParams]=""
+                                class="btn btn-success mr-1">
+                                <i class="mr-0 mr-sm-1" data-feather="bar-chart-2"></i><span
+                                    class="d-none d-sm-inline-block">Empleados por Excel</span>
+                            </button> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ngx-datatable-multi-purpose">
+            <div class="card">
+                <div class="card-body p-0">
+                    <div class="row" *ngIf="flagVista == false">
+                        <div class="col-md-12 col-12">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead class="centerall-header">
+                                        <tr>
+                                            <th class="utble">ACCIÓN</th>                                            
+                                            <th class="utble">CLIENTE</th>
+                                            <th class="utble">CONTRATISTA</th>                                                                                        
+                                            <th class="utble">TELÉFONO</th>
+                                            <th class="utble">CORREO</th>
+                                            <th class="utble">CUMPLIMIENTO</th>
+                                            <th class="utble">EMPLEADOS</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let row of rowsContratista" class="cursor-pointer">
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <button (click)="EditContratista(NCT, row)"
+                                                        ngbTooltip="Subir Documentos" placement="top"
+                                                        class="btn btn-icon btn-icon rounded-circle btn-outline-secondary mr-1"
+                                                        rippleEffect>
+                                                        <span class="fa fa-folder-open-o"
+                                                            style="margin-left: 2px;"></span>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="cell-line-height">
+                                                        <p class="font-medium-1 font-weight-bold line-height-1 mb-25"
+                                                            style="font-size: small !important;">
+                                                            {{ row.rucCliente }}
+                                                        </p>
+                                                        <span class="text-secondary font-small-2"> {{ row.rsCliente }}</span>
+                                                    </div>
+                                                </div>
+                                            </td>                                            
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="cell-line-height">
+                                                        <p class="font-medium-1 font-weight-bold line-height-1 mb-25"
+                                                            style="font-size: small !important;">
+                                                            {{ row.ruc }}
+                                                        </p>
+                                                        <span class="text-secondary font-small-2"> {{ row.razonSocial }}</span>
+                                                    </div>
+                                                </div>
+                                            </td>                                            
+                                            <!-- <td><span style="font-size: small;">{{
+                                                    row.direccion}}</span></td> -->
+                                            <td style="text-align: center;">{{ row.telefono }}</td>
+                                            <td><span>{{ row.correo }}</span></td>
+                                            <td class="utble">
+                                                <div class="progress-wrapper" *ngIf="20 >= row.porcentaje">
+                                                    <div class="mb-25 text-danger text-center">
+                                                        Progreso&hellip;{{ row.porcentaje }}%</div>
+                                                    <ngb-progressbar type="danger" [animated]="true" showValue="true"
+                                                        [striped]="true" [value]="row.porcentaje"
+                                                        [height]="progressbarHeight">
+                                                    </ngb-progressbar>
+                                                </div>
+                                                <div class="progress-wrapper"
+                                                    *ngIf="row.porcentaje > 20 && 50 >= row.porcentaje">
+                                                    <!-- &hellip;{{ row.porcentaje }}% -->
+                                                    <div class="mb-25 text-warning text-center">Progreso
+                                                        Total</div>
+                                                    <ngb-progressbar type="warning" [animated]="true" showValue="true"
+                                                        [striped]="true" [value]="row.porcentaje"
+                                                        [height]="progressbarHeight">
+                                                    </ngb-progressbar>
+                                                </div>
+                                                <div class="progress-wrapper"
+                                                    *ngIf="row.porcentaje > 50 && 99 >= row.porcentaje">
+                                                    <!-- &hellip;{{ row.porcentaje }}% -->
+                                                    <div class="mb-25 text-info text-center">Progreso Total
+                                                    </div>
+                                                    <ngb-progressbar type="info" [animated]="true" showValue="true"
+                                                        [striped]="true" [value]="row.porcentaje"
+                                                        [height]="progressbarHeight">
+                                                    </ngb-progressbar>
+                                                </div>
+                                                <div class="progress-wrapper" *ngIf="100 == row.porcentaje">
+                                                    <!-- &hellip;{{ row.porcentaje }}% -->
+                                                    <div class="mb-25 text-success text-center">Progreso
+                                                        Total</div>
+                                                    <ngb-progressbar type="success" [animated]="true" showValue="true"
+                                                        [striped]="true" [value]="row.porcentaje"
+                                                        [height]="progressbarHeight">
+                                                    </ngb-progressbar>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="avatar bg-light-secondary mr-1">
+                                                        <div class="avatar-content">
+                                                            <a ngbTooltip="Información empleados" placement="top"
+                                                                (click)="onSetEmpleados(row)" href="javascript:void(0)">
+                                                                <i data-feather="users" class="font-medium-3"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <span>Empleados</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-1" *ngIf="flagVista == false">
+                        <div class="col-12 col-md-12 utble mg-6">
+                            <ngb-pagination [collectionSize]="contratistaSettings.colletionSize"
+                                [(page)]="contratistaSettings.page" (pageChange)="onReloadChanged()" [rotate]="true"
+                                [boundaryLinks]="true" [pageSize]="contratistaSettings.pageSize"
+                                class="d-flex justify-content-center">
+                                <ng-template ngbPaginationFirst>⠀<span data-feather="skip-back"></span>
+                                </ng-template>
+                                <ng-template ngbPaginationPrevious><span [data-feather]="'chevron-left'"
+                                        [class]="'font-weight-bolder'"></span>⠀
+                                </ng-template>
+                                <ng-template ngbPaginationNext>⠀<span [data-feather]="'chevron-right'"
+                                        [class]="'font-weight-bolder'"></span>
+                                </ng-template>
+                                <ng-template ngbPaginationLast><span data-feather="skip-forward"></span>⠀
+                                </ng-template>
+                            </ngb-pagination>
+                        </div>
+                    </div>
+
+                    <div *ngIf="flagVista == true" class="row">
+                        <div class="col-md-12 col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="col-md-12 col-12 d-flex justify-content-end">
+                                        <button (click)="onReturn()" class="btn btn-outline-primary mr-1">
+                                            <i class="mr-0 mr-sm-1" data-feather="corner-up-left"></i>
+                                            <span class="d-none d-sm-inline-block">Regresar</span>
+                                        </button>
+                                    </div>
+                                    <div style="margin-top: 10px">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="table-responsive">
+                                                    <table class="table"
+                                                        style="border: solid 1px #CCC;border-top: solid 1px #CCC;">
+                                                        <thead class="centerall-header">
+                                                            <tr>
+                                                                <th class="width-column" title="Acción">ACCIÓN</th>
+                                                                <th class="width-column" title="Contratista">
+                                                                    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀CONTRATISTA⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+                                                                </th>
+                                                                <th class="width-column" title="Empleados">EMPLEADOS
+                                                                </th>
+                                                                <th class="width-column" title="Nº Documento">DNI</th>
+                                                                <th class="width-column" title="Dirección">CORREO
+                                                                </th>
+                                                                <th class="width-column" title="Teléfono">TELÉFONO</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let row of rowsEmpleado" class="cursor-pointer">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="avatar bg-light-primary mr-1">
+                                                                            <div class="avatar-content">
+                                                                                <a (click)="EditarEmpleado(modalz, row)"
+                                                                                    ngbTooltip="Editar" placement="top"
+                                                                                    href="javascript:void(0)">
+                                                                                    <i data-feather="edit"
+                                                                                        class="font-medium-3"></i>
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="d-flex align-items-center">
+                                                                            <div class="avatar bg-light-danger mr-1">
+                                                                                <div class="avatar-content">
+                                                                                    <a (click)="onDeleteEmpleado(row)"
+                                                                                        ngbTooltip="Eliminar"
+                                                                                        placement="top"
+                                                                                        href="javascript:void(0)">
+                                                                                        <i data-feather="trash-2"
+                                                                                            class="font-medium-3"></i>
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td><span>{{ row.contratista }}</span></td>
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="avatar mr-1 ml-0 bg-light-primary">
+                                                                            <div class="avatar-content">{{ row.nombres |
+                                                                                initials }}
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="cell-line-height">
+                                                                            <p class=" mb-25">
+                                                                                {{ row.nombres }}
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td><span style="font-size: small;">{{ row.nroDocumento
+                                                                        }}</span>
+                                                                </td>
+                                                                <td><span style="font-size: small;">{{ row.direccion
+                                                                        }}</span></td>
+                                                                <td><span>{{ row.telefono }}</span></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-1">
+                                            <div class="col-12 col-md-12 d-flex justify-content-end">
+                                                <ngb-pagination [collectionSize]="empleadoSettings.colletionSize"
+                                                    [(page)]="empleadoSettings.page" (pageChange)="onSetEmpleados()"
+                                                    [pageSize]="empleadoSettings.pageSize">
+                                                </ngb-pagination>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <ng-template #modalz let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">Información complementaria ({{ nombres }})</h4>
+                <button (click)="modal.dismiss('Cross click')" aria-label="Close" class="close" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" ngbAutofocus tabindex="0">
+                <div class="row">
+                    <div class="col-md-6 col-12">
+                        <div class="form-group">
+                            <span> Estado del cumplimiento</span>
+                        </div>
+                    </div>
+                </div>
+                <ngb-progressbar type="primary" [value]="0">0%</ngb-progressbar>
+                <!-- <ngb-progressbar type="primary" [value]="100">100%</ngb-progressbar> -->
+                <div class="col-md-12 col-12">
+                    <div class="divider divider-secondary">
+                        <div class="divider-text">Empleado</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <div class="form-group">
+                            <label>Empleado</label>
+                            <input class="form-control" type="text" [(ngModel)]="nombres" />
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-12">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input class="form-control" type="text" [(ngModel)]="email" />
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <div class="form-group">
+                            <label>Teléfono</label>
+                            <input class="form-control" type="text" [(ngModel)]="telefono" />
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <div class="form-group">
+                            <label>DNI</label>
+                            <input class="form-control" type="text" [(ngModel)]="dni" />
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="this.idContratista != 0" class="col-md-12 col-12">
+                    <div class="divider divider-secondary">
+                        <div class="divider-text">Documentos Publicados</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <ul #navWithIcons="ngbNav" class="nav-tabs" ngbNav>
+                            <li ngbNavItem>
+                                <a ngbNavLink><span [data-feather]="'globe'"></span> Auditoría (Empleados)</a>
+                                <ng-template ngbNavContent>
+                                    <div class="row">
+                                        <div class="col-md-12 col-12 lg-6">
+                                            <div class="divider divider-left divider-dotted divider-primary">
+                                                <div class="divider-text"><span class="ygcolor"
+                                                        [data-feather]="'arrow-down-right'"></span><span
+                                                        class="ml-1 ygcolor">General (Empleado)</span></div>
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div *ngFor="let row of rowsDocumentosEmpleado"
+                                                        class="meetup-day text-left">
+                                                        <div class="media mb-1">
+                                                            <div class="avatar bg-light-s rounded mr-1">
+                                                                <div class="avatar-content">
+                                                                    <i data-feather="file"
+                                                                        class="avatar-icon font-medium-3"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="media-body mg-6">
+                                                                <h5>{{ row.documentoName }}</h5>
+                                                            </div>
+                                                            <div ngbDropdown class="btn-group mg-6 mr-2">
+                                                                <div
+                                                                    class="custom-control custom-control-primary custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                        id="{{'dCheckEmpleado' + row.idDocumentoName}}"
+                                                                        [(ngModel)]="row.estado" dibled
+                                                                        [ngModelOptions]="{ standalone: true }" />
+                                                                    <label class="custom-control-label"
+                                                                        for="{{'dCheckEmpleado' + row.idDocumentoName}}">
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="" *ngIf="this.sesionPerfil == 3">
+                                                            <fieldset class="form-group">
+                                                                <div class="custom-file">
+                                                                    <input type="file" class="custom-file-input"
+                                                                        type="file" ng2FileSelect
+                                                                        [uploader]="archivosHomologacion"
+                                                                        id="file-upload-single" />
+                                                                    <label class="custom-file-label">Elija el
+                                                                        archivo</label>
+                                                                </div>
+                                                            </fieldset>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </li>
+                        </ul>
+                        <div [ngbNavOutlet]="navWithIcons" class="mt-2"></div>
+                    </div>
+                </div>
+                <!-- <div *ngIf="notification != true" class="col-md-12 col-12">
+                    <div class="divider divider-secondary">
+                        <div class="divider-text">Auditoría</div>
+                    </div>
+                </div>
+                <div *ngIf="notification != true" class="col-md-6 col-12">
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input"  />
+                        <label class="custom-control-label" for="customRadio1">Cumple con los requisitos</label>
+                    </div>
+                </div>
+                <div *ngIf="notification != true" class="col-md-6 col-12">
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input" checked     />
+                        <label class="custom-control-label" for="customRadio2">No cumple con los requisitos</label>
+                    </div>
+                </div> -->
+
+            </div>
+            <div class="modal-footer" style="display: block !important;">
+                <div class="row">
+                    <div class="col-md-6 col-12" style="margin-bottom: 5px">
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <div style="float: right">
+                            <button (click)="ValidacionDocumento()" class="btn btn-primary" rippleEffect type="submit">
+                                Aceptar
+                            </button>
+                            &nbsp;
+                            <button (click)="CancelModal()" class="btn btn-secondary" rippleEffect type="button">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template #NCT let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">Registrar Información complementaria</h4>
+                <button (click)="modal.dismiss('Cross click')" aria-label="Close" class="close" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" ngbAutofocus tabindex="0">
+                <div class="row">
+                    <div class="col-md-6 col-12">
+                        <div class="form-group font-weight-bolder">
+                            <span> Estado de cumplimiento</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <countdown [config]="{leftTime: 604800}"></countdown>
+                    </div>
+                </div>
+                <ngb-progressbar type="primary" [value]="Controls.porcentaje.value" [animated]="true" [striped]="true"
+                    [height]="progressbarHeight" showValue="true">
+                </ngb-progressbar>
+
+                <ul #navWithIcons="ngbNav" class="nav-tabs" ngbNav>
+                    <li ngbNavItem>
+                        <a ngbNavLink><span [data-feather]="'user'"></span>Datos Generales</a>
+                        <ng-template ngbNavContent>
+                            <div class="col-md-12 col-12">
+                                <div class="divider divider-dotted divider-info">
+                                    <div class="divider-text text-dark font-weight-bolder">Registrar Información
+                                        complementaria</div>
+                                </div>
+                            </div>
+                            <form [formGroup]="General">
+                                <div class="row">
+                                    <div class="col-md-4 col-12">
+                                        <div class="form-group">
+                                            <label>RUC:</label>
+                                            <div class="input-group">
+                                                <input class="form-control" type="search" formControlName="ruc"
+                                                    maxlength="11" placeholder="Buscar..."
+                                                    aria-describedby="button-addon2" />
+                                                <div class="input-group-append" id="button-addon2">
+                                                    <button (click)="onDocumentoSearch()" ngbTooltip="Buscar RUC"
+                                                        placement="left" class="btn btn-outline-primary" type="button"
+                                                        rippleEffect>
+                                                        <i data-feather="search"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 col-12">
+                                        <div class="form-group">
+                                            <label class="text-dark">Razón Social:</label>
+                                            <input class="form-control" type="text" formControlName="razonSocial" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-12">
+                                        <div class="form-group">
+                                            <label>Dirección:</label>
+                                            <input class="form-control" type="text" formControlName="direccion" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Actividad Económica / Rubro:</label>
+                                            <ng-select [items]="rowsrubro" [clearable]="false" formControlName="idRubro"
+                                                bindValue="idColumna" bindLabel="descripcion">
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Provincia:</label>
+                                            <input class="form-control" type="text" formControlName="provincia" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Distrito</label>
+                                            <input class="form-control" type="text" formControlName="distrito" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Página Web</label>
+                                            <div class="input-group input-group-merge">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        <i class="font-medium-2" data-feather="aperture"></i>
+                                                    </span>
+                                                </div>
+                                                <input class="form-control" type="text" formControlName="paginaWeb" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Teléfono</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon1">+51</span>
+                                                </div>
+                                                <input class="form-control" type="text" formControlName="telefono"
+                                                    mask="000 000 000" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Fecha de constitución de la Empresa</label>
+                                            <div class="input-group">
+                                                <input #basicDP="ngbDatepicker" #i18nDP="ngbDatepicker"
+                                                    [(ngModel)]="fechaEmision" [ngModelOptions]="{standalone: true}"
+                                                    class="form-control" ngbDatepicker placeholder="dd/mm/yyyy"
+                                                    formControlName="fechaConstitucion">
+                                                <div class="input-group-append">
+                                                    <button (click)="basicDP.toggle()"
+                                                        class="btn btn-outline-secondary feather icon-calendar"
+                                                        rippleEffect type="button"></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Núcleo del negocio</label>
+                                            <input class="form-control" type="text" formControlName="nucleoNegocio" />
+                                        </div>
+                                    </div> -->
+                                    <div class="col-md-12 col-12">
+                                        <div class="divider divider-dotted divider-success">
+                                            <div class="divider-text dsg">Cuenta con certificado?</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
+                                            <label>Certificado de Homologación:</label>
+                                            <div class="d-flex">
+                                                <div class="custom-control custom-control-success custom-checkbox mr-1">
+                                                    <input type="checkbox" class="custom-control-input"
+                                                        formControlName="certificado" (click)="CertificadoCheck()"
+                                                        id="colorCheck1" />
+                                                    <label class="custom-control-label utble"
+                                                        for="colorCheck1">Si</label>
+                                                </div>
+                                                <div class="custom-control custom-control-success custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input"
+                                                        formControlName="certificado2" (click)="CertificadoCheck()"
+                                                        id="colorCheck2" />
+                                                    <label class="custom-control-label utble"
+                                                        for="colorCheck2">No</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-9 col-12" *ngIf="Controls.certificado.value == true">
+                                        <div ng2FileDrop [uploader]="archivosAudEmpresa"
+                                            class="py-5 mb-3 text-center font-medium-5 text-warning text-uppercase file-drop-zone">
+                                            Arrastre aquí los archivos
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-12 align-items-center"
+                                        *ngIf="Controls.certificado.value == true">
+                                        <div class="form-group">
+                                            <label>Fecha Vencimiento del certificado</label>
+                                            <div class="input-group">
+                                                <input #basicDP="ngbDatepicker" #i18nDP="ngbDatepicker"
+                                                    [(ngModel)]="fechaCertificado" [ngModelOptions]="{standalone: true}"
+                                                    class="form-control" ngbDatepicker placeholder="dd/mm/yyyy"
+                                                    formControlName="fechaCertificado">
+                                                <div class="input-group-append">
+                                                    <button (click)="basicDP.toggle()"
+                                                        class="btn btn-outline-secondary feather icon-calendar"
+                                                        rippleEffect type="button"></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </ng-template>
+                    </li>
+                    <li ngbNavItem>
+                        <a ngbNavLink><span [data-feather]="'user'"></span>Datos de Contacto</a>
+                        <ng-template ngbNavContent>
+                            <div class="col-md-12 col-12">
+                                <div class="divider divider-dotted divider-warning">
+                                    <div class="divider-text text-dark font-weight-bolder">Persona Encargada</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-12">
+                                    <div class="form-group">
+                                        <label class="text-dark">Nombre Completo</label>
+                                        <input class="form-control " type="text" [(ngModel)]="contacto" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-12">
+                                    <div class="form-group">
+                                        <label class="text-dark">Tipo Documento</label>
+                                        <ng-select [(ngModel)]="idTipoDoc" [items]="rowsTipoDoc" [clearable]="false"
+                                            bindValue="idColumna" bindLabel="descripcion">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div *ngIf="idTipoDoc != 3" class="col-md-8 col-12">
+                                    <div class="form-group">
+                                        <label class="text-dark">N° Documento de Identidad</label>
+                                        <input class="form-control" type="text" mask="00000000" />
+                                    </div>
+                                </div>
+                                <div *ngIf="idTipoDoc == 3" class="col-md-8 col-12">
+                                    <div class="form-group">
+                                        <label class="text-dark">Otro:</label>
+                                        <input class="form-control" type="text" placeholder="Especificar" />
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-12">
+                                    <div class="form-group">
+                                        <label class="text-dark">Nacionalidad y Residencia</label>
+                                        <div class="input-group input-group-merge">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <i class="font-medium-2" data-feather="flag"></i>
+                                                </span>
+                                            </div>
+                                            <input class="form-control" type="text" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label class="text-dark">Domicilio</label>
+                                        <input class="form-control" type="text" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label class="text-dark">Puesto</label>
+                                        <div class="input-group input-group-merge">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <i class="font-medium-2" data-feather="briefcase"></i>
+                                                </span>
+                                            </div>
+                                            <input class="form-control" type="text" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label class="text-dark">Teléfono</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1">+51</span>
+                                            </div>
+                                            <input class="form-control" type="text" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label class="text-dark">Correo electrónico</label>
+                                        <div class="input-group input-group-merge">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <i class="font-medium-2" data-feather="mail"></i>
+                                                </span>
+                                            </div>
+                                            <input class="form-control" type="text" [(ngModel)]="correo" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </li>
+                    <li ngbNavItem>
+                        <a ngbNavLink><span [data-feather]="'archive'"></span>Matriz de Documentos</a>
+                        <ng-template ngbNavContent>
+                            <div class="col-md-12 col-12">
+                                <div class="divider divider-dotted divider-primary">
+                                    <div class="divider-text text-dark font-weight-bolder">Documentos</div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <ul #navWithIcons="ngbNav" class="nav-tabs" ngbNav>
+                                        <li ngbNavItem>
+                                            <a ngbNavLink><span [data-feather]="'award'"></span> Homologación
+                                                (Empresa)</a>
+                                            <ng-template ngbNavContent>
+                                                <div class="row">
+                                                    <!-- <div class="divider divider-left divider-dotted divider-primary">
+                                                        <div class="divider-text"><span class="ygcolor"
+                                                                [data-feather]="'arrow-down-right'"></span><span
+                                                                class="ml-1 ygcolor">General (Homologación)</span></div>
+                                                    </div> -->
+                                                    <div class="col-12 col-md-12">
+                                                        <div class="card card-company-table">
+                                                            <div class="card-body p-0">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-hover">
+                                                                        <thead class="centerall-header">
+                                                                            <tr>
+                                                                                <th class="utble">Nombre</th>
+                                                                                <th class="utble">Aplica (Si/No)</th>
+                                                                                <th class="utble">Tipo</th>
+                                                                                <th class="utble">Subir Archivo</th>
+                                                                                <th class="utble">Archivo</th>
+                                                                                <th class="utble">Tamaño</th>
+                                                                                <th class="utble">Acción</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody *ngFor="let row of rowsDocumentos">
+                                                                            <td>{{ row.documentoName }}</td>
+                                                                            <td style="text-align: center;">
+                                                                                <!-- [disabled]="row.aplica"  -->
+                                                                                <div
+                                                                                    class="custom-control custom-switch custom-switch-secondary">
+                                                                                    <p class="mb-50"></p>
+                                                                                    <input type="checkbox"
+                                                                                        class="custom-control-input"
+                                                                                        id="{{'d' + row.idHomologacion}}"
+                                                                                        [(ngModel)]="row.aplica" />
+                                                                                    <label class="custom-control-label"
+                                                                                        for="{{'d' + row.idHomologacion}}">
+                                                                                        <span class="switch-icon-left"
+                                                                                            style="font-size: 10px; margin-top: 3px;">SI</span>
+                                                                                        <span class="switch-icon-right"
+                                                                                            style="font-size: 10px; margin-top: 3px;">NO</span>
+                                                                                    </label>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>{{ row.tipoExtension }}</td>
+                                                                            <td>
+                                                                                <div>
+                                                                                    <fieldset class="form-group">
+                                                                                        <div class="custom-file"
+                                                                                            *ngIf="row.aplica != false && row.idEstado != 2">
+                                                                                            <input type="file"
+                                                                                                class="custom-file-input"
+                                                                                                type="file"
+                                                                                                ng2FileSelect
+                                                                                                (change)="fileOverBase(row, 1)"
+                                                                                                accept=".{{row.tipoExtension}}"
+                                                                                                [uploader]="uploader"
+                                                                                                id="file-upload-single" />
+                                                                                            <label [ngClass]="{                                                                            
+                                                                                                'border-success': row.idEstado == 2,
+                                                                                                'border-danger': row.idEstado == 3
+                                                                                                }"
+                                                                                                class="custom-file-label">Elija
+                                                                                                el archivo</label>
+                                                                                        </div>
+                                                                                    </fieldset>
+                                                                                </div>
+                                                                                <div *ngIf="row.idEstado == 2"
+                                                                                    class="d-flex justify-content-center">
+                                                                                    <div
+                                                                                        class="badge d-block badge-success">
+                                                                                        <span>Aprobado</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div *ngIf="row.idEstado == 3 && row.aplica != true"
+                                                                                    class="d-flex justify-content-center">
+                                                                                    <div
+                                                                                        class="badge d-block badge-danger">
+                                                                                        <span>Desaprobado</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>{{ row.fileName }}</td>
+                                                                            <td *ngIf="row.tipoExtension != 'ADPROV'">{{
+                                                                                row.fileTamanio | number: '.2' }} MB
+                                                                            </td>
+                                                                            <td>
+                                                                                <button
+                                                                                    *ngIf="row.fileName !== '' && row.idEstado != 2"
+                                                                                    type="button"
+                                                                                    class="btn btn-raised btn-outline-danger btn-sm"
+                                                                                    ngbTooltip="Remover Archivo"
+                                                                                    placement="top"
+                                                                                    (click)="onRemoveFile(row)"
+                                                                                    rippleEffect>
+                                                                                    <i data-feather="trash"></i>
+                                                                                </button>
+                                                                                <button
+                                                                                    *ngIf="row.idEstado == 3 && row.fileName == ''"
+                                                                                    type="button"
+                                                                                    class="btn btn-raised btn-outline-warning btn-sm"
+                                                                                    ngbTooltip="Comentarios"
+                                                                                    placement="top"
+                                                                                    (click)="onComentarios(row, COM)"
+                                                                                    rippleEffect>
+                                                                                    <i
+                                                                                        data-feather="message-circle"></i>
+                                                                                </button>
+                                                                            </td>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- <div class="col-12 col-md-6">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <div *ngFor="let row of rowsDocumentos"
+                                                                    class="row mb-1">
+                                                                    <div class="col-md-1 col-12">
+                                                                        <div class="avatar bg-light-s rounded mr-1">
+                                                                            <div class="avatar-content">
+                                                                                <i data-feather="file"
+                                                                                    class="avatar-icon font-medium-3"></i>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-5 col-12">
+                                                                        <h5>{{ row.documentoName }}</h5>
+                                                                    </div>
+                                                                    <div class="col-md-2 col-12">
+                                                                        <span>{{ row.tipoExtension }}</span>
+                                                                    </div>
+                                                                    <div class="col-md-4 col-12"
+                                                                        *ngIf="Controls.sesionPerfil.value == 3">
+                                                                        <fieldset class="form-group"
+                                                                            *ngIf="row.tipoExtension != 'ADPROV'">
+
+                                                                            <div class="custom-file"
+                                                                                (click)="fileHom(row)">
+                                                                                <input type="file"
+                                                                                    class="custom-file-input"
+                                                                                    type="file" ng2FileSelect
+                                                                                    [uploader]="uploader"
+                                                                                    id="file-upload-single" />
+                                                                                <label
+                                                                                    [ngClass]="{ 'special-border': row.upload != false}"
+                                                                                    class="custom-file-label">Elija el
+                                                                                    archivo</label>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div> -->
+                                                </div>
+                                            </ng-template>
+                                        </li>
+                                        <!-- <li ngbNavItem>
+                                            <a ngbNavLink><span [data-feather]="'globe'"></span> Auditoría (Empleados)</a>
+                                            <ng-template ngbNavContent>
+                                                <div class="row">
+                                                    <div class="col-md-12 col-12 lg-6">
+                                                        <div class="divider divider-left divider-dotted divider-primary">
+                                                            <div class="divider-text"><span class="ygcolor"
+                                                                    [data-feather]="'arrow-down-right'"></span><span
+                                                                    class="ml-1 ygcolor">General (Empleado)</span></div>
+                                                        </div>
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <div *ngFor="let row of rowsDocumentosEmpleado"
+                                                                    class="meetup-day text-left">
+                                                                    <div class="media mb-1">
+                                                                        <div class="avatar bg-light-s rounded mr-1">
+                                                                            <div class="avatar-content">
+                                                                                <i data-feather="file"
+                                                                                    class="avatar-icon font-medium-3"></i>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="media-body mg-6">
+                                                                            <h5>{{ row.documentoName }}</h5>
+                                                                        </div>
+                                                                        <div ngbDropdown class="btn-group mg-6 mr-2">
+                                                                            <div
+                                                                                class="custom-control custom-control-primary custom-checkbox">
+                                                                                <input type="checkbox" class="custom-control-input"
+                                                                                    id="{{'dCheckEmpleado' + row.idDocumentoName}}"
+                                                                                    [(ngModel)]="row.estado" disabled
+                                                                                    [ngModelOptions]="{ standalone: true }" />
+                                                                                <label class="custom-control-label"
+                                                                                    for="{{'dCheckEmpleado' + row.idDocumentoName}}">
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="" *ngIf="this.sesionPerfil == 3">                                                            
+                                                                        <fieldset class="form-group">                                                                
+                                                                            <div class="custom-file">
+                                                                                <input type="file" class="custom-file-input"
+                                                                                    type="file" ng2FileSelect
+                                                                                    [uploader]="archivosHomologacion"
+                                                                                    id="file-upload-single" />
+                                                                                <label class="custom-file-label">Elija el
+                                                                                    archivo</label>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                    </div>
+                                                                </div>                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                        </li> -->
+                                    </ul>
+                                    <div [ngbNavOutlet]="navWithIcons" class="mt-2"></div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </li>
+
+                </ul>
+                <div [ngbNavOutlet]="navWithIcons"></div>
+            </div>
+            <div class="modal-footer" style="display: block !important;">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <div style="float: right">
+                            <button (click)="onSave()" class="btn btn-primary" rippleEffect type="submit">
+                                Aceptar
+                            </button>
+                            &nbsp;
+                            <button (click)="CancelModal()" class="btn btn-secondary" rippleEffect type="button">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template #NEM let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">Registrar Información complementaria (Empleado)</h4>
+                <button (click)="modal.dismiss('Cross click')" aria-label="Close" class="close" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" ngbAutofocus tabindex="0">
+                <form [formGroup]="EmpForm">
+                    <!-- <div class="row">
+                    <div class="col-md-6 col-12">
+                        <div class="form-group">
+                            <span> Estado del Empleado</span>
+                        </div>
+                    </div>
+
+                </div> -->
+                    <!-- <ngb-progressbar type="primary" [value]="45">45%</ngb-progressbar> -->
+                    <!-- <div class="col-md-12 col-12">
+                    <div class="divider divider-secondary">
+                        <div class="divider-text">Empleado</div>
+                    </div>
+                </div> -->
+                    <div class="row">
+                        <div class="col-md-12 col-12">
+                            <div class="form-group">
+                                <label>Contratista</label>
+                                <div class="input-group-append">
+                                    <!-- [ngClass]="{ 'is-invalid': IDSubmitted && ReactiveIUForm.contratista.errors }"  -->
+                                    <input [(ngModel)]="contratista" class="form-control" type="search"
+                                        style="margin-right: 4px;" formControlName="contratista" readonly>
+                                    <button (click)="onContratistaSelect(CS)" ngbTooltip="Buscar contratista"
+                                        placement="left" class="btn btn-outline-primary" type="button">
+                                        <i data-feather="search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-12">
+                            <div class="form-group">
+                                <label>Nombres</label>
+                                <input class="form-control" type="text" formControlName="nombres" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label>Apellido Paterno</label>
+                                <input class="form-control" type="text" formControlName="apellidoPaterno" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label>Apellido Materno</label>
+                                <input class="form-control" type="text" formControlName="apellidoMaterno" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label>DNI</label>
+                                <input class="form-control" type="text" formControlName="nroDocumento"
+                                    mask="00000000" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label>Teléfono</label>
+                                <input class="form-control" type="text" formControlName="telefono" mask="000 000 000" />
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-12">
+                            <div class="form-group">
+                                <label>Direccion</label>
+                                <input class="form-control" type="text" formControlName="direccion" />
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-12 col-12">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input class="form-control" type="text" value="" />
+                            </div>
+                        </div> -->
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer" style="display: block !important;">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <div style="float: right">
+                            <button (click)="onSaveEmpleado()" class="btn btn-primary mr-1" rippleEffect type="submit">
+                                Aceptar
+                            </button>
+                            <button (click)="CancelModal()" class="btn btn-secondary" rippleEffect type="button">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template #CS let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">Búsqueda de Contratista</h4>
+                <button (click)="modal.dismiss('Cross click')" aria-label="Close" class="close" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12 col-12 d-flex justify-content-md-end mb-1">
+                                        <label class="d-flex align-items-center ml-1 utble">
+                                            <span class="d-none d-sm-inline-block mr-1">Buscar:</span>
+                                            <input (keyup)="onContratistaDropdown()"
+                                                [(ngModel)]="contratistadropdownSettings.searchString"
+                                                class="form-control" placeholder="Texto de búsqueda..." type="search" />
+                                        </label>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead class="centerall-header">
+                                                    <tr>
+                                                        <th class="width-column utble">ACCIÓN</th>
+                                                        <th class="width-column utble">⠀⠀⠀⠀CONTRATISTA⠀⠀⠀⠀</th>
+                                                        <th class="width-column utble">E-MAIL</th>
+                                                        <th class="width-column utble">TELÉFONO</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let row of rowsContratistaDropdown"
+                                                        class="cursor-pointer">
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <a title="Click para seleccionar al Contratista"
+                                                                    [class.selectedRow]="rowDiscIsSelected(row.razonSocial)"
+                                                                    (click)="onRowClick(row)">
+                                                                    <i class="text-primary cursor-pointer"
+                                                                        data-feather="check-circle"></i>
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                        <td><span>{{ row.razonSocial }}</span></td>
+                                                        <td><span>{{ row.correo }}</span></td>
+                                                        <td><span>{{ row.telefono }}</span></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-1">
+                                    <div class="col-12 col-md-12 utble mg-6 d-flex justify-content-end">
+                                        <ngb-pagination [collectionSize]="contratistadropdownSettings.colletionSize"
+                                            [(page)]="contratistadropdownSettings.page"
+                                            (pageChange)="onContratistaDropdown()" [rotate]="true"
+                                            [boundaryLinks]="true" [pageSize]="contratistadropdownSettings.pageSize"
+                                            class="d-flex justify-content-center">
+                                            <ng-template ngbPaginationFirst>⠀<span data-feather="skip-back"></span>
+                                            </ng-template>
+                                            <ng-template ngbPaginationPrevious><span [data-feather]="'chevron-left'"
+                                                    [class]="'font-weight-bolder'"></span>⠀
+                                            </ng-template>
+                                            <ng-template ngbPaginationNext>⠀<span [data-feather]="'chevron-right'"
+                                                    [class]="'font-weight-bolder'"></span>
+                                            </ng-template>
+                                            <ng-template ngbPaginationLast><span data-feather="skip-forward"></span>⠀
+                                            </ng-template>
+                                        </ngb-pagination>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <div style="float: right">
+                            <button (click)="onCloseConstratista()" class="btn btn-secondary" rippleEffect
+                                type="button">
+                                Cerrar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template #COM let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">Comentarios (Archivo Desaprobado):</h4>
+                <button (click)="modal.dismiss('Cross click')" aria-label="Close" class="close" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" ngbAutofocus tabindex="0">
+                <form [formGroup]="General">
+                    <div class="row">
+                        <div class="col-md-12 col-12">
+                            <div class="form-group">
+                                <label class="text-dark font-weight-bolder">Motivo:</label>
+                                <textarea rows="5" class="form-control" style="resize: none;"
+                                    formControlName="observacion" disabled></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <div style="float: right">
+                            <button (click)="onCloseComentarios()" class="btn btn-secondary" rippleEffect type="button">
+                                Cerrar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <block-ui></block-ui>
+    </div>
+</div>

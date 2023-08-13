@@ -1,0 +1,26 @@
+<!-- Coming soon page-->
+<div class="misc-wrapper">
+  <a class="brand-logo" href="javascript:void(0);">
+    <img src="{{ coreConfig.app.appLogoImage }}" alt="brand-logo" height="28" />
+    <h2 class="brand-text text-primary ml-1">Prototype Parconsil</h2></a
+  >
+  <div class="misc-inner p-2 p-sm-3">
+    <div class="w-100 text-center">
+      <h2 class="mb-1">Estamos lanzando pronto 🚀</h2>
+      <p class="mb-3">Estamos creando algo increíble.</p>
+      <a class="btn btn-primary mb-2 btn-sm-block" routerLink="/comercial/solicitudes/" rippleEffect
+      >Volver a Inicio</a
+      >
+      <img
+        class="img-fluid"
+        [src]="
+          coreConfig.layout.skin === 'dark'
+            ? 'assets/images/pages/coming-soon-dark.svg'
+            : 'assets/images/pages/coming-soon.svg'
+        "
+        alt="Coming soon page"
+      />
+    </div>
+  </div>
+</div>
+<!-- / Coming soon page-->

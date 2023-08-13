@@ -1,0 +1,392 @@
+<div class="content-wrapper">
+    <div class="content-body">
+        <app-content-header class="utble" [contentHeader]="contentHeader"></app-content-header>
+        <section id="ngx-datatable-multi-purpose">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-2 col-12 justify-content-start" style="margin-top: 14px;">
+                            <div class="col-md-12 col-12">
+                                <div
+                                    class="d-flex justify-content-between align-items-center pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+                                    <label class="d-flex align-items-center"><span
+                                            class="d-none d-sm-inline-block">Mostrar⠀</span>
+                                        <ng-select (change)="onReloadPage()" [clearable]="false"
+                                            [items]="forPageOptions" [(ngModel)]="usuarioSettings.pageSize">
+                                        </ng-select>
+                                        <span class="d-none d-sm-inline-block">⠀entradas</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="col-md-12 col-12">
+                                <div class="pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+                                    <!-- <div class="demo-inline-spacing">
+                                        <span>Estado: </span>
+                                        <div class="custom-control custom-control-primary custom-radio">
+                                            <input type="radio" id="customRadio3" name="customRadio" value="0"
+                                                class="custom-control-input" (change)="onClickBtn(0)" checked>
+                                            <label class="custom-control-label" for="customRadio3">Todos</label>
+                                        </div>
+                                        <div class="custom-control custom-control-success custom-radio">
+                                            <input type="radio" id="customRadio1" name="customRadio" value="1"
+                                                class="custom-control-input" (change)="onClickBtn(1)">
+                                            <label class="custom-control-label" for="customRadio1">Activo</label>
+                                        </div>
+                                        <div class="custom-control custom-control-warning custom-radio">
+                                            <input type="radio" id="customRadio2" name="customRadio" value="2"
+                                                class="custom-control-input" (change)="onClickBtn(2)">
+                                            <label class="custom-control-label" for="customRadio2">Inactivo</label>
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12 d-flex justify-content-md-end">
+                            <div class="d-flex justify-content-end align-items-center m-1">
+                                <!-- *ngIf="access.flagWrite" -->
+                                <button (click)="onNewUser(modal)" class="btn btn-primary f-w mr-1" rippleEffect>
+                                    <i class="mr-0 mr-sm-1" data-feather="plus-square"></i><span
+                                        class="d-none d-sm-inline-block">Agregar Usuario</span>
+                                </button>
+
+                                <button (click)="onReloadPage()" class="btn btn-secondary f-w mr-1" rippleEffect>
+                                    <i class="mr-0 mr-sm-1" data-feather="refresh-cw"></i><span
+                                        class="d-none d-sm-inline-block">Refrescar</span>
+                                </button>
+                                <div
+                                    class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0 space-left">
+                                    <label class="d-flex align-items-center">Buscar
+                                        <input (keyup)="onReloadPage()" [(ngModel)]="usuarioSettings.searchString"
+                                            class="form-control ml-25" placeholder="Texto de búsqueda..." type="search">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ngx-datatable-multi-purpose">
+            <div class="card">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-md-12 col-12">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead class="centerall-header">
+                                        <tr>
+                                            <th class="utble">ACCIÓN</th>
+                                            <th class="utble">USUARIO</th>
+                                            <th class="utble">NOMBRES</th>
+                                            <th class="utble">EMAIL</th>
+                                            <!-- <th class="utble">TELÉFONO</th> -->
+                                            <th class="utble">ROL</th>
+                                            <th class="utble">TIPO DE USUARIO</th>
+                                            <th class="utble">EMPRESA</th>
+                                            <th class="utble">ESTADO</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let row of rowsUsuario" class="cursor-pointer">
+                                            <td>
+                                                <div class="d-flex justify-content-center align-items-center">
+                                                    <div (click)="onEditUser(modal, row)"
+                                                        class="avatar bg-light-primary mr-1">
+                                                        <div class="avatar-content">
+                                                            <a ngbTooltip="Editar" placement="top"
+                                                                href="javascript:void(0)">
+                                                                <i data-feather="edit" class="font-medium-3"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div (click)="onDeleteUser(row)"
+                                                        class="avatar bg-light-danger mr-1">
+                                                        <div class="avatar-content">
+                                                            <a ngbTooltip="Eliminar" placement="top"
+                                                                href="javascript:void(0)">
+                                                                <i data-feather="trash-2" class="font-medium-3"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="c-w">{{ row.usuario }}</td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="avatar mr-1 ml-0 bg-light-primary">
+                                                        <div class="avatar-content">{{ row.fullName
+                                                            | initials
+                                                            }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="cell-line-height">
+                                                        <p class="mb-25 c-w">
+                                                            {{ row.fullName }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="c-w">{{ row.email }}</td>
+                                            <!-- <td class="c-w">{{ row.telefono }}</td> -->
+                                            <td class="c-w">{{ row.idRolName }}</td>
+                                            <td class="c-w">{{ row.idTipoTablaUsuarioName }}</td>
+                                            <td class="c-w" *ngIf="row.idTipoTablaUsuarioName == 'ADPROV' ">PARCONSIL</td>
+                                            <td class="c-w" *ngIf="row.idTipoTablaUsuarioName != 'ADPROV' ">{{row.idUserTablaUsuarioName}}</td>
+                                            <td class="c-w utble">
+                                                <div class="badge badge-pill" [ngClass]="{
+                                                                    'badge-light-success': row.idEstado == 1,
+                                                                    'badge-light-warning': row.idEstado == 2
+                                                                    }">
+                                                    {{ row.estado }}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12 col-md-5 col-lg-5">
+                            <span *ngIf="usuarioSettings.colletionSize == 0" class="ml-2" style="color: #b9b9c3;">
+                                No hay filas
+                            </span>
+                            <span *ngIf="usuarioSettings.colletionSize == 1" class="ml-2" style="color: #b9b9c3;">{{
+                                usuarioSettings.colletionSize }} Fila</span>
+                            <span *ngIf="usuarioSettings.colletionSize > 1" class="ml-2" style="color: #b9b9c3;">{{
+                                usuarioSettings.colletionSize }} Filas</span>
+                        </div>
+                        <div class="col-12 col-md-7 col-lg-7 utble d-flex justify-content-end">
+                            <ngb-pagination [collectionSize]="usuarioSettings.colletionSize" style="margin-right: 13px;"
+                                [(page)]="usuarioSettings.page" (pageChange)="onReloadPage()" [rotate]="true"
+                                [boundaryLinks]="true" [pageSize]="usuarioSettings.pageSize">
+                                <ng-template ngbPaginationFirst>⠀<span data-feather="skip-back"></span>
+                                </ng-template>
+                                <ng-template ngbPaginationPrevious><span [data-feather]="'chevron-left'"
+                                        [class]="'font-weight-bolder'"></span>⠀
+                                </ng-template>
+                                <ng-template ngbPaginationNext>⠀<span [data-feather]="'chevron-right'"
+                                        [class]="'font-weight-bolder'"></span>
+                                </ng-template>
+                                <ng-template ngbPaginationLast><span data-feather="skip-forward"></span>⠀
+                                </ng-template>
+                            </ngb-pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <ng-template #modal let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">Registrar Información complementaria</h4>
+                <button (click)="modal.dismiss('Cross click')" aria-label="Close" class="close" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" ngbAutofocus tabindex="0">
+                <form [formGroup]="UserForm">
+                    <div class="row">
+                        <div class="col-md-12 col-12">
+                            <div class="divider divider-dotted divider-secondary">
+                                <div class="divider-text">Info. complementaria</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label>Usuario</label>
+                                <input class="form-control" type="text" formControlName="usuario"
+                                    [ngClass]="{ 'is-invalid': IDSubmitted && UControls.usuario.errors }"
+                                    placeholder="Escriba su nombre" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label>Contraseña</label>
+                                <div class="input-group form-password-toggle input-group-merge">
+                                    <input formControlName="clave" [type]="passwordTextTypeOld ? 'text' : 'password'"
+                                        [ngClass]="{ 'is-invalid': IDSubmitted && UControls.clave.errors }"
+                                        class="form-control" id="account-old-password" name="password"
+                                        placeholder="Escriba una contraseña">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text cursor-pointer"><i class="feather font-small-4"
+                                                [ngClass]="{
+                                          'icon-eye-off': passwordTextTypeOld,
+                                          'icon-eye': !passwordTextTypeOld
+                                        }" (click)="showPassword(1)"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label>Nombres</label>
+                                <input formControlName="nombres" class="form-control" type="text"
+                                    [ngClass]="{ 'is-invalid': IDSubmitted && UControls.nombres.errors }"
+                                    placeholder="Escriba su nombre" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label>Apellido Paterno</label>
+                                <input formControlName="apellidoPaterno" class="form-control" type="text"
+                                    [ngClass]="{ 'is-invalid': IDSubmitted && UControls.apellidoPaterno.errors }"
+                                    placeholder="Escriba su a.paterno" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label>Apellido Materno</label>
+                                <input formControlName="apellidoMaterno" class="form-control" type="text"
+                                    [ngClass]="{ 'is-invalid': IDSubmitted && UControls.apellidoMaterno.errors }"
+                                    placeholder="Escriba su a.materno" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label>Teléfono</label>
+                                <input formControlName="telefono" class="form-control" type="text"
+                                    [ngClass]="{ 'is-invalid': IDSubmitted && UControls.telefono.errors }"
+                                    placeholder="Escriba su teléfono" mask="000 000 000" />
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-12">
+                            <div class="form-group">
+                                <label>E-mail</label>
+                                <input formControlName="email" class="form-control" type="text" required email
+                                    [ngClass]="{ 'is-invalid': IDSubmitted && UControls.email.errors }"
+                                    placeholder="Escriba su correo" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divider divider-dotted divider-primary">
+                        <div class="divider-text">Asignación de Rol</div>
+                    </div>
+                    <div class="pt-1 pb-1">
+                        <p class="card-text ml-2"></p>
+                        <div class="row">
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label>Seleccionar Tipo de Usuario:</label>
+                                    <ng-select [(ngModel)]="TypeUserSelected"
+                                        (ngModelChange)="updateRol()"
+                                        [ngModelOptions]="{standalone: true}" [items]="rowsTypeUser"
+                                        [clearable]="false" bindLabel="nombre"
+                                        placeholder="Seleccionar" bindValue="id">
+                                    </ng-select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label>Seleccionar Rol:</label>
+                                    <ng-select [(ngModel)]="RolSelected"
+                                        [ngModelOptions]="{standalone: true}" [items]="rowsRol"
+                                        [clearable]="false" bindLabel="nombreRol"
+                                        placeholder="Seleccionar" bindValue="idRol">
+                                    </ng-select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="TypeUserSelected === 2">
+                            <div class="col-md-6 col-6">
+                                <div class="form-group">
+                                    <label>Seleccionar Cliente:</label>
+                                    <ng-select [(ngModel)]="ClienteSelected"
+                                        [ngModelOptions]="{standalone: true}" [items]="rowsCliente"
+                                        [clearable]="false" bindLabel="razonSocial"
+                                        placeholder="Seleccionar" bindValue="idCliente">
+                                    </ng-select>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="table-responsive">
+                            <table class="table table-class table-striped table-borderless">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th class="width-column utble">Menu</th>
+                                        <th class="width-column utble">Leer</th>
+                                        <th class="width-column utble">Crear</th>
+                                        <th class="width-column utble">Editar</th>
+                                        <th class="width-column utble">Eliminar</th>
+                                        <th class="width-column utble">Exportar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let row of rowMenu">
+                                        <td class="utbleleft">{{row.menu}}</td>
+                                        <td>
+                                            <div class="custom-control custom-control-secondary custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                    id="{{'readCheck' + row.idMenu}}" [(ngModel)]="row.flagLectura"
+                                                    [ngModelOptions]="{ standalone: true }" />
+                                                <label class="custom-control-label"
+                                                    for="{{'readCheck' + row.idMenu}}"></label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="custom-control custom-control-warning custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                    id="{{'createCheck' + row.idMenu}}" [(ngModel)]="row.flagEscritura"
+                                                    [ngModelOptions]="{ standalone: true }" />
+                                                <label class="custom-control-label"
+                                                    for="{{'createCheck' + row.idMenu}}"></label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="custom-control custom-control-warning custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                    id="{{'editCheck' + row.idMenu}}" [(ngModel)]="row.flagEditar"
+                                                    [ngModelOptions]="{ standalone: true }" />
+                                                <label class="custom-control-label"
+                                                    for="{{'editCheck' + row.idMenu}}"></label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="custom-control custom-control-danger custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                    id="{{'deleteCheck' + row.idMenu}}" [(ngModel)]="row.flagEliminar"
+                                                    [ngModelOptions]="{ standalone: true }" />
+                                                <label class="custom-control-label"
+                                                    for="{{'deleteCheck' + row.idMenu}}"></label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="custom-control custom-control-success custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                    id="{{'exportCheck' + row.idMenu}}" [(ngModel)]="row.flagExportar"
+                                                    [ngModelOptions]="{ standalone: true }" />
+                                                <label class="custom-control-label"
+                                                    for="{{'exportCheck' + row.idMenu}}"></label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div> -->
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer" style="display: block !important;">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <div style="float: right">
+                            <button (click)="onSaveUser()" class="btn btn-primary mr-1" rippleEffect type="submit">
+                                Aceptar
+                            </button>
+                            <button (click)="modal.dismiss()" class="btn btn-secondary" rippleEffect type="button">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <block-ui></block-ui>
+    </div>
+</div>

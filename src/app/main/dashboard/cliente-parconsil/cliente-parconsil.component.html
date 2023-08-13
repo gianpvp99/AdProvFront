@@ -1,0 +1,570 @@
+<div class="content-wrapper p-0">
+    <div class="content-body">
+        <!-- <app-content-header class="utble" [contentHeader]="contentHeader"></app-content-header> -->
+        <h2 class="mb-1">Clientes
+            <span class="vertical-line" style="margin-left: 5px; margin-right: 10px;"></span>
+            <span style="font-size: 14px;">
+                <span style="margin-right: 5px; margin-left: 5px; "> Inicio</span>
+
+                <span data-feather="chevron-right" style="margin-right: 5px; margin-top: 4px;"></span>
+
+                <span style="margin-right: 5px; margin-left: 5px;"> Cliente</span>
+
+            </span>
+        </h2>
+
+        <section id="ngx-datatable-multi-purpose">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 col-12">
+                            <label class="d-flex align-items-center utble ml-2 mt-1">
+                                <span class="mr-1">Mostrar</span>
+                                <ng-select (change)="onReloadChanged()" [clearable]="false" [items]="forPageOptions"
+                                    [(ngModel)]="clienteSettings.pageSize">
+                                </ng-select>
+                                <span class="ml-1">Filas</span>
+                            </label>
+                        </div>
+                        <div class="col-md-9 col-12 d-flex justify-content-md-end">
+                            <div class="d-flex justify-content-end align-items-center">
+                                <button (click)="onNewCliente(NC)" class="btn btn-primary ml-1"
+                                    style="margin-top: 5px;">
+                                    <i class="mr-0 mr-sm-1" data-feather="plus-square"></i><span
+                                        class="d-none d-sm-inline-block">Agregar Cliente</span>
+                                </button>
+                                <button (click)="onReloadChanged()" class="btn btn-secondary ml-1"
+                                    style="margin-top: 5px;">
+                                    <i class="mr-0 mr-sm-1" data-feather="refresh-cw"></i><span
+                                        class="d-none d-sm-inline-block">Refrescar</span>
+                                </button>
+
+                                <label class="d-flex align-items-center ml-1 utble">
+                                    <span class="d-none d-sm-inline-block mr-1">Buscar:</span>
+                                    <div class="input-group">
+                                        <input type="text" (change)="onReloadChanged()" class="form-control"
+                                            placeholder="Texto de búsqueda..." aria-label="Amount"
+                                            [(ngModel)]="clienteSettings.searchString" />
+                                        <div class="input-group-append">
+                                            <button (click)="onClearFilter()" class="btn btn-outline-primary"
+                                                type="button" rippleEffect>
+                                                <i data-feather="trash-2"></i>
+                                            </button>
+                                            <button (click)="onReloadChanged()" class="btn btn-outline-primary"
+                                                type="button" rippleEffect>
+                                                <i data-feather="search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="card card-company-table">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="centerall-header">
+                                    <tr>
+                                        <th class="utble text-nowrap" *ngIf="this.sesionPerfil != 4">ACCIÓN</th>
+                                        <th class="utble text-nowrap">RUC</th>
+                                        <th class="utble text-nowrap">RAZÓN SOCIAL</th>
+                                        <th class="utble text-nowrap">TELÉFONO</th>
+                                        <th class="utble text-nowrap">CORREO</th>
+                                        <th class="utble text-nowrap">ESPECIALISTA ENCARGADO</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let row of rowsClientes" class="cursor-pointer">
+                                        <td *ngIf="this.sesionPerfil != 4">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <button (click)="onEditCliente(NC, row)" ngbTooltip="Editar"
+                                                    placement="top"
+                                                    class="btn btn-icon btn-icon rounded-circle btn-outline-primary mr-1"
+                                                    rippleEffect>
+                                                    <span [data-feather]="'edit'"></span>
+                                                </button>
+
+                                                <button [routerLink]="['/dashboard/cliente-parconsil/documentos']"
+                                                    [queryParams]="{IdCliente: row.idCliente, PuntajeMin: row.puntajeMinimo }"
+                                                    queryParamsHandling="merge" skipLocationChange
+                                                    ngbTooltip="Configuración Documentos" placement="top"
+                                                    class="btn btn-icon btn-icon rounded-circle btn-outline-warning mr-1"
+                                                    rippleEffect>
+                                                    <span [data-feather]="'archive'"></span>
+                                                </button>
+
+                                                <button
+                                                    [routerLink]="['/dashboard/cliente-parconsil/contratista-cliente']"
+                                                    [queryParams]="{IdCliente: row.idCliente, Ruc: row.ruc, RazonSocial: row.razonSocial,
+                                                    Direccion: row.direccion, Ubigeo: row.idUbigeo, Telefono: row.telefono, Correo: row.correo,
+                                                    Especialista: row.nombres, FechaCreacion: row.fechaCreacion }"
+                                                    queryParamsHandling="merge" skipLocationChange type="button"
+                                                    ngbTooltip="Contratistas" placement="top"
+                                                    class="btn btn-icon btn-icon rounded-circle btn-outline-secondary mr-1"
+                                                    rippleEffect>
+                                                    <span [data-feather]="'users'"></span>
+                                                </button>
+
+                                                <button (click)="onDeleteCliente(row)" ngbTooltip="Eliminar"
+                                                    placement="top"
+                                                    class="btn btn-icon btn-icon rounded-circle btn-outline-info"
+                                                    rippleEffect>
+                                                    <span [data-feather]="'trash-2'"></span>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td class="c-w">{{ row.ruc }}</td>
+                                        <td class="f-w">{{ row.razonSocial}}</td>
+                                        <td class="c-w">{{ row.telefono }}</td>
+                                        <td class="c-w">{{ row.correo }}</td>
+                                        <td>
+                                            <div class="d-flex justify-content-center align-items-center">
+                                                <div *ngIf="false; else customAvatar">
+                                                    <img alt="datatable-avatar" class="rounded-circle mr-1" height="32"
+                                                        width="32" />
+                                                    <!--                    src="assets/images/portrait/small/{{ row.foto }}"-->
+                                                </div>
+                                                <ng-template #customAvatar>
+                                                    <div class="avatar mr-1 ml-0 bg-light-primary">
+                                                        <div class="avatar-content">{{ row.nombres | initials }}</div>
+                                                    </div>
+                                                </ng-template>
+                                                <div class="cell-line-height">
+                                                    <p class="font-medium-1 font-weight-bold line-height-1 mb-25"
+                                                        style="font-size: 13px !important;">
+                                                        {{ row.nombres }}
+                                                    </p>
+                                                    <span class="text-muted font-small-3 c-w"> {{ row.fechaCreacion
+                                                        }}</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12 col-md-5 col-lg-5">
+                            <span *ngIf="clienteSettings.colletionSize == 0" class="ml-2" style="color: #b9b9c3;">
+                                No hay filas
+                            </span>
+                            <span *ngIf="clienteSettings.colletionSize == 1" class="ml-2" style="color: #b9b9c3;">{{
+                                clienteSettings.colletionSize }} Fila</span>
+                            <span *ngIf="clienteSettings.colletionSize > 1" class="ml-2" style="color: #b9b9c3;">{{
+                                clienteSettings.colletionSize }} Filas</span>
+                        </div>
+                        <div class="col-12 col-md-7 col-lg-7 utble d-flex justify-content-end">
+                            <ngb-pagination [collectionSize]="clienteSettings.colletionSize" style="margin-right: 13px;"
+                                [(page)]="clienteSettings.page" (pageChange)="onReloadChanged()" [rotate]="true"
+                                [boundaryLinks]="true" [pageSize]="clienteSettings.pageSize" [maxSize]="3">
+                                <ng-template ngbPaginationFirst>⠀<span data-feather="skip-back"></span>
+                                </ng-template>
+                                <ng-template ngbPaginationPrevious><span [data-feather]="'chevron-left'"
+                                        [class]="'font-weight-bolder'"></span>⠀
+                                </ng-template>
+                                <ng-template ngbPaginationNext>⠀<span [data-feather]="'chevron-right'"
+                                        [class]="'font-weight-bolder'"></span>
+                                </ng-template>
+                                <ng-template ngbPaginationLast><span data-feather="skip-forward"></span>⠀
+                                </ng-template>
+                            </ngb-pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <ng-template #NC let-modal>
+            <div class="modal-header utble">
+                <h4 class="modal-title" id="myModalLabel1" style="flex: auto;">{{ title }}</h4>
+                <button (click)="modal.dismiss('Cross click')" aria-label="Close" class="close" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" ngbAutofocus tabindex="0">
+                <ul #navWithIcons="ngbNav" class="nav-tabs" ngbNav>
+                    <li ngbNavItem>
+                        <a ngbNavLink><span [data-feather]="'users'"></span>Cliente</a>
+                        <ng-template ngbNavContent>
+                            <div class="row">
+                                <div class="col-md-12 col-12">
+                                    <form [formGroup]="CliForm">
+                                        <div class="row">
+                                            <div class="col-md-12 col-12">
+                                                <div class="divider divider-dotted divider-warning">
+                                                    <div class="divider-text text-dark utble">Datos del Cliente</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-12">
+                                                <div class="form-group">
+                                                    <label class="utble">RUC:</label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" formControlName="ruc"
+                                                            maxlength="11"
+                                                            [ngClass]="{ 'is-invalid': IDSubmitted && CControls.ruc.errors }"
+                                                            placeholder="Buscar..." aria-describedby="button-addon2" />
+                                                        <div class="input-group-append">
+                                                            <button (click)="onDocumentoSearch()"
+                                                                class="btn btn-outline-primary" type="button">
+                                                                <i data-feather="search"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-12">
+                                                <div class="form-group">
+                                                    <label class="utble">Cliente:</label>
+                                                    <!-- (focus)="focus$.next($any($event).target.value)" -->
+                                                    <!-- (click)="click$.next($any($event).target.value)" -->
+                                                    <!-- (selectItem)="onAutoCompleteChange($event)" -->
+                                                    <!-- [ngbTypeahead]="search" -->
+                                                    <!-- #instance="ngbTypeahead" -->
+                                                    <input id="typeahead-focus" class="form-control" type="text"
+                                                        formControlName="razonSocial"
+                                                        [ngClass]="{ 'is-invalid': IDSubmitted && CControls.razonSocial.errors }">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-12">
+                                                <div class="form-group">
+                                                    <label class="utble">Dirección:</label>
+                                                    <input ID="IUDirProveedor" class="form-control" type="text"
+                                                        formControlName="direccion"
+                                                        [ngClass]="{ 'is-invalid': IDSubmitted && CControls.direccion.errors }">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <label class="utble">Puntaje mínimo (Homologación):</label>
+                                                    <input class="form-control" type="number"
+                                                        formControlName="puntajemin" maxlength="4"
+                                                        [ngClass]="{ 'is-invalid': IDSubmitted && CControls.puntajemin.errors }">
+                                                    <div *ngIf="CControls.puntajemin.errors" class="invalid-feedback">
+                                                        <div *ngIf="CControls.puntajemin.errors.required">* Ejem: 1000
+                                                            puntos
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <label class="utble">Teléfono:</label>
+                                                    <input class="form-control" type="text" formControlName="telefono"
+                                                        mask="000 000 000"
+                                                        [ngClass]="{ 'is-invalid': IDSubmitted && CControls.telefono.errors }">
+                                                    <div *ngIf="CControls.telefono.errors" class="invalid-feedback">
+                                                        <div *ngIf="CControls.telefono.errors.required">* Campo
+                                                            Obligatorio
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-12">
+                                                <div class="form-group">
+                                                    <label class="utble">Correo:</label>
+                                                    <input class="form-control" type="text" formControlName="correo"
+                                                        [ngClass]="{ 'is-invalid': IDSubmitted && CControls.correo.errors }">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <label class="utble">Sector:</label>
+                                                    <ng-select [(ngModel)]="idTipoDoc"
+                                                        [ngModelOptions]="{standalone: true}" [items]="rowsTipoDoc"
+                                                        [clearable]="false" bindLabel="descripcion"
+                                                        bindValue="idColumna" placeholder="Seleccionar">
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <label class="utble">Régimen:</label>
+                                                    <ng-select [(ngModel)]="idRegimen"
+                                                        [ngModelOptions]="{standalone: true}" [items]="rowsRegimen"
+                                                        [clearable]="false" bindLabel="descripcion"
+                                                        placeholder="Seleccionar" bindValue="idColumna">
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </li>
+                    <li ngbNavItem>
+                        <a ngbNavLink><span [data-feather]="'layers'"></span> Proyecto</a>
+                        <ng-template ngbNavContent>
+                            <div class="row">
+                                <div class="col-md-12 col-12">
+                                    <form [formGroup]="ProyectoForm">
+                                        <div class="row">
+                                            <div class="col-md-12 col-12">
+                                                <div class="divider divider-dotted divider-info">
+                                                    <div class="divider-text text-dark utble">Proyectos del Cliente
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div *ngIf="PControls.idEstadoProyecto.value == 1"
+                                                class="col-md-12 col-12 utble">
+                                                <div class="badge d-block badge-light-primary">
+                                                    <i class="mr-25" data-feather="plus-square"></i>
+                                                    <span>{{ PControls.estadoProyecto.value }}</span>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="PControls.idEstadoProyecto.value == 2"
+                                                class="col-md-12 col-12 utble">
+                                                <div class="badge d-block badge-light-warning">
+                                                    <i class="mr-25" data-feather="edit"></i>
+                                                    <span>{{ PControls.estadoProyecto.value }}</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-8 col-12 mt-1">
+                                                <div class="form-group">
+                                                    <label class="utble">Nombre Proyecto:</label>
+                                                    <input class="form-control" type="text" formControlName="proyecto"
+                                                        [ngClass]="{ 'is-invalid': PRSubmitted && PControls.proyecto.errors }"
+                                                        maxlength="60" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4 col-12" style="margin-top: 37px">
+                                                <button *ngIf="PControls.tipoEstado.value == false"
+                                                    (click)="onProyectoSave()" class="btn btn-icon btn-primary mr-1"
+                                                    ngbTooltip="Agregar" placement="top" type="button" rippleEffect>
+                                                    <span [data-feather]="'plus-circle'"></span>
+                                                </button>
+                                                <button *ngIf="PControls.tipoEstado.value == true"
+                                                    (click)="onProyectoSave()" class="btn btn-icon btn-success mr-1"
+                                                    ngbTooltip="Actualizar" placement="top" type="button" rippleEffect>
+                                                    <span [data-feather]="'save'"></span>
+                                                </button>
+
+                                                <button (click)="onProyectoClean()" class="btn btn-icon btn-warning"
+                                                    [disabled]="bagdeActiveP" ngbTooltip="Limpiar" placement="top"
+                                                    rippleEffect tooltipClass="fadeInAnimation" type="button">
+                                                    <span [data-feather]="'scissors'"></span>
+                                                </button>
+                                            </div>
+
+                                            <div class="col-md-8 col-12">
+                                                <div class="form-group">
+                                                    <label class="utble">Responsable:</label>
+                                                    <input class="form-control" type="text"
+                                                        formControlName="responsable"
+                                                        [ngClass]="{ 'is-invalid': PRSubmitted && PControls.responsable.errors }"
+                                                        maxlength="40" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12 col-12">
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover">
+                                                        <thead class="centerall-header">
+                                                            <tr>
+                                                                <th class="width-column utble" style="width: 20%;">
+                                                                    ACCIÓN</th>
+                                                                <th class="width-column utble" style="width: 40%;">
+                                                                    PROYECTO
+                                                                </th>
+                                                                <th class="width-column utble" style="width: 40%;">
+                                                                    RESPONSABLE
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let row of rowsProyecto" class="cursor-pointer">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div (click)="onProyectoEdit(row)"
+                                                                            class="avatar bg-light-primary mr-1">
+                                                                            <div class="avatar-content">
+                                                                                <a ngbTooltip="Editar" placement="top"
+                                                                                    href="javascript:void(0)">
+                                                                                    <i data-feather="edit"
+                                                                                        class="font-medium-3"></i>
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div (click)="onProyectoDelete(row)"
+                                                                            class="avatar bg-light-danger mr-1">
+                                                                            <div class="avatar-content">
+                                                                                <a ngbTooltip="Eliminar" placement="top"
+                                                                                    href="javascript:void(0)">
+                                                                                    <i data-feather="trash-2"
+                                                                                        class="font-medium-3"></i>
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="c-w">{{ row.proyecto }}</td>
+                                                                <td class="c-w">{{ row.responsable }}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </li>
+                    <li ngbNavItem>
+                        <a ngbNavLink><span class="utble" [data-feather]="'globe'"></span>Grupos</a>
+                        <ng-template ngbNavContent>
+                            <div class="row">
+                                <div class="col-md-12 col-12">
+                                    <form [formGroup]="GrupoForm">
+                                        <div class="row">
+                                            <div class="col-md-12 col-12">
+                                                <div class="divider divider-dotted divider-info">
+                                                    <div class="divider-text text-dark utble">Grupos</div>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="GControls.idEstadoGrupo.value == 1"
+                                                class="col-md-12 col-12 utble">
+                                                <div class="badge d-block badge-light-primary">
+                                                    <i class="mr-25" data-feather="plus-square"></i>
+                                                    <span>{{ GControls.estadoGrupo.value }}</span>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="GControls.idEstadoGrupo.value == 2"
+                                                class="col-md-12 col-12 utble">
+                                                <div class="badge d-block badge-light-warning">
+                                                    <i class="mr-25" data-feather="edit"></i>
+                                                    <span>{{ GControls.estadoGrupo.value }}</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-12 mt-1">
+                                                <div class="form-group">
+                                                    <label class="utble">Nombre Grupo:</label>
+                                                    <input formControlName="nombreGrupo" class="form-control"
+                                                        [ngClass]="{ 'is-invalid': GRSubmitted && GControls.nombreGrupo.errors }"
+                                                        type="text" maxlength="40" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-12" style="margin-top: 37px">
+                                                <button *ngIf="GControls.tipoEstado.value == false"
+                                                    (click)="onSaveGrupos()" class="btn btn-icon btn-primary mr-1"
+                                                    ngbTooltip="Agregar" placement="top" type="button" rippleEffect>
+                                                    <span [data-feather]="'plus-circle'"></span>
+                                                </button>
+                                                <button *ngIf="GControls.tipoEstado.value == true"
+                                                    (click)="onSaveGrupos()" class="btn btn-icon btn-success mr-1"
+                                                    ngbTooltip="Actualizar" placement="top" type="button" rippleEffect>
+                                                    <span [data-feather]="'save'"></span>
+                                                </button>
+
+                                                <button (click)="onGrupoClean()" class="btn btn-icon btn-warning"
+                                                    [disabled]="bagdeActive" ngbTooltip="Limpiar" placement="top"
+                                                    rippleEffect tooltipClass="fadeInAnimation" type="button">
+                                                    <span [data-feather]="'scissors'"></span>
+                                                </button>
+                                            </div>
+
+                                            <div class="col-md-12 col-12">
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover">
+                                                        <thead class="centerall-header">
+                                                            <tr>
+                                                                <th class="width-column utble" style="width: 30%;">
+                                                                    ACCIÓN</th>
+                                                                <th class="width-column utble" style="width: 70%;">GRUPO
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let row of rowsGrupo" class="cursor-pointer">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div (click)="onGrupoEdit(row)"
+                                                                            class="avatar bg-light-primary mr-1">
+                                                                            <div class="avatar-content">
+                                                                                <a ngbTooltip="Editar" placement="top"
+                                                                                    href="javascript:void(0)">
+                                                                                    <i data-feather="edit"
+                                                                                        class="font-medium-3"></i>
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div (click)="onGrupoDelete(row)"
+                                                                            class="avatar bg-light-danger mr-1">
+                                                                            <div class="avatar-content">
+                                                                                <a ngbTooltip="Eliminar" placement="top"
+                                                                                    href="javascript:void(0)">
+                                                                                    <i data-feather="trash-2"
+                                                                                        class="font-medium-3"></i>
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="c-w">{{ row.nombreGrupo }}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                            <!-- <div class="row mt-1">
+                                                <div class="col-12 col-md-12 utble mg-6 d-flex justify-content-end">
+                                                    <ngb-pagination [collectionSize]="contratistadropdownSettings.colletionSize"
+                                                        [(page)]="contratistadropdownSettings.page"
+                                                        (pageChange)="onContratistaDropdown()" [rotate]="true"
+                                                        [boundaryLinks]="true" [pageSize]="contratistadropdownSettings.pageSize"
+                                                        class="d-flex justify-content-center">
+                                                        <ng-template ngbPaginationFirst>⠀<span data-feather="skip-back"></span>
+                                                        </ng-template>
+                                                        <ng-template ngbPaginationPrevious><span [data-feather]="'chevron-left'"
+                                                                [class]="'font-weight-bolder'"></span>⠀
+                                                        </ng-template>
+                                                        <ng-template ngbPagin   ationNext>⠀<span [data-feather]="'chevron-right'"
+                                                                [class]="'font-weight-bolder'"></span>
+                                                        </ng-template>
+                                                        <ng-template ngbPaginationLast><span data-feather="skip-forward"></span>⠀
+                                                        </ng-template>
+                                                    </ngb-pagination>
+                                                </div>
+                                            </div> -->
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </li>
+
+                </ul>
+                <div [ngbNavOutlet]="navWithIcons"></div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <div style="float: right">
+                            <button (click)="onSaveCliente()" class="btn btn-primary mr-1" rippleEffect type="submit">
+                                Aceptar
+                            </button>
+                            <button (click)="modal.dismiss()" class="btn btn-secondary" rippleEffect type="button">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <block-ui></block-ui>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+<!-- Footer -->
+<p class="clearfix mb-0" style="user-select: none;">
+  <span class="float-md-left d-block d-md-inline-block mt-25">
+    COPYRIGHT © {{ year }}
+    <a a class="ml-25" href="" target="_blank">AdProv</a>
+    <span class="d-none d-sm-inline-block">, Todos los derechos reservados</span>
+  </span>
+  <span class="float-md-right d-none d-md-block">
+    <span class="d-none d-sm-inline-block">Propietario: <span class="text-primary">Parconsil Consultores S.A.C</span></span>
+    <!-- <span [data-feather]="'globe'" [class]="'pink'"></span> -->
+  </span> 
+</p>
+<!--/ Footer -->
+
+<!-- Move to top Button-->
+<app-scroll-top *ngIf="coreConfig.layout.scrollTop"></app-scroll-top>
+
+<!-- Buynow Button-->
+<div class="buy-now">
+  <a href="https://1.envato.market/vuexy_admin" target="_blank" class="btn btn-danger" *ngIf="coreConfig.layout.buyNow"
+    >Buy Now</a
+  >
+</div>

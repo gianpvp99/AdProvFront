@@ -1,0 +1,299 @@
+<section class="invoice-preview-wrapper" style="padding: 20px;">
+    <div class="row invoice-preview">
+        <!-- Invoice -->
+        <div class="col-xl-9 col-md-8 col-12 printRef">
+            <div class="card invoice-preview-card">
+                <div class="card-body invoice-padding pb-0">
+                    <!-- Header Starts -->
+                    <div class="row">
+                        <div class="col-md-6 col-12 mt-1 mb-1">
+                            <img src="assets/images/logo/LogoParconsil.jpeg" alt="LogoParconsil" height="60">
+                        </div>
+                        <div class="col-md-6 col-12 mt-1 mb-1 d-flex justify-content-end">
+                            <img src="assets/images/logo/LogoLoginAdProv.png" alt="LogoAdProv" height="45">
+                        </div>
+                        <div class="col-md-12 col-12 d-flex justify-content-center">
+                            <strong style="font-size: larger; color: #000000;">RESULTADO DE EVALUACIÓN</strong>
+                        </div>
+                    </div>
+
+                    <hr class="invoice-spacing" />
+
+                    <div class="row">
+                        <div class="col-md-12 col-12 d-flex justify-content-center mb-1">
+                            <label class="font-weight-bolder" style="font-size: medium;">PARCONSIL CONSULTORES SAC, DA
+                                CONFORMIDAD QUE LA ORGANIZACIÓN
+                            </label>
+                        </div>
+                        <div class="col-md-12 col-12 d-flex justify-content-center mb-1">
+                            <label class="text-primary font-weight-bolder" style="font-size: large;">{{
+                                razonSocialContratista }}
+                            </label>
+                        </div>
+
+                        <div class="col-md-12 col-12 d-flex justify-content-center mb-1">
+                            <label class="text-primary font-weight-bolder" style="font-size: large;">{{ rucContratista
+                                }}
+                            </label>
+                        </div>
+
+
+
+                        <div class="col-md-12 col-12 d-flex justify-content-center">
+                            <label *ngIf="alerta" class="font-weight-bolder"
+                                style="font-size: medium; margin-right: 4px;">NO</label>
+                            <label class="font-weight-bolder" style="font-size: medium;">CUMPLE CON LOS REQUISITOS DE
+                                EVALUACION DE PROVEEDORES ESTABLECIDOS POR NUESTRO CLIENTE:</label>
+                        </div>
+
+                        <div class="col-md-12 col-12 d-flex justify-content-center mb-1">
+                            <label class="text-primary font-weight-bolder" style="font-size: medium;">{{ razonSocial }}
+                            </label>
+                        </div>
+
+
+                        <div class="col-md-6 col-12 mt-1 mb-1">
+                            <label class="c-w">OBTENIENDO UN PUNTAJE DE:
+                            </label>
+                            <span class="ml-3 font-weight-bolder text-primary"> {{ resTotal }} </span>
+                        </div>
+
+                        <div class="col-md-6 col-12 mt-1 mb-1">
+                            <label class="c-w">Y CON NIVEL DE RIESGO:
+                            </label>
+                            <span class="ml-3 font-weight-bolder text-primary"> {{ letter }} </span>
+                        </div>
+
+                        <div class="col-md-6 col-12 mb-1">
+                            <label class="c-w">GRUPO:
+                            </label>
+                            <span class="ml-3 font-weight-bolder text-primary"> {{ params.NombreGrupo }} </span>
+                        </div>
+                        <div class="col-md-6 col-12"></div>
+
+                        <div class="col-md-7 col-12" style="margin-top: 8px;">
+                            <table class="table table-class table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th colspan="3" class="utble">PUNTAJE FINAL</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="utble" style="width: 60%;"></th>
+                                        <th class="utble" style="width: 20%;">OBTENIDO</th>
+                                        <th class="utble" style="width: 20%;">MAXIMO</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="utble">GENERALES</td>
+                                        <td class="utble" style="text-align: right;">{{ res1 }}</td>
+                                        <td style="text-align: right;">{{ val1 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="utble">SEGURIDAD Y SALUD</td>
+                                        <td class="utble" style="text-align: right;">{{ res2 }}</td>
+                                        <td style="text-align: right;">{{ val2 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="utble">LABORALES</td>
+                                        <td class="utble" style="text-align: right;">{{ res3 }}</td>
+                                        <td style="text-align: right;">{{ val3 }}</td>
+                                    </tr>
+                                    <tr>
+                                    <tr>
+                                        <td class="utble">AMBIENTAL</td>
+                                        <td class="utble" style="text-align: right;">{{ res4 }}</td>
+                                        <td style="text-align: right;">{{ val4 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="utble">COMPLIANCE</td>
+                                        <td class="utble" style="text-align: right;">{{ res5 }}</td>
+                                        <td style="text-align: right;">{{ val5 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="utble">RESPONSABILIDAD SOCIAL</td>
+                                        <td class="utble" style="text-align: right;">{{ res6 }}</td>
+                                        <td style="text-align: right;">{{ val6 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="utble">FINANCIERA</td>
+                                        <td class="utble" style="text-align: right;">{{ res7 }}</td>
+                                        <td style="text-align: right;">{{ val7 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="utble">COMERCIAL</td>
+                                        <td class="utble" style="text-align: right;">{{ res8 }}</td>
+                                        <td style="text-align: right;">{{ val8 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="utble">CALIDAD</td>
+                                        <td class="utble" style="text-align: right;">{{ res9 }}</td>
+                                        <td style="text-align: right;">{{ val9 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="utble">OTROS</td>
+                                        <td class="utble" style="text-align: right;">{{ res10 }}</td>
+                                        <td style="text-align: right;">{{ val10 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="utble c-w">Puntaje Total:</td>
+                                        <td class="utble font-weight-bolder" style="text-align: right;">{{ resTotal }}
+                                        </td>
+                                        <td class="utble font-weight-bolder" style="text-align: right;">{{ valTotal }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="col-md-5 col-12" style="margin-top: 8px;">
+                            <table class="table table-class table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th colspan="3" class="utble">CLASIFICACIÓN</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="utble" style="width: 20%;"></th>
+                                        <th colspan="2" class="utble" style="width: 80%;">RANGO</th>
+                                    </tr>
+                                    <tr>
+                                        <td style="color: forestgreen;">A</td>
+                                        <td class="utble">900
+                                        </td>
+                                        <td class="utble">1000</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color: forestgreen;">B
+                                        </td>
+                                        <td class="utble">850
+                                        </td>
+                                        <td class="utble">899
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color: forestgreen;">C
+                                        </td>
+                                        <td class="utble">800
+                                        </td>
+                                        <td class="utble">849
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color: forestgreen;">D
+                                        </td>
+                                        <td class="utble">700
+                                        </td>
+                                        <td class="utble">799
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color: red;">E
+                                        </td>
+                                        <td class="utble">0
+                                        </td>
+                                        <td class="utble">699
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="col-md-7 col-12 mb-3 "></div>
+                        <div class="col-md-5 col-12 mb-3 d-flex justify-content-center">
+                            <div class="form-group">
+                                <p style="text-align: center;font-size: 15px;border-style: solid;padding: 10px;">
+                                    <strong class="text-primary">{{ resultado }}</strong>
+                                </p>
+                                <label *ngIf="alerta" style="color: crimson">*Debe completar documentos
+                                    requeridos</label>                                
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-12 mb-3 mt-3 d-flex justify-content-center">
+                            <div class="form-group">
+                                <span class="font-weight-bolder"> {{ fechaven }}</span>
+                                <br>
+                                <label for="">Vigencia</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12 mb-3 mt-3 d-flex justify-content-center">
+                            <div class="form-group">
+                                <span class="font-weight-bolder"> {{ params.Especialista }}</span>
+                                <br>
+                                <label for="">Consultor Auditor</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 col-12 mt-3 d-flex justify-content-center">
+                            <label for="">El presente informe de resultados, deriva de la revision documental y
+                                cumplimiento legal segun lo requerido por el cliente, y realizado mediante la plataforma
+                                web AdProv.
+                            </label>
+                        </div>
+
+                        <div class="col-md-12 col-12 mt-1 d-flex justify-content-center">
+                            <label for="">Los documentos obligarorios de presentacion, al no ser aprobados, no
+                                habilitara al contratistas o proveedor
+                            </label>
+                        </div>
+
+                        <div class="col-md-12 col-12 mt-1 mb-3 d-flex justify-content-center">
+                            <label for="">El puntaje obtenido en la presente evaluación, es unicamente en base a la
+                                documentación
+                                solicitada por el cliente para el grupo al que fue designado
+
+                            </label>
+                        </div>
+                    </div>
+
+
+                    <!-- Header Ends -->
+                </div>
+
+
+                <!-- Invoice Description Ends -->
+
+                <!-- <hr class="invoice-spacing" /> -->
+
+                <!-- Invoice Note Starts -->
+                <!-- <footer class="footer">
+            <div class="card-body invoice-padding pt-0" style="margin-top: 3% !important;">
+              <div class="row">
+                <div class="col-12 d-flex justify-content-end">
+                  <span style="color: #000000 !important;">PRO-SOP-007-001/ Ver. 00 / FechaCreacion / Página
+                    1/1</span>
+                </div>
+              </div>
+            </div>
+          </footer> -->
+
+
+                <!-- 1 -->
+                <!-- Invoice Note Ends -->
+            </div>
+        </div>
+        <!--/ Invoice -->
+
+        <!-- Invoice Actions -->
+        <div class="col-xl-3 col-md-4 col-12 invoice-actions mt-md-0 mt-2" style="position: sticky; top: 0;">
+            <div class="card">
+                <div class="card-body">
+                    <a type="reset" class="btn btn-outline-secondary btn-block mb-75" data-toggle="modal"
+                        [routerLink]="['/dashboard/cliente-parconsil/contratista-cliente']" skipLocationChange
+                        [queryParams]="" queryParamsHandling="merge" rippleEffect>Volver</a>
+                    <!-- <button (click)="Regret()" class="btn btn-outline-secondary btn-block mb-75" data-toggle="modal"
+              data-target="#send-invoice-sidebar" rippleEffect>
+              Volver
+            </button> -->
+                    <a class="btn btn-outline-secondary btn-block mb-75" href="javascript:window.print();" rippleEffect>
+                        Imprimir
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!--/ Invoice Actions -->
+    </div>
+</section>

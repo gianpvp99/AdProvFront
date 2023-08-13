@@ -1,0 +1,86 @@
+@import '@core/scss/angular/libs/file-uploader.component.scss';
+
+.width-column {
+    border: solid 1px #CCC;
+}
+
+.left-column {
+    border-left: solid 1px #CCC
+}
+
+.top-column {
+    border-top: solid 1px #CCC
+}
+
+.simple-column {
+    border: solid 1px #CCC;
+}
+
+.centerall-header tr th {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table-class {
+    border: solid 1px #CCC;
+    border-top: solid 1px #CCC;
+
+}
+
+.special-border {
+    border: 2px solid #77ED23 !important;
+}
+
+.cent {
+    text-align: center;
+}
+
+.lft {
+    text-align: right;
+}
+
+.utble {
+    text-align: center;
+    user-select: none;
+}
+
+.top {
+    margin-top: 20px;
+}
+
+.ygcolor {
+    color: rgb(65, 225, 97)
+}
+
+.table-dholp {
+    background-color: #7ae6f3;
+}
+
+.table-suprary {
+    background-color: #b6b0f7;
+}
+
+.f-w {
+    font-size: 0.925rem;
+    //line-height: 2.25rem;
+    font-weight: 500;
+}
+
+.number-format {
+    font-size: 0.955rem;
+    font-weight: 500;
+    //font-family: 'Courier New', Courier, monospace;
+}
+
+.c-w {
+    font-size: 0.988rem;
+    //line-height: 2rem;
+    font-weight: 500
+}
+
+
+.h-w {
+    font-size: 1.25rem;
+    //line-height: 2rem;
+    font-weight: 500
+}

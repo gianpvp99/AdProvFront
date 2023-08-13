@@ -1,0 +1,798 @@
+<div class="content-wrapper">
+    <div class="content-body">
+        <section id="MatricesConfiguration">
+            <ul #navWithIcons="ngbNav" class="nav-tabs col-12" ngbNav>
+                <li ngbNavItem>
+                    <!-- (click)="SelectGrupo(SG)" -->
+                    <a ngbNavLink><span class="fa fa-folder-open-o" style="margin-right: 8px;"></span> Homologación
+                        Empresa</a>
+                    <ng-template ngbNavContent>
+                        <div class="card" *ngIf="this.rowsGrupo.length >= 1">
+                            <div class="card-body p-0">
+                                <ul ngbNav #navGrupo="ngbNav" class="nav nav-pills justify-content-center mt-2">
+                                    <li ngbNavItem *ngFor="let row of rowsGrupo">
+                                        <a (click)="onGrupoSelect(row.idClienteGrupo)" ngbNavLink>{{ row.nombreGrupo
+                                            }}</a>
+                                        <ng-template ngbNavContent>
+                                            <div class="row">
+                                                <div class="col-md-12 col-12 lg-12">
+                                                    <div>
+                                                        <hr class="invoice-spacing" />
+                                                    </div>
+                                                    <div class="d-flex justify-content-center mt-1">
+                                                        <button [routerLink]="['/dashboard/cliente-parconsil']"
+                                                            [queryParams]="{}" queryParamsHandling="merge"
+                                                            skipLocationChange class="btn btn-outline-dark ml-1">
+                                                            <i class="mr-0 mr-sm-1"
+                                                                data-feather="corner-up-left"></i><span
+                                                                class="d-none d-sm-inline-block">Regresar</span>
+                                                        </button>
+                                                        <button (click)="onEmpresaSaveDocument()"
+                                                            class="btn btn-outline-success ml-1">
+                                                            <i class="mr-0 mr-sm-1" data-feather="save"></i><span
+                                                                class="d-none d-sm-inline-block">Guardar
+                                                                Documentos</span>
+                                                        </button>
+                                                        <button (click)="onNewDocumento(NDC)"
+                                                            class="btn btn-outline-primary ml-1">
+                                                            <i class="mr-0 mr-sm-1" data-feather="plus-square"></i><span
+                                                                class="d-none d-sm-inline-block">Agregar
+                                                                Documento</span>
+                                                        </button>
+                                                    </div>
+                                                    <div>
+                                                        <hr class="invoice-spacing" />
+                                                    </div>
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <div class="meetup-day text-left">
+                                                                <div class="media mb-1">
+                                                                    <div class="col-lg-9 col-md-8 col-sm-8 utble">
+                                                                        <h5>DOCUMENTOS</h5>
+                                                                    </div>
+                                                                    <div class="col-lg-1 utble">
+                                                                        <!-- ({{params.PuntajeMin}}) -->
+                                                                        <h5>PUNTAJE (1000)</h5>
+                                                                    </div>
+                                                                    <div class="col-lg-1 col-md-2 col-sm-2 utble-user">
+                                                                        <h5>CRITICIDAD</h5>
+                                                                    </div>
+                                                                    <div class="col-lg-1 d-flex justify-content-center">
+                                                                        <div
+                                                                            class="custom-control custom-control-primary custom-checkbox">
+                                                                            <input (click)="CheckEnableAll()"
+                                                                                type="checkbox"
+                                                                                class="custom-control-input"
+                                                                                id="TotalCheck"
+                                                                                [(ngModel)]="allEstadoEmpresa"
+                                                                                [ngModelOptions]="{ standalone: true }" />
+                                                                            <label class="custom-control-label"
+                                                                                for="TotalCheck">
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngFor="let row of rowsDocumentos"
+                                                                class="meetup-day text-left">
+                                                                <div class="media mb-1">
+                                                                    <div *ngIf="!row.flaggrupo"
+                                                                        class="col-lg-9 col-md-8 col-sm-8">
+                                                                        <ul class="list-group utble-user">
+                                                                            <li class="list-group-item d-flex"
+                                                                                style="padding: 7px"
+                                                                                [ngClass]="{ 'background-grey' : row.estado == false }">
+                                                                                <p class="float-left mb-0">
+                                                                                    <span [data-feather]="'book'"
+                                                                                        [size]="16"
+                                                                                        [class]="'mr-1'"></span>
+                                                                                </p>
+                                                                                <span
+                                                                                    class="d-none d-sm-inline-block">{{
+                                                                                    row.documentoName }}</span>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                    <div *ngIf="row.flaggrupo"
+                                                                        class="col-lg-8 col-md-7 col-sm-7 d-flex"
+                                                                        [ngClass]="{
+                                                                                    'background-aliceblue': row.matriz == 'GENERALES',
+                                                                                    'background-paleturquoise': row.matriz == 'SEGURIDAD Y SALUD',
+                                                                                    'background-darkorange': row.matriz == 'LABORALES',
+                                                                                    'background-lightgreen': row.matriz == 'AMBIENTAL',
+                                                                                    'background-lavender': row.matriz == 'COMPLIANCE',
+                                                                                    'background-antiquewhite': row.matriz == 'RESPONSABILIDAD SOCIAL',
+                                                                                    'background-gold': row.matriz == 'FINANCIERA',
+                                                                                    'background-mediumslateblue': row.matriz == 'COMERCIAL',
+                                                                                    'background-yellow': row.matriz == 'CALIDAD',
+                                                                                    'background-blue': row.matriz == 'OTROS'
+                                                                                    }"
+                                                                        style="border: 1px solid #d8d6de !important;">
+                                                                        <span class="ml-1 font-weight-bolder dsg">
+                                                                            {{ row.documentoName }}
+                                                                        </span>
+                                                                    </div>
+                                                                    <div *ngIf="row.flaggrupo"
+                                                                        class="col-lg-1 col-md-1 d-flex">
+                                                                        <span class="ml-auto align-items-center">
+                                                                            <input (keyup)="TotalNumber(row)"
+                                                                                type="text" mask="separator"
+                                                                                class="form-control"
+                                                                                style="text-align: center;"
+                                                                                [(ngModel)]="row.puntaje"
+                                                                                [ngModelOptions]="{ standalone: true }" />
+                                                                        </span>
+                                                                    </div>
+
+                                                                    <div *ngIf="!row.flaggrupo"
+                                                                        class="col-lg-1 col-md-1">
+                                                                        <input type="text" class="form-control"
+                                                                            mask="separator" style="text-align: center;"
+                                                                            [disabled]="!row.estado"
+                                                                            (keyup)="ValidatorNumber(row)"
+                                                                            [(ngModel)]="row.sumaPuntaje"
+                                                                            [ngModelOptions]="{ standalone: true }" />
+                                                                    </div>
+                                                                    <div *ngIf="row.flaggrupo"
+                                                                        class="col-lg-1 col-md-1">
+                                                                        <input [ngClass]="{                                                                
+                                                                                        'border-red': flagOption == true && row.idMatriz == MatrizValidator,
+                                                                                        'border-green': flagOption == false && row.idMatriz == MatrizValidator
+                                                                                        }" type="number"
+                                                                            class="form-control"
+                                                                            style="text-align: center;"
+                                                                            [(ngModel)]="row.sumaPuntaje"
+                                                                            [disabled]="disabled"
+                                                                            [ngModelOptions]="{ standalone: true }" />
+                                                                    </div>
+                                                                    <!-- <div class="col-lg-2">
+                                                                                    <ng-select [(ngModel)]="row.idPeriodicidad"
+                                                                                        [ngModelOptions]="{standalone: true}"
+                                                                                        [items]="rowsPeriodo" [clearable]="false"
+                                                                                        bindLabel="descripcion" bindValue="idColumna"
+                                                                                        placeholder="Seleccionar">
+                                                                                    </ng-select>
+                        
+                                                                                    <div *ngIf="row.idPeriodicidad == 2"
+                                                                                        class="col-md-12 col-12 mt-1">
+                                                                                        <div class="form-group">
+                                                                                            <label> Seleccione la fecha específica</label>
+                                                                                            <div class="input-group">
+                                                                                                <input #basicDPFrom="ngbDatepicker"
+                                                                                                    #i18nDP="ngbDatepicker" [(ngModel)]="toDate"
+                                                                                                    class="form-control" ngbDatepicker
+                                                                                                    placeholder="dd/mm/yyyy">
+                                                                                                <div class="input-group-append">
+                                                                                                    <button (click)="basicDPFrom.toggle()"
+                                                                                                        class="btn btn-outline-secondary feather icon-calendar"
+                                                                                                        rippleEffect type="button"></button>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                        
+                                                                                </div> -->
+                                                                    <div *ngIf="!row.flaggrupo"
+                                                                        class="col-lg-1 col-md-2 col-sm-2"
+                                                                        style="text-align: center;">
+                                                                        <ng-select [items]="rowsCriticidad"
+                                                                            [(ngModel)]="row.idCriticidad"
+                                                                            [disabled]="!row.estado" [clearable]="false"
+                                                                            bindLabel="descripcion"
+                                                                            bindValue="idColumna">
+                                                                        </ng-select>
+                                                                    </div>
+                                                                    <!-- <div class="col-lg-2">
+                                                                                    <ng-select *ngIf="!row.flaggrupo"
+                                                                                        [(ngModel)]="row.idRegimen" [items]="rowsRegimen"
+                                                                                        [clearable]="false" bindLabel="descripcion"
+                                                                                        placeholder="Seleccionar" bindValue="idColumna">
+                                                                                    </ng-select>
+                                                                                </div> -->
+                                                                    <div class="col-lg-1 d-flex justify-content-center">
+                                                                        <div *ngIf="!row.flaggrupo"
+                                                                            class="custom-control custom-control-primary custom-checkbox">
+                                                                            <input (click)="CheckEnable(row)"
+                                                                                type="checkbox"
+                                                                                class="custom-control-input"
+                                                                                id="{{'dCheck' + row.idDocumentoName}}"
+                                                                                [(ngModel)]="row.estado"
+                                                                                [ngModelOptions]="{ standalone: true }" />
+                                                                            <label class="custom-control-label"
+                                                                                for="{{'dCheck' + row.idDocumentoName}}">
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-8 col-12 d-flex justify-content-end">
+                                                                    <label class="font-weight-bolder text-dark"
+                                                                        style="font-size: medium;">
+                                                                        Puntaje mínimo para homologarse :
+                                                                        {{params.PuntajeMin}}
+                                                                    </label>
+                                                                </div>
+                                                                <div
+                                                                    class="col-md-1 col-12 d-flex justify-content-center">
+                                                                    <label class="font-weight-bolder"
+                                                                        style="font-size: medium;">{{
+                                                                        resultadoGeneral | number }}</label>
+                                                                </div>
+                                                                <div
+                                                                    class="col-md-1 col-12 d-flex justify-content-center">
+                                                                    <label class="font-weight-bolder"
+                                                                        style="font-size: medium;">{{
+                                                                        total | number }}</label>
+                                                                </div>
+                                                                <div class="col-md-2 col-12">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </li>
+                                </ul>
+                                <div [ngbNavOutlet]="navGrupo" class="mt-1"></div>
+                            </div>
+                        </div>
+                        <div class="card text-center py-1" *ngIf="this.rowsGrupo.length < 1">
+                            <div class="card-body">
+                                <div class="avatar avatar-tag bg-light-primary mb-2 mx-auto">
+                                    <button [routerLink]="['/dashboard/cliente-parconsil']" [queryParams]="{}"
+                                        queryParamsHandling="merge" skipLocationChange class="btn text-primary">
+                                        <i data-feather="archive" class="font-medium-3"></i>
+                                    </button>
+                                </div>
+                                <h4>No se pudo encontrar Grupos</h4>
+                                <span class="text-body">Crea uno para configurar sus documentos</span>
+                            </div>
+                        </div>
+                    </ng-template>
+                </li>
+                <li ngbNavItem>
+                    <a ngbNavLink><span class="fa fa-folder-open-o" style="margin-right: 8px;"></span> Homologación
+                        Trabajador</a>
+                    <ng-template ngbNavContent>
+                        <div class="card" *ngIf="this.rowsProyecto.length >= 1">
+                            <div class="card-body p-0">
+                                <ul ngbNav #navProject="ngbNav" class="nav nav-pills justify-content-center mt-2">
+                                    <li ngbNavItem *ngFor="let row of rowsProyecto">
+                                        <a (click)="onProyectoSelect(row.idProyecto)" ngbNavLink>{{ row.proyecto
+                                            }}</a>
+                                        <ng-template ngbNavContent>
+                                            <div class="row">
+                                                <div class="col-md-12 col-12 lg-12">
+                                                    <div>
+                                                        <hr class="invoice-spacing" />
+                                                    </div>
+                                                    <div class="d-flex justify-content-center mt-1">
+                                                        <button [routerLink]="['/dashboard/cliente-parconsil']"
+                                                            [queryParams]="{}" queryParamsHandling="merge"
+                                                            skipLocationChange class="btn btn-outline-dark ml-1">
+                                                            <i class="mr-0 mr-sm-1"
+                                                                data-feather="corner-up-left"></i><span
+                                                                class="d-none d-sm-inline-block">Regresar</span>
+                                                        </button>
+                                                        <button (click)="onEmpleadoSaveDocument()"
+                                                            class="btn btn-outline-success ml-1">
+                                                            <i class="mr-0 mr-sm-1" data-feather="save"></i><span
+                                                                class="d-none d-sm-inline-block">Guardar
+                                                                Documentos</span>
+                                                        </button>
+                                                        <!-- (click)="onNewDocumento(NDC)" -->
+                                                        <button class="btn btn-outline-primary ml-1">
+                                                            <i class="mr-0 mr-sm-1" data-feather="plus-square"></i><span
+                                                                class="d-none d-sm-inline-block">Agregar
+                                                                Documento</span>
+                                                        </button>
+                                                    </div>
+                                                    <div>
+                                                        <hr class="invoice-spacing" />
+                                                    </div>
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <div class="meetup-day text-left">
+                                                                <div class="media mb-1">
+                                                                    <div class="col-lg-6" style="text-align: center;">
+                                                                        <h5>DOCUMENTOS</h5>
+                                                                    </div>
+                                                                    <div class="col-lg-2" style="text-align: center;">
+                                                                        <h5>PERIODICIDAD</h5>
+                                                                    </div>
+                                                                    <div class="col-lg-1" style="text-align: center;">
+                                                                        <h5>CRITICIDAD</h5>
+                                                                    </div>
+                                                                    <div class="col-lg-2" style="text-align: center;">
+                                                                        <h5>REGIMEN</h5>
+                                                                    </div>
+                                                                    <div class="col-lg-1 d-flex justify-content-center">
+                                                                        <div
+                                                                            class="custom-control custom-control-warning custom-checkbox">
+                                                                            <input (click)="CheckEnableAllEmpleado()"
+                                                                                [(ngModel)]="allEstadoEmpleado"
+                                                                                type="checkbox"
+                                                                                class="custom-control-input"
+                                                                                id="TotalCheckTR" />
+                                                                            <label class="custom-control-label"
+                                                                                for="TotalCheckTR">
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngFor="let row of rowsDocumentosHomEmpleado"
+                                                                class="meetup-day text-left">
+                                                                <div class="media mb-1">
+                                                                    <div *ngIf="!row.flaggrupo"
+                                                                        class="col-lg-6 col-md-6 col-sm-6">
+                                                                        <ul class="list-group utble-user">
+                                                                            <li class="list-group-item d-flex"
+                                                                                style="padding: 7px"
+                                                                                [ngClass]="{ 'background-grey' : row.estado == false }">
+                                                                                <p class="float-left mb-0">
+                                                                                    <span [data-feather]="'book'"
+                                                                                        [size]="16"
+                                                                                        [class]="'mr-1'"></span>
+                                                                                </p>
+                                                                                <span
+                                                                                    class="d-none d-sm-inline-block">{{
+                                                                                    row.documentoName }}</span>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                    <div *ngIf="row.flaggrupo"
+                                                                        class="col-lg-12 col-md-12 col-sm-12">
+                                                                        <ul class="list-group utble-user">
+                                                                            <li class="list-group-item d-flex align-items-center"
+                                                                                style="padding: 7px" [ngClass]="{
+                                                                                        'bg-light-primary': row.matriz == 'GENERALES'
+                                                                                        || row.matriz == 'SEGURIDAD Y SALUD'
+                                                                                        || row.matriz == 'LABORALES' 
+                                                                                        || row.matriz == 'AMBIENTAL' 
+                                                                                        || row.matriz == 'COMPLIANCE' 
+                                                                                        || row.matriz == 'RESPONSABILIDAD SOCIAL' 
+                                                                                        || row.matriz == 'FINANCIERA' 
+                                                                                        || row.matriz == 'COMERCIAL' 
+                                                                                        || row.matriz == 'CALIDAD' 
+                                                                                        || row.matriz == 'OTROS'}">
+                                                                                <p class="float-left mb-0 text-dark">
+                                                                                    <span [data-feather]="'archive'"
+                                                                                        [size]="20"
+                                                                                        [class]="'mr-1'"></span>
+                                                                                </p>
+                                                                                <span
+                                                                                    class="d-none d-sm-inline-block font-weight-bolder text-dark">{{
+                                                                                    row.documentoName }}</span>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                    <div *ngIf="!row.flaggrupo" class="col-lg-2">
+                                                                        <ng-select [(ngModel)]="row.idPeriodicidad"
+                                                                            [items]="rowsPeriodo" [clearable]="false"
+                                                                            bindLabel="descripcion"
+                                                                            bindValue="idColumna"
+                                                                            [disabled]="!row.estado"
+                                                                            placeholder="Seleccionar">
+                                                                        </ng-select>
+                                                                    </div>
+                                                                    <div *ngIf="!row.flaggrupo" class="col-lg-1">
+                                                                        <ng-select [(ngModel)]="row.idCriticidad"
+                                                                            [items]="rowsCriticidad" [clearable]="false"
+                                                                            bindLabel="descripcion"
+                                                                            bindValue="idColumna"
+                                                                            [disabled]="!row.estado"
+                                                                            placeholder="Seleccionar">
+                                                                        </ng-select>
+                                                                    </div>
+                                                                    <div *ngIf="!row.flaggrupo" class="col-lg-2">
+                                                                        <ng-select [items]="rowsRegimen"
+                                                                            [multiple]="true" [closeOnSelect]="true"
+                                                                            [disabled]="!row.estado" [searchable]="true"
+                                                                            bindLabel="descripcion" [clearable]="false"
+                                                                            (click)="MultiSelect($event, row)"
+                                                                            placeholder="Seleccionar"
+                                                                            [(ngModel)]="row.complete">
+                                                                        </ng-select>
+                                                                        <!-- <ng-select [(ngModel)]="row.idRegimen"
+                                                                            [items]="rowsRegimen" [clearable]="false"
+                                                                            bindLabel="descripcion"
+                                                                            [disabled]="!row.estado"
+                                                                            placeholder="Seleccionar"
+                                                                            bindValue="idColumna">
+                                                                        </ng-select> -->
+                                                                    </div>
+                                                                    <div *ngIf="!row.flaggrupo" ngbDropdown
+                                                                        class="col-lg-1 d-flex justify-content-center btn-group mr-2">
+                                                                        <div
+                                                                            class="custom-control custom-control-secondary custom-checkbox">
+                                                                            <input type="checkbox"
+                                                                                class="custom-control-input"
+                                                                                id="{{'dCheck' + row.idDocumentoName}}"
+                                                                                [(ngModel)]="row.estado"
+                                                                                [ngModelOptions]="{ standalone: true }" />
+                                                                            <label class="custom-control-label"
+                                                                                for="{{'dCheck' + row.idDocumentoName}}">
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </li>
+                                </ul>
+                                <div [ngbNavOutlet]="navProject" class="mt-1"></div>
+                            </div>
+                        </div>
+                        <div class="card text-center py-1" *ngIf="this.rowsProyecto.length < 1">
+                            <div class="card-body">
+                                <div class="avatar avatar-tag bg-light-primary mb-2 mx-auto">
+                                    <button [routerLink]="['/dashboard/cliente-parconsil']" [queryParams]="{}"
+                                        queryParamsHandling="merge" skipLocationChange class="btn text-primary">
+                                        <i data-feather="archive" class="font-medium-3"></i>
+                                    </button>
+                                </div>
+                                <h4>No se pudo encontrar Proyectos</h4>
+                                <span class="text-body">Crea uno para configurar sus documentos</span>
+                            </div>
+                        </div>
+                    </ng-template>
+                </li>
+                <li ngbNavItem>
+                    <a ngbNavLink><span class="fa fa-folder-open-o" style="margin-right: 8px;"></span> Auditoría
+                        (Empresa)</a>
+                    <ng-template ngbNavContent>
+                        <div class="card" *ngIf="this.rowsGrupo.length >= 1">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12 col-12 lg-12">
+                                        <div class="d-flex justify-content-center mt-1">
+                                            <button [routerLink]="['/dashboard/cliente-parconsil']" [queryParams]="{}"
+                                                queryParamsHandling="merge" skipLocationChange
+                                                class="btn btn-outline-dark ml-1">
+                                                <i class="mr-0 mr-sm-1" data-feather="corner-up-left"></i><span
+                                                    class="d-none d-sm-inline-block">Regresar</span>
+                                            </button>
+                                            <!-- (click)="onSaveAllDocument()" -->
+                                            <button class="btn btn-outline-success ml-1">
+                                                <i class="mr-0 mr-sm-1" data-feather="save"></i><span
+                                                    class="d-none d-sm-inline-block">Guardar Documentos</span>
+                                            </button>
+                                            <!-- (click)="onNewDocumento(NDC)" -->
+                                            <button class="btn btn-outline-primary ml-1">
+                                                <i class="mr-0 mr-sm-1" data-feather="plus-square"></i><span
+                                                    class="d-none d-sm-inline-block">Agregar Documento</span>
+                                            </button>
+                                        </div>
+                                        <div>
+                                            <hr class="invoice-spacing" />
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="meetup-day text-left">
+                                                    <div class="media mb-1">
+                                                        <div class="col-lg-5" style="text-align: center;">
+                                                            <h5>DOCUMENTOS</h5>
+                                                        </div>
+                                                        <div class="col-lg-3" style="text-align: center;">
+                                                            <h5>PERIODICIDAD</h5>
+                                                        </div>
+                                                        <div class="col-lg-3" style="text-align: center;">
+                                                            <h5>CRITICIDAD</h5>
+                                                        </div>
+                                                        <div class="col-lg-1 d-flex justify-content-center">
+                                                            <div
+                                                                class="custom-control custom-control-primary custom-checkbox">
+                                                                <!-- (click)="CheckEnableAll()" -->
+                                                                <!-- [(ngModel)]="allEstado" -->
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                    id="TotalCheckTR" />
+                                                                <label class="custom-control-label" for="TotalCheckTR">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div *ngFor="let row of rowsDocumentosEmpresa"
+                                                    class="meetup-day text-left">
+                                                    <div class="media mb-1">
+                                                        <div class="col-lg-5">
+                                                            <ul class="list-group utble-user">
+                                                                <!-- [ngClass]="{ 'background-grey' : row.estado == false }" -->
+                                                                <li class="list-group-item d-flex" style="padding: 7px">
+                                                                    <p class="float-left mb-0">
+                                                                        <span [data-feather]="'book'" [size]="16"
+                                                                            [class]="'mr-1'"></span>
+                                                                    </p>
+                                                                    <!-- {{ row.codDocumento }} -->
+                                                                    <span> {{ row.documentoName
+                                                                        }}</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <ng-select [(ngModel)]="row.idPeriodicidad"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                [items]="rowsPeriodo" [clearable]="false"
+                                                                bindLabel="descripcion" bindValue="idColumna"
+                                                                placeholder="Seleccionar">
+                                                            </ng-select>
+
+                                                            <div *ngIf="row.idPeriodicidad == 2"
+                                                                class="col-md-12 col-12 mt-1">
+                                                                <div class="form-group">
+                                                                    <label> Seleccione la fecha específica</label>
+                                                                    <div class="input-group">
+                                                                        <input #basicDPFrom="ngbDatepicker"
+                                                                            #i18nDP="ngbDatepicker" [(ngModel)]="toDate"
+                                                                            class="form-control" ngbDatepicker
+                                                                            placeholder="dd/mm/yyyy">
+                                                                        <div class="input-group-append">
+                                                                            <button (click)="basicDPFrom.toggle()"
+                                                                                class="btn btn-outline-secondary feather icon-calendar"
+                                                                                rippleEffect type="button"></button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <ng-select [(ngModel)]="row.idCriticidad"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                [items]="rowsCriticidad" [clearable]="false"
+                                                                bindLabel="descripcion" bindValue="idColumna"
+                                                                placeholder="Seleccionar">
+                                                            </ng-select>
+                                                        </div>
+                                                        <div ngbDropdown class="col-lg-1 d-flex justify-content-center">
+                                                            <div
+                                                                class="custom-control custom-control-primary custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                    id="{{'dCheckEmpresa' + row.idDocumentoName}}"
+                                                                    [(ngModel)]="row.estado"
+                                                                    [ngModelOptions]="{ standalone: true }" />
+                                                                <label class="custom-control-label"
+                                                                    for="{{'dCheckEmpresa' + row.idDocumentoName}}">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card text-center py-1" *ngIf="this.rowsGrupo.length < 1">
+                            <div class="card-body">
+                                <div class="avatar avatar-tag bg-light-primary mb-2 mx-auto">
+                                    <button [routerLink]="['/dashboard/cliente-parconsil']" [queryParams]="{}"
+                                        queryParamsHandling="merge" skipLocationChange class="btn text-primary">
+                                        <i data-feather="archive" class="font-medium-3"></i>
+                                    </button>
+                                </div>
+                                <h4>No se pudo encontrar Grupos</h4>
+                                <span class="text-body">Crea uno para configurar sus documentos</span>
+                            </div>
+                        </div>
+                    </ng-template>
+                </li>
+                <li ngbNavItem>
+                    <a ngbNavLink><span class="fa fa-folder-open-o" style="margin-right: 8px;"></span> Auditoría
+                        (Empleados)</a>
+                    <ng-template ngbNavContent>
+                        <div class="card" *ngIf="this.rowsProyecto.length >= 1">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12 col-12 lg-12">
+                                        <div class="d-flex justify-content-center mt-1">
+                                            <button [routerLink]="['/dashboard/cliente-parconsil']" [queryParams]="{}"
+                                                queryParamsHandling="merge" skipLocationChange
+                                                class="btn btn-outline-dark ml-1">
+                                                <i class="mr-0 mr-sm-1" data-feather="corner-up-left"></i><span
+                                                    class="d-none d-sm-inline-block">Regresar</span>
+                                            </button>
+                                            <!-- (click)="onSaveAllDocument()" -->
+                                            <button class="btn btn-outline-success ml-1">
+                                                <i class="mr-0 mr-sm-1" data-feather="save"></i><span
+                                                    class="d-none d-sm-inline-block">Guardar Documentos</span>
+                                            </button>
+                                            <!-- (click)="onNewDocumento(NDC)" -->
+                                            <button class="btn btn-outline-primary ml-1">
+                                                <i class="mr-0 mr-sm-1" data-feather="plus-square"></i><span
+                                                    class="d-none d-sm-inline-block">Agregar Documento</span>
+                                            </button>
+                                        </div>
+                                        <div>
+                                            <hr class="invoice-spacing" />
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="meetup-day text-left">
+                                                    <div class="media mb-1">
+                                                        <div class="col-lg-5" style="text-align: center;">
+                                                            <h5>DOCUMENTOS</h5>
+                                                        </div>
+                                                        <div class="col-lg-3" style="text-align: center;">
+                                                            <h5>PERIOCIDAD</h5>
+                                                        </div>
+                                                        <div class="col-lg-3" style="text-align: center;">
+                                                            <h5>CRITICIDAD</h5>
+                                                        </div>
+                                                        <div class="col-lg-1 d-flex justify-content-center">
+                                                            <div
+                                                                class="custom-control custom-control-primary custom-checkbox">
+                                                                <!-- (click)="CheckEnableAll()" -->
+                                                                <!-- [(ngModel)]="allEstado" -->
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                    id="TotalCheckTR" />
+                                                                <label class="custom-control-label" for="TotalCheckTR">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div *ngFor="let row of rowsDocumentosEmpleado"
+                                                    class="meetup-day text-left">
+                                                    <div class="media mb-1">
+                                                        <div class="col-lg-5">
+                                                            <ul class="list-group utble-user">
+                                                                <!-- [ngClass]="{ 'background-grey' : row.estado == false }" -->
+                                                                <li class="list-group-item d-flex" style="padding: 7px">
+                                                                    <p class="float-left mb-0">
+                                                                        <span [data-feather]="'book'" [size]="16"
+                                                                            [class]="'mr-1'"></span>
+                                                                    </p>
+                                                                    <!-- {{ row.codDocumento }} -->
+                                                                    <span> {{ row.documentoName
+                                                                        }}</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <ng-select [(ngModel)]="row.idPeriodicidad"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                [items]="rowsPeriodo" [clearable]="false"
+                                                                bindLabel="descripcion" bindValue="idColumna"
+                                                                placeholder="Seleccionar">
+                                                            </ng-select>
+
+                                                            <div *ngIf="row.idPeriodicidad == 2"
+                                                                class="col-md-12 col-12 mt-1">
+                                                                <div class="form-group">
+                                                                    <label> Seleccione la fecha específica</label>
+                                                                    <div class="input-group">
+                                                                        <input #basicDPFrom="ngbDatepicker"
+                                                                            #i18nDP="ngbDatepicker" [(ngModel)]="toDate"
+                                                                            class="form-control" ngbDatepicker
+                                                                            placeholder="dd/mm/yyyy">
+                                                                        <div class="input-group-append">
+                                                                            <button (click)="basicDPFrom.toggle()"
+                                                                                class="btn btn-outline-secondary feather icon-calendar"
+                                                                                rippleEffect type="button"></button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <ng-select [(ngModel)]="row.idCriticidad"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                [items]="rowsCriticidad" [clearable]="false"
+                                                                bindLabel="descripcion" bindValue="idColumna"
+                                                                placeholder="Seleccionar">
+                                                            </ng-select>
+                                                        </div>
+                                                        <div ngbDropdown class="col-lg-1 d-flex justify-content-center">
+                                                            <div
+                                                                class="custom-control custom-control-primary custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                    id="{{'dCheckEmpleado' + row.idDocumentoName}}"
+                                                                    [(ngModel)]="row.estado"
+                                                                    [ngModelOptions]="{ standalone: true }" />
+                                                                <label class="custom-control-label"
+                                                                    for="{{'dCheckEmpleado' + row.idDocumentoName}}">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card text-center py-1" *ngIf="this.rowsProyecto.length < 1">
+                            <div class="card-body">
+                                <div class="avatar avatar-tag bg-light-primary mb-2 mx-auto">
+                                    <button [routerLink]="['/dashboard/cliente-parconsil']" [queryParams]="{}"
+                                        queryParamsHandling="merge" skipLocationChange class="btn text-primary">
+                                        <i data-feather="archive" class="font-medium-3"></i>
+                                    </button>
+                                </div>
+                                <h4>No se pudo encontrar Proyectos</h4>
+                                <span class="text-body">Crea uno para configurar sus documentos</span>
+                            </div>
+                        </div>
+                    </ng-template>
+                </li>
+            </ul>
+            <div [ngbNavOutlet]="navWithIcons" class="mt-2"></div>
+        </section>
+
+
+        <ng-template #SG let-modal>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 col-12" style="margin-bottom: 90px;">
+                        <ng-select [(ngModel)]="idGrupo" [ngModelOptions]="{standalone: true}" [items]="rowsGrupo"
+                            [clearable]="false" bindLabel="nombreGrupo" bindValue="idClienteGrupo">
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <button (click)="modal.dismiss()" class="btn btn-primary" rippleEffect type="button">
+                            OK
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template #NDC let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">Asignar Documento</h4>
+                <button (click)="modal.dismiss('Cross click')" aria-label="Close" class="close" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="DocumentoForm">
+                    <div class="row">
+                        <!-- <div class="col-md-12 col-12">
+                            <div class="form-group">
+                                <label for="">Matriz</label>
+                                <ng-select [(ngModel)]="IdSubGrupo" [ngModelOptions]="{standalone: true}"
+                                    formControlName="idMatriz" [items]="rowsMatriz" [clearable]="false"
+                                    bindLabel="descripcion" bindValue="idColumna">
+                                </ng-select>
+                            </div>
+                        </div> -->
+                        <div class="col-md-12 col-12">
+                            <div class="form-group">
+                                <label for="">Nombre del Documento:</label>
+                                <textarea rows="4" class="form-control" formControlName="nombreDocumento"
+                                    style="resize: none;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-12 col-12 d-flex justify-content-center">
+                        <button (click)="onSaveDocument()" class="btn btn-primary" rippleEffect type="button">
+                            Agregar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <block-ui></block-ui>
+    </div>
+</div>

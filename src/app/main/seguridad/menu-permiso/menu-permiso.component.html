@@ -1,0 +1,97 @@
+<div style="margin-top: 10px">
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-class">
+                    <thead class="centerall-header">
+                        <tr>
+                            <th class="width-column utble">MENU</th>
+                            <th class="width-column utble">LEER</th>
+                            <th class="width-column utble">AGREGAR</th>
+                            <th class="width-column utble">EDITAR</th>
+                            <th class="width-column utble">ELIMINAR</th>
+                            <th class="width-column utble">EXPORTAR</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- <tr *ngFor="let row of rowsUsuario" class="cursor-pointer">
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <div (click)="onEditUser(modal, row)"
+                                        class="avatar bg-light-primary mr-1">
+                                        <div class="avatar-content">
+                                            <a ngbTooltip="Editar" placement="top"
+                                                href="javascript:void(0)">
+                                                <i data-feather="edit"
+                                                    class="font-medium-3"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div (click)="onDeleteUser(row)"
+                                        class="avatar bg-light-danger mr-1">
+                                        <div class="avatar-content">
+                                            <a ngbTooltip="Eliminar" placement="top"
+                                                href="javascript:void(0)">
+                                                <i data-feather="trash-2"
+                                                    class="font-medium-3"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><span>{{ row.usuario }}</span></td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar mr-1 ml-0 bg-light-primary">
+                                        <div class="avatar-content">{{ row.fullName
+                                            | initials
+                                            }}
+                                        </div>
+                                    </div>
+                                    <div class="cell-line-height">
+                                        <p class=" mb-25">
+                                            {{ row.fullName }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><span>{{ row.email }}</span></td>
+                            <td><span>{{ row.telefono }}</span></td>
+                            <td><span>{{ row.perfil }}</span></td>
+                            <td style="text-align: center;">
+                                <div class="badge badge-pill" [ngClass]="{
+                                    'badge-light-success': row.idEstado == 1,
+                                    'badge-light-warning': row.idEstado == 2
+                                    }">
+                                    {{ row.estado }}
+                                </div>
+                            </td>
+                        </tr> -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-1">
+        <!-- <div class="col-md-12 col-12 utble" style="margin-top: 6px;">
+            <ngb-pagination [collectionSize]="usuarioSettings.colletionSize"
+                [(page)]="usuarioSettings.page" (pageChange)="onReloadPage()"
+                [rotate]="true" [boundaryLinks]="true"
+                [pageSize]="usuarioSettings.pageSize"
+                class="d-flex justify-content-center">
+                <ng-template ngbPaginationFirst>⠀<span
+                        data-feather="skip-back"></span></ng-template>
+                <ng-template ngbPaginationPrevious><span
+                        [data-feather]="'chevron-left'"
+                        [class]="'font-weight-bolder'"></span>⠀
+                </ng-template>
+                <ng-template ngbPaginationNext>⠀<span
+                        [data-feather]="'chevron-right'"
+                        [class]="'font-weight-bolder'"></span>
+                </ng-template>
+                <ng-template ngbPaginationLast><span
+                        data-feather="skip-forward"></span>⠀</ng-template>
+            </ngb-pagination>
+        </div> -->
+    </div>
+</div>

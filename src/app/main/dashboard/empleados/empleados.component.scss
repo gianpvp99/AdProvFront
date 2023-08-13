@@ -1,0 +1,11 @@
+@import '@core/scss/angular/libs/file-uploader.component.scss';
+
+.utble {
+    text-align: center;
+    user-select: none;
+}
+    
+::ng-deep .opened .modal-dialog {
+    max-width: 90%;
+    width: 90%;
+}

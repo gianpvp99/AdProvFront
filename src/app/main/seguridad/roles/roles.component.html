@@ -1,0 +1,499 @@
+<div class="content-wrapper">
+    <div class="content-body">
+        <app-content-header class="utble" [contentHeader]="contentHeader"></app-content-header>
+        <section id="ngx-datatable-multi-purpose">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-2 col-12 justify-content-start" style="margin-top: 14px;">
+                            <div class="col-md-12 col-12">
+                                <div
+                                    class="d-flex justify-content-between align-items-center pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+                                    <label class="d-flex align-items-center"><span
+                                            class="d-none d-sm-inline-block">Mostrar⠀</span>
+                                        <ng-select (change)="onReloadPage()" [clearable]="false"
+                                            [items]="forPageOptions" [(ngModel)]="rolSettings.pageSize">
+                                        </ng-select>
+                                        <span class="d-none d-sm-inline-block">⠀entradas</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="col-md-12 col-12">
+                                <div class="pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+                                    <!-- <div class="demo-inline-spacing">
+                                        <span>Estado: </span>
+                                        <div class="custom-control custom-control-primary custom-radio">
+                                            <input type="radio" id="customRadio3" name="customRadio" value="0"
+                                                class="custom-control-input" (change)="onClickBtn(0)" checked>
+                                            <label class="custom-control-label" for="customRadio3">Todos</label>
+                                        </div>
+                                        <div class="custom-control custom-control-success custom-radio">
+                                            <input type="radio" id="customRadio1" name="customRadio" value="1"
+                                                class="custom-control-input" (change)="onClickBtn(1)">
+                                            <label class="custom-control-label" for="customRadio1">Activo</label>
+                                        </div>
+                                        <div class="custom-control custom-control-warning custom-radio">
+                                            <input type="radio" id="customRadio2" name="customRadio" value="2"
+                                                class="custom-control-input" (change)="onClickBtn(2)">
+                                            <label class="custom-control-label" for="customRadio2">Inactivo</label>
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12 d-flex justify-content-md-end">
+                            <div class="d-flex justify-content-end align-items-center m-1">
+                                <!-- *ngIf="access.flagWrite" -->
+                                <button (click)="onNewRol(addRol)" class="btn btn-primary f-w mr-1" rippleEffect>
+                                    <i class="mr-0 mr-sm-1" data-feather="plus-square"></i><span
+                                        class="d-none d-sm-inline-block">Agregar Rol</span>
+                                </button>
+
+                                <button (click)="onReloadPage()" class="btn btn-secondary f-w mr-1" rippleEffect>
+                                    <i class="mr-0 mr-sm-1" data-feather="refresh-cw"></i><span
+                                        class="d-none d-sm-inline-block">Refrescar</span>
+                                </button>
+                                <div
+                                    class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0 space-left">
+                                    <label class="d-flex align-items-center">Buscar
+                                        <input (keyup)="onReloadPage()" [(ngModel)]="rolSettings.searchString"
+                                            class="form-control ml-25" placeholder="Texto de búsqueda..." type="search">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="ngx-datatable-multi-purpose">
+            <div class="card">
+                <div class="card-body p-0">
+                    <div class="row" >
+                        <div class="col-md-12 col-12">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead class="centerall-header">
+                                        <tr>
+                                            <th class="d-flex justify-content-center utble ">ACCIÓN</th>
+                                            <th class="utble" >ROL</th>
+                                            <th class="utble" >TIPO DE USUARIO</th>
+                                            <th class="utble" >ESTADO</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let row of rowsRol" class="cursor-pointer">
+                                            <td>
+                                                <div class="d-flex justify-content-center align-items-center">
+                                                    <div (click)="onaccessRol(row); onaccessRolModal(row.idRol); openModalRol(accessRol)"
+                                                        class="avatar bg-light-primary mr-1">
+                                                        <div class="avatar-content">
+                                                            <a ngbTooltip="Asignación" placement="top"
+                                                                href="javascript:void(0)">
+                                                                <i data-feather="key" class="font-medium-3"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div (click)="onEditRol(editRol, row)"
+                                                        class="avatar bg-light-primary mr-1">
+                                                        <div class="avatar-content">
+                                                            <a ngbTooltip="Editar" placement="top"
+                                                                href="javascript:void(0)">
+                                                                <i data-feather="edit" class="font-medium-3"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div (click)="onDeleteRol(row)"
+                                                        class="avatar bg-light-danger mr-1">
+                                                        <div class="avatar-content">
+                                                            <a ngbTooltip="Eliminar" placement="top"
+                                                                href="javascript:void(0)">
+                                                                <i data-feather="trash-2" class="font-medium-3"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="c-w">{{row.nombreRol}}</td>
+                                            <td class="c-w">{{row.nombreTipoTabla}}</td>
+                                            <!-- <td class="c-w">{{row.stateRol}}</td> -->
+                                            <td class="c-w utble">
+                                                <div class="badge badge-pill" [ngClass]="{
+                                                    'badge-light-success': row.stateRol,
+                                                    'badge-light-warning': !row.stateRol
+                                                }">
+                                                    {{ row.stateRol ? 'ACTIVO' : 'INACTIVO' }}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="col-12 col-md-5 col-lg-5">
+                            <span *ngIf="rolSettings.colletionSize == 0" class="ml-2" style="color: #b9b9c3;">
+                                No hay filas
+                            </span>
+                            <span *ngIf="rolSettings.colletionSize == 1" class="ml-2" style="color: #b9b9c3;">{{
+                                rolSettings.colletionSize }} Fila</span>
+                            <span *ngIf="rolSettings.colletionSize > 1" class="ml-2" style="color: #b9b9c3;">{{
+                                rolSettings.colletionSize }} Filas</span>
+                        </div>
+                        <div class="col-12 col-md-7 col-lg-7 utble d-flex justify-content-end">
+                            <ngb-pagination [collectionSize]="rolSettings.colletionSize" style="margin-right: 13px;"
+                                [(page)]="rolSettings.page" (pageChange)="onReloadPage()" [rotate]="true"
+                                [boundaryLinks]="true" [pageSize]="rolSettings.pageSize">
+                                <ng-template ngbPaginationFirst>⠀<span data-feather="skip-back"></span>
+                                </ng-template>
+                                <ng-template ngbPaginationPrevious><span [data-feather]="'chevron-left'"
+                                        [class]="'font-weight-bolder'"></span>⠀
+                                </ng-template>
+                                <ng-template ngbPaginationNext>⠀<span [data-feather]="'chevron-right'"
+                                        [class]="'font-weight-bolder'"></span>
+                                </ng-template>
+                                <ng-template ngbPaginationLast><span data-feather="skip-forward"></span>⠀
+                                </ng-template>
+                            </ngb-pagination>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <ng-template #addRol let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">Registrar Información complementaria</h4>
+                <button (click)="modal.dismiss('Cross click')" aria-label="Close" class="close" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" ngbAutofocus tabindex="0">
+                <form [formGroup]="RolForm">
+                    <div class="row">
+                        <div class="col-md-12 col-12">
+                            <div class="divider divider-dotted divider-secondary">
+                                <div class="divider-text">Info. complementaria</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label>Rol</label>
+                                <input formControlName="nombre" class="form-control" type="text"
+                                    [ngClass]="{ 'is-invalid': IDSubmitted && UControlsAdd.nombre.errors }"
+                                    placeholder="Escriba el nombre del Rol" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label>Seleccionar Tipo de Usuario:</label>
+                                <ng-select formControlName="idTipoTablaUsuario"
+                                    [ngModelOptions]="{standalone: true}" [items]="rowsTypeUser"
+                                    [clearable]="false" bindLabel="nombre"
+                                    placeholder="Seleccionar" bindValue="id">
+                                </ng-select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- <div class="divider divider-dotted divider-primary">
+                        <div class="divider-text">Permisos</div>
+                    </div> -->
+                    <div class="pt-1 pb-1">
+                        <!-- <p class="card-text ml-2">Permission according to roles</p> -->
+                        <!-- <div class="table-responsive">
+                            <table class="table table-class table-striped table-borderless">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th class="width-column utble">Menu</th>
+                                        <th class="width-column utble">Leer</th>
+                                        <th class="width-column utble">Crear</th>
+                                        <th class="width-column utble">Editar</th>
+                                        <th class="width-column utble">Eliminar</th>
+                                        <th class="width-column utble">Exportar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let row of rowMenu">
+                                        <td class="utbleleft">{{row.menu}}</td>
+                                        <td>
+                                            <div class="custom-control custom-control-secondary custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                    id="{{'readCheck' + row.idMenu}}" [(ngModel)]="row.flagLectura"
+                                                    [ngModelOptions]="{ standalone: true }" />
+                                                <label class="custom-control-label"
+                                                    for="{{'readCheck' + row.idMenu}}"></label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="custom-control custom-control-warning custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                    id="{{'createCheck' + row.idMenu}}" [(ngModel)]="row.flagEscritura"
+                                                    [ngModelOptions]="{ standalone: true }" />
+                                                <label class="custom-control-label"
+                                                    for="{{'createCheck' + row.idMenu}}"></label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="custom-control custom-control-warning custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                    id="{{'editCheck' + row.idMenu}}" [(ngModel)]="row.flagEditar"
+                                                    [ngModelOptions]="{ standalone: true }" />
+                                                <label class="custom-control-label"
+                                                    for="{{'editCheck' + row.idMenu}}"></label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="custom-control custom-control-danger custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                    id="{{'deleteCheck' + row.idMenu}}" [(ngModel)]="row.flagEliminar"
+                                                    [ngModelOptions]="{ standalone: true }" />
+                                                <label class="custom-control-label"
+                                                    for="{{'deleteCheck' + row.idMenu}}"></label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="custom-control custom-control-success custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                    id="{{'exportCheck' + row.idMenu}}" [(ngModel)]="row.flagExportar"
+                                                    [ngModelOptions]="{ standalone: true }" />
+                                                <label class="custom-control-label"
+                                                    for="{{'exportCheck' + row.idMenu}}"></label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div> -->
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer" style="display: block !important;">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <div style="float: right">
+                            <button (click)="onSaveRol()" class="btn btn-primary mr-1" rippleEffect type="submit">
+                                Aceptar
+                            </button>
+                            <button (click)="modal.dismiss()" class="btn btn-secondary" rippleEffect type="button">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        
+        <ng-template #editRol let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">Editar Información complementaria</h4>
+                <button (click)="modal.dismiss('Cross click')" aria-label="Close" class="close" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" ngbAutofocus tabindex="0">
+                <form [formGroup]="editRolForm">
+                    <div class="row">
+                        <div class="col-md-12 col-12">
+                            <div class="divider divider-dotted divider-secondary">
+                                <div class="divider-text">Info. complementaria</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <!-- <label>ID</label> -->
+                                <input formControlName="id" class="form-control" type="hidden" disabled/>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 col-12">
+                            <div class="form-group">
+                                <label>Rol</label>
+                                <input formControlName="nombre" class="form-control" type="text"
+                                    [ngClass]="{ 'is-invalid': IDSubmitted && UControlsEdit.nombre.errors }"
+                                    placeholder="Escriba el nombre del Rol" />
+                            </div>
+                        </div>
+
+                        <!-- <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label>Seleccionar Tipo de Usuario:</label>
+                                <ng-select formControlName="idTipoTablaUsuario"
+                                    [ngModelOptions]="{standalone: true}" [items]="rowsTypeUser"
+                                    [clearable]="false" bindLabel="nombre"
+                                    placeholder="Seleccionar" bindValue="id">
+                                </ng-select>
+                            </div>
+                        </div> -->
+
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer" style="display: block !important;">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <div style="float: right">
+                            <button (click)="onSaveEditRol(row)" class="btn btn-primary mr-1" rippleEffect type="submit">
+                                Aceptar
+                            </button>
+                            <button (click)="modal.dismiss()" class="btn btn-secondary" rippleEffect type="button">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template #accessRol let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">Asignación de accesos a Roles</h4>
+                <button (click)="modal.dismiss('Cross click')" aria-label="Close" class="close" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" ngbAutofocus tabindex="0">
+                <form [formGroup]="accessRolForm">
+                    <div class="row">
+                        <div class="col-md-12 col-12">
+                            <div class="divider divider-dotted divider-secondary">
+                                <div class="divider-text">Info. complementaria</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-3">
+                            <div class="form-group">
+                                <!-- <label>ID</label> -->
+                                <input formControlName="id" class="form-control" type="hidden" disabled/>
+                            </div>
+                        </div>
+
+                        
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label>Seleccionar accesos:</label>
+                                    <!-- <div class="input-group"> -->
+                                        <ng-select formControlName="idAccess"
+                                            [ngModelOptions]="{standalone: true}" [items]="rowsAccess"
+                                            [clearable]="false" bindLabel="nombreAcceso"
+                                            placeholder="Seleccionar" bindValue="idAcceso">
+                                        </ng-select> 
+      
+                                    <!-- </div> -->
+                            </div>
+                        </div> 
+                        <div class="form-group" style="margin-top: 30px">
+                            <button (click)="onSaveAccessRol();"
+                                ngbTooltip="Agregar" placement="top" rippleEffect
+                                class="btn btn-icon btn-primary mr-1" type="button">
+                                <span [data-feather]="'plus-circle'"></span>
+                            </button>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 col-12">
+                        <div class="table-responsive">
+                            <table class="table table-class table-striped table-borderless">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th class="width-column utble" style="width: 20%;">
+                                            ACCIÓN</th>
+                                        <th class="width-column utble" style="width: 40%;">
+                                            NOMBRE ACCESO
+                                        </th>
+                                        <!-- <th class="width-column utble" style="width: 40%;">
+                                            VISUALIZAR
+                                        </th>
+                                        <th class="width-column utble" style="width: 40%;">
+                                            AGREGAR
+                                        </th>
+                                        <th class="width-column utble" style="width: 40%;">
+                                            EDITAR
+                                        </th>
+                                        <th class="width-column utble" style="width: 40%;">
+                                            ELIMINAR
+                                        </th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let row of rowsRolAccess" class="cursor-pointer">
+                                        <td>
+                                            <div (click)="onDeleteRolAccess(row.id);" class="d-flex align-items-center">
+                                                <div  class="avatar bg-light-danger mr-1">
+                                                    <div class="avatar-content">
+                                                        <a ngbTooltip="Eliminar" placement="top"
+                                                            href="javascript:void(0)">
+                                                            <i data-feather="trash-2"
+                                                                class="font-medium-3"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="c-w utble" >{{ row.title}}</td>
+                                        <!-- <td>
+                                            <div class="custom-control custom-control-secondary custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                    id="{{'readCheck' }}" >
+                                                <label class="custom-control-label"
+                                                    for="{{'readCheck'}}"></label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="custom-control custom-control-success custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                    id="{{'createCheck' }}" >
+                                                <label class="custom-control-label"
+                                                    for="{{'createCheck'}}"></label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="custom-control custom-control-warning custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                    id="{{'editCheck' }}" >
+                                                <label class="custom-control-label"
+                                                    for="{{'editCheck'}}"></label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="custom-control custom-control-danger custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                    id="{{'deleteCheck' }}" >
+                                                <label class="custom-control-label"
+                                                    for="{{'deleteCheck'}}"></label>
+                                            </div>
+                                        </td> -->
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer" style="display: block !important;">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <div style="float: right">
+                            <button (click)="modal.dismiss()" class="btn btn-secondary" rippleEffect type="button">
+                                Cerrar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <block-ui></block-ui>
+    </div>
+</div>

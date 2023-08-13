@@ -1,0 +1,120 @@
+@import '@core/scss/base/pages/app-invoice.scss';
+@import '@core/scss/angular/libs/flatpickr.component.scss';
+@import '@core/scss/angular/libs/select.component.scss';
+
+.width-column {
+    border: solid 1px #CCC;
+}
+
+.table.sticky th{
+    position: sticky;
+    top: 0;
+    text-align: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.table.sticky th::after {    
+    content: "";
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    bottom: 38px;
+    left: 0;
+    background: #CCC;
+}
+
+.left-column {
+    border-left: solid 1px #CCC
+}
+
+.top-column {
+    border-top: solid 1px #CCC
+}
+
+.simple-column {
+    border: solid 1px #CCC;
+}
+
+.centerall-header tr th {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table-class {
+    border: solid 1px #CCC;
+    border-top: solid 1px #CCC;
+}
+
+.bk {
+    text-align: center;
+}
+
+.lft {
+    text-align: right;
+}
+
+.utble {
+    text-align: center;
+    user-select: none;
+}
+
+.top {
+    margin-top: 20px;
+}
+
+.mg-6 {
+    margin-top: 6px;
+}
+
+.ygcolor {
+    color: rgb(65, 225, 97)
+}
+
+.more-options-dropdown {
+  white-space: normal;
+}
+
+.f-w {
+    font-size: 0.925rem;
+    //line-height: 2.25rem;
+    font-weight: 500;
+}
+
+.number-format {
+    font-size: 0.955rem;
+    font-weight: 500;
+    //font-family: 'Courier New', Courier, monospace;
+}
+
+.c-w {
+    font-size: 0.988rem;
+    //line-height: 2rem;
+    font-weight: 500
+}
+
+.h-w {
+    font-size: 1.25rem;
+    //line-height: 2rem;
+    font-weight: 500
+}
+
+.disabled-2 {
+    color: #b9b9c3;
+    pointer-events: none;
+    background-color: #fff;
+}
+
+.clock {
+    font-size: 2em;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .vertical-line {
+    border-left: 1px solid #d6dce1;
+    width: 1px;
+    height: 50px;
+    background-color: black;
+    transform: rotate(90deg);
+  }

@@ -1,0 +1,1461 @@
+<div class="content-wrapper">
+    <div class="content-body">
+        <a id="mainTable"></a>
+        <app-content-header class="utble" [contentHeader]="contentHeader"></app-content-header>
+
+        <section class="app-user-view">
+            <div class="row">
+                <div class="col-xl-9 col-lg-8 col-md-7">
+                    <div class="card user-card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div
+                                    class="col-xl-6 col-lg-12 d-flex flex-column justify-content-between border-container-lg">
+                                    <div class="user-avatar-section">
+                                        <div class="d-flex justify-content-start">
+                                            <div class="d-flex flex-column ml-1">
+                                                <div class="user-info mb-1">
+                                                    <h4 class="mb-0">{{ ReactiveIUForm.razonSocial.value }}</h4>
+                                                    <span class="card-text"> {{ ReactiveIUForm.correo.value }} </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-12 mt-2 mt-xl-0">
+                                    <div class="user-info-wrapper">
+                                        <div class="d-flex flex-wrap">
+                                            <div class="user-info-title">
+                                                <i data-feather="user" class="mr-1"></i>
+                                                <span
+                                                    class="card-text user-info-title font-weight-bold mb-0">Especialista</span>
+                                            </div>
+                                            <p class="card-text mb-0 ml-1"> Cristina Córdova</p>
+                                        </div>
+                                        <div class="d-flex flex-wrap my-50">
+                                            <div class="user-info-title">
+                                                <i data-feather="check" class="mr-1"></i>
+                                                <span class="card-text user-info-title font-weight-bold mb-0">RUC</span>
+                                            </div>
+                                            <p class="card-text mb-0 ml-1"> {{ ReactiveIUForm.ruc.value }} </p>
+                                        </div>
+                                        <div class="d-flex flex-wrap my-50">
+                                            <div class="user-info-title">
+                                                <i data-feather="compass" class="mr-1"></i>
+                                                <span
+                                                    class="card-text user-info-title font-weight-bold mb-0">Dirección</span>
+                                            </div>
+                                            <p class="card-text mb-0 ml-1"> {{ ReactiveIUForm.direccion.value }} </p>
+                                        </div>
+                                        <div class="d-flex flex-wrap my-50">
+                                            <div class="user-info-title">
+                                                <i data-feather="phone" class="mr-1"></i>
+                                                <span
+                                                    class="card-text user-info-title font-weight-bold mb-0">Teléfono</span>
+                                            </div>
+                                            <p class="card-text mb-0 ml-1"> {{ ReactiveIUForm.telefono.value }} </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-lg-4 col-md-5">
+                    <div class="card plan-card border-primary">
+                        <div class="card-body">
+                            <button (click)="Return()" class="btn btn-primary text-center btn-block"
+                                rippleEffect>Regresar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ngx-datatable-multi-purpose">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12 col-12 d-flex justify-content-md-end">
+                            <div class="d-flex justify-content-end align-items-center m-1">
+                                <button (click)="AgregarCliente(modalNC, true)" class="btn btn-primary ml-1">
+                                    <i class="mr-0 mr-sm-1" data-feather="plus-square"></i><span
+                                        class="d-none d-sm-inline-block">Agregar Contratista</span>
+                                </button>
+                                <button (click)="onReloadChanged()" class="btn btn-secondary ml-1">
+                                    <i class="mr-0 mr-sm-1" data-feather="refresh-cw"></i><span
+                                        class="d-none d-sm-inline-block">Refrescar</span>
+                                </button>
+                                <label class="d-flex align-items-center ml-1 utble">
+                                    <span class="d-none d-sm-inline-block mr-1">Buscar:</span>
+                                    <input (keyup)="onReloadChanged()" [(ngModel)]="clienteSettings.searchString"
+                                        class="form-control" placeholder="Texto de búsqueda..." type="search" />
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title mb-2">Contratistas</h4>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-12 col-12">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead class="centerall-header">
+                                            <tr>
+                                                <th class="utble">ACCIÓN</th>
+                                                <th class="utble">RUC</th>
+                                                <th class="utble">RAZÓN SOCIAL
+                                                </th>
+                                                <th class="utble">DIRECCIÓN</th>
+                                                <th class="utble">TELÉFONO</th>
+                                                <th class="utble">CORREO</th>
+                                                <th class="utble">% CUMPLIMIENTO
+                                                </th>
+                                                <!-- <th class="width-column utble" title="Empleados">EMPLEADOS</th> -->
+                                                <!-- <th class="width-column utble" title="Documentos">DOCUMENTOS
+                                                        </th> -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let row of rowsContratista" class="cursor-pointer">
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="avatar bg-light-danger mr-1">
+                                                            <div class="avatar-content">
+                                                                <a (click)="onDelete(row)" ngbTooltip="Eliminar"
+                                                                    placement="top" href="javascript:void(0)">
+                                                                    <i data-feather="trash-2" class="font-medium-3"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <span>{{ row.ruc }}</span>
+                                                </td>
+                                                <td>
+                                                    <span style="font-size: small;">{{ row.razonSocial }}</span>
+                                                </td>
+                                                <td>
+                                                    <span style="font-size: small;">{{ row.direccion }}</span>
+                                                </td>
+                                                <td>
+                                                    <span>{{ row.telefono }}</span>
+                                                </td>
+                                                <td>
+                                                    <span>{{ row.correo }}</span>
+                                                </td>
+                                                <td>
+                                                    <div class="progress-wrapper">
+                                                        <div class="mb-25">&hellip;{{row.porcentaje}} %</div>
+                                                        <ngb-progressbar type="primary" [value]="row.porcentaje">
+                                                        </ngb-progressbar>
+                                                    </div>
+                                                </td>
+                                                <!-- <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="avatar bg-light-secondary mr-1">
+                                                                    <div class="avatar-content">
+                                                                        <a ngbTooltip="Información empleados"
+                                                                            placement="top"
+                                                                            (click)="onSetEmpleados(row)"
+                                                                            href="javascript:void(0)">
+                                                                            <i data-feather="users"
+                                                                                class="font-medium-3"></i>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                                <span>Empleados</span>
+                                                            </div>
+                                                        </td> -->
+                                                <!-- <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="avatar bg-light-secondary mr-1">
+                                                                    <div class="avatar-content">
+                                                                        <a ngbTooltip="Información del contratista"
+                                                                            placement="top"
+                                                                            (click)="EditarCliente(modaledit, row)"
+                                                                            href="javascript:void(0)">
+                                                                            <i data-feather="file-text"
+                                                                                class="font-medium-3"></i>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                                <span>Ver detalle</span>
+                                                            </div>
+                                                        </td> -->
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-1">
+                            <div class="col-md-6 col-12">
+                                <span *ngIf="contratistaSettings.colletionSize == 0" class="ml-1 utble">
+                                    No hay
+                                    filas
+                                    para mostrar</span>
+                                <span *ngIf="contratistaSettings.colletionSize == 1" class="ml-1 utble">{{
+                                    contratistaSettings.colletionSize }} Fila</span>
+                                <span *ngIf="contratistaSettings.colletionSize > 1" class="ml-1 utble">{{
+                                    contratistaSettings.colletionSize }} Filas</span>
+                            </div>
+                            <div class="col-md-6 col-12 d-flex justify-content-end utble">
+                                <ngb-pagination [collectionSize]="contratistaSettings.colletionSize"
+                                    [(page)]="contratistaSettings.page" (pageChange)="onReloadChanged()"
+                                    [pageSize]="contratistaSettings.pageSize">
+                                </ngb-pagination>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <ng-template #modalNC let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">Registrar Información complementaria</h4>
+                <button (click)="modal.dismiss('Cross click')" aria-label="Close" class="close" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" ngbAutofocus tabindex="0">
+                <form [formGroup]="CliForm">
+                    <div class="row">
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label>Especialista encargado</label>
+                                <ng-select [clearable]="false" [items]="Especialista" bindLabel="despecialista"
+                                    bindValue="idColumna" [(ngModel)]="this.Value" formControlName="value">
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label>RUC / DNI:</label>
+                                <div class="input-group">
+                                    <input [(ngModel)]="ruc" class="form-control" style="margin-right: 4px;" type="text"
+                                        formControlName="ruc"
+                                        [ngClass]="{ 'is-invalid': IDSubmitted && ReactiveIUForm.ruc.errors }"
+                                        placeholder="Buscar..." aria-describedby="button-addon2">
+                                    <div class="input-group-append" id="button-addon2">
+                                        <button (click)="onDocumentoSearch()" ngbTooltip="Buscar RUC/DNI"
+                                            placement="left" class="btn btn-outline-primary" type="button" rippleEffect>
+                                            <i data-feather="search"></i>
+                                        </button>
+                                    </div>
+                                    <div *ngIf="ReactiveIUForm.ruc.errors" class="invalid-feedback">
+                                        <div *ngIf="ReactiveIUForm.ruc.errors.required">* Campo obligatorio
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-12">
+                            <div class="form-group">
+                                <label>Cliente</label>
+                                <input id="typeahead-focus" class="form-control" type="text" [(ngModel)]="razonSocial"
+                                    formControlName="razonSocial" (focus)="focus$.next($any($event).target.value)"
+                                    (click)="click$.next($any($event).target.value)"
+                                    (selectItem)="onAutoCompleteChange($event)" [ngbTypeahead]="search"
+                                    #instance="ngbTypeahead"
+                                    [ngClass]="{ 'is-invalid': IDSubmitted && ReactiveIUForm.razonSocial.errors }">
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-12">
+                            <div class="form-group">
+                                <label>Dirección</label>
+                                <input ID="IUDirProveedor" class="form-control" type="text" [(ngModel)]="direccion"
+                                    formControlName="direccion"
+                                    [ngClass]="{ 'is-invalid': IDSubmitted && ReactiveIUForm.direccion.errors }">
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-12">
+                            <div class="form-group">
+                                <label>Contratista</label>
+                                <div class="input-group-append">
+                                    <input [(ngModel)]="contratista" class="form-control" type="search"
+                                        style="margin-right: 4px;" formControlName="contratista" readonly
+                                        [ngClass]="{ 'is-invalid': IDSubmitted && ReactiveIUForm.contratista.errors }" />
+                                    <button (click)="onContratistaSelect(CS)" ngbTooltip="Buscar contratista"
+                                        placement="left" class="btn btn-outline-primary" type="button">
+                                        <i data-feather="search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label>Ubigeo</label>
+                                <input class="form-control" type="text" [(ngModel)]="idUbigeo"
+                                    formControlName="idUbigeo"
+                                    [ngClass]="{ 'is-invalid': IDSubmitted && ReactiveIUForm.idUbigeo.errors }">
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label>Teléfono</label>
+                                <input class="form-control" type="text" [(ngModel)]="telefono"
+                                    formControlName="telefono"
+                                    [ngClass]="{ 'is-invalid': IDSubmitted && ReactiveIUForm.telefono.errors }">
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-12">
+                            <div class="form-group">
+                                <label>Correo</label>
+                                <input class="form-control" type="text" [(ngModel)]="correo" formControlName="correo"
+                                    [ngClass]="{ 'is-invalid': IDSubmitted && ReactiveIUForm.correo.errors }">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row">
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label>Sector</label>
+                            <ng-select [(ngModel)]="idTipoDoc" [items]="rowsTipoDoc" [clearable]="false"
+                                bindLabel="descripcion" bindValue="idColumna" placeholder="Seleccionar">
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label>Régimen</label>
+                            <ng-select (click)="ChangeRegimen()" [(ngModel)]="idRegimen" [items]="rowsRegimen"
+                                [clearable]="false" bindLabel="descripcion" placeholder="Seleccionar"
+                                bindValue="idColumna">
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label>Grupos</label>
+                            <ng-select (click)="ChangeRegimen()" [(ngModel)]="idRegimen" [items]="rowsRegimen"
+                                [clearable]="false" bindLabel="descripcion" placeholder="Seleccionar"
+                                bindValue="idColumna">
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-12">
+                    <div class="divider divider-dotted divider-warning">
+                        <div class="divider-text dsg">Configuración de documentos</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <ul #navWithIcons="ngbNav" class="nav-tabs" ngbNav>
+                            <li ngbNavItem>
+                                <a ngbNavLink><span [data-feather]="'award'"></span> Homologación</a>
+                                <ng-template ngbNavContent>
+                                    <div class="row">
+                                        <div class="col-md-12 col-12 lg-6">
+                                            <div class="divider divider-left divider-dotted divider-primary">
+                                                <div class="divider-text"><span class="ygcolor"
+                                                        [data-feather]="'arrow-down-right'"></span><span
+                                                        class="ml-1 ygcolor">General (Homologación)</span></div>
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="meetup-day text-left">
+                                                        <div class="media mb-1">
+                                                            <div class="col-lg-4" style="text-align: center;">
+                                                                <b>Documentos</b>
+                                                            </div>
+                                                            <div class="col-lg-3" style="text-align: center;">
+                                                                <b>Periodicidad</b>
+                                                            </div>
+                                                            <div class="col-lg-3" style="text-align: center;">
+                                                                <b>Criticidad</b>
+                                                            </div>
+                                                            <div class="col-lg-2 mr-2"
+                                                                style="text-align: center;margin-left: 28px">
+                                                                <i data-feather="info"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngFor="let row of rowsDocumentos"
+                                                        class="meetup-day text-left">
+                                                        <div class="media mb-1">
+                                                            <div class="avatar bg-light-s rounded">
+                                                                <div class="avatar-content">
+                                                                    <i data-feather="file"
+                                                                        class="avatar-icon font-medium-3"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4">
+                                                                <h5>{{ row.documentoName }}</h5>
+                                                            </div>
+                                                            <div class="col-lg-3">
+                                                                <ng-select [(ngModel)]="row.idPeriodicidad"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    [items]="rowsPeriodo" [clearable]="false"
+                                                                    bindLabel="descripcion" bindValue="idColumna"
+                                                                    placeholder="Seleccionar">
+                                                                </ng-select>
+
+                                                                <div *ngIf="row.idPeriodicidad == 2"
+                                                                    class="col-md-12 col-12 mt-1">
+                                                                    <div class="form-group">
+                                                                        <label> Seleccione la fecha específica</label>
+                                                                        <div class="input-group">
+                                                                            <input #basicDPFrom="ngbDatepicker"
+                                                                                #i18nDP="ngbDatepicker"
+                                                                                [(ngModel)]="toDate"
+                                                                                class="form-control" ngbDatepicker
+                                                                                placeholder="dd/mm/yyyy">
+                                                                            <div class="input-group-append">
+                                                                                <button (click)="basicDPFrom.toggle()"
+                                                                                    class="btn btn-outline-secondary feather icon-calendar"
+                                                                                    rippleEffect type="button"></button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="col-lg-3">
+                                                                <ng-select [(ngModel)]="row.idCriticidad"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    [items]="rowsCriticidad" [clearable]="false"
+                                                                    bindLabel="descripcion" bindValue="idColumna"
+                                                                    placeholder="Seleccionar">
+                                                                </ng-select>
+                                                            </div>
+                                                            <div ngbDropdown
+                                                                class="col-lg-2 d-flex justify-content-center btn-group mr-2">
+                                                                <div
+                                                                    class="custom-control custom-control-primary custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                        id="{{'dCheck' + row.idDocumentoName}}"
+                                                                        [(ngModel)]="row.estado"
+                                                                        [ngModelOptions]="{ standalone: true }" />
+                                                                    <label class="custom-control-label"
+                                                                        for="{{'dCheck' + row.idDocumentoName}}">
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- <div class="mt-3">
+                                                        <button (click)="addItem()" type="button"
+                                                            class="btn btn-primary btn-sm" rippleEffect>
+                                                            <i class="mr-25" data-feather="plus-square"></i><span
+                                                                class="d-none d-sm-inline-block">Agregar
+                                                                documento</span>
+                                                        </button>
+                                                    </div> -->
+
+                                                    <!-- <div ng2FileDrop [ngClass]="{ 'file-drop-over': hasBaseDropZoneOver }"
+                                                        (fileOver)="fileHom($event)" [uploader]="archivosHomologacion"
+                                                        class="py-5 mb-3 text-center font-medium-5 text-uppercase file-drop-zone">
+                                                        Arrastre aquí los archivos
+                                                    </div>
+                                                    <div class="d-flex justify-content-between mb-1">
+                                                        <h4>Archivo(s) a subir</h4>
+                                                    </div>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th [width]="250">Nivel</th>
+                                                                    <th [width]="250">Período</th>
+                                                                    <th>Nombre</th>
+                                                                    <th>Tamaño</th>
+                                                                    <th>Acción</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr *ngFor="let item of archivosHom">
+                                                                    <td [width]="250">
+                                                                        <ng-select appendTo="body" [clearable]="false" [items]="rowsNivel"
+                                                                            style="width: 250px" bindLabel="descripcion"
+                                                                            placeholder="Tipo Archivo" bindValue="idColumna"
+                                                                            [(ngModel)]="idNivel" [ngModelOptions]="{standalone: true}">
+                                                                        </ng-select>
+                                                                    </td>
+                                                                    <td [width]="250">
+                                                                        <ng-select appendTo="body" [clearable]="false" [items]="rowsPeriodo"
+                                                                            style="width: 250px" bindLabel="descripcion"
+                                                                            placeholder="Tipo Archivo" bindValue="idColumna"
+                                                                            [(ngModel)]="idPeriodo" [ngModelOptions]="{standalone: true}">
+                                                                        </ng-select>
+                                                                    </td>
+                                                                    <td>
+                                                                        <strong>{{ item.nombre }}</strong>
+                                                                    </td>
+                                                                    <td>
+                                                                        {{item.tamanio}}
+                                                                    </td>
+                                                                    <td nowrap>
+                                                                        <button (click)="onEliminarArchivo(item)" type="button"
+                                                                            class="btn btn-raised btn-outline-danger btn-sm" rippleEffect>
+                                                                            <i data-feather="trash"></i>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </li>
+                            <li ngbNavItem>
+                                <a ngbNavLink><span [data-feather]="'globe'"></span> Auditoría (Empresa)</a>
+                                <ng-template ngbNavContent>
+                                    <div class="row">
+                                        <div class="col-md-12 col-12 lg-6">
+                                            <div class="divider divider-left divider-dotted divider-primary">
+                                                <div class="divider-text"><span class="ygcolor"
+                                                        [data-feather]="'arrow-down-right'"></span><span
+                                                        class="ml-1 ygcolor">General (Empresa)</span></div>
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="meetup-day text-left">
+                                                        <div class="media mb-1">
+                                                            <div class="col-lg-4" style="text-align: center;">
+                                                                <b>Documentos</b>
+                                                            </div>
+                                                            <div class="col-lg-3" style="text-align: center;">
+                                                                <b>Periodicidad</b>
+                                                            </div>
+                                                            <div class="col-lg-3" style="text-align: center;">
+                                                                <b>Criticidad</b>
+                                                            </div>
+                                                            <div class="col-lg-2 mr-2"
+                                                                style="text-align: center;margin-left: 40px">
+                                                                <i data-feather="info"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngFor="let row of rowsDocumentosEmpresa"
+                                                        class="meetup-day text-left">
+                                                        <div class="media mb-1">
+                                                            <div class="avatar bg-light-s rounded mr-1">
+                                                                <div class="avatar-content">
+                                                                    <i data-feather="file"
+                                                                        class="avatar-icon font-medium-3"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4">
+                                                                <h5>{{ row.documentoName }}</h5>
+                                                            </div>
+                                                            <div class="col-lg-3">
+                                                                <ng-select [(ngModel)]="row.idPeriodicidad"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    [items]="rowsPeriodo" [clearable]="false"
+                                                                    bindLabel="descripcion" bindValue="idColumna"
+                                                                    placeholder="Seleccionar">
+                                                                </ng-select>
+
+                                                                <div *ngIf="row.idPeriodicidad == 2"
+                                                                    class="col-md-12 col-12 mt-1">
+                                                                    <div class="form-group">
+                                                                        <label> Seleccione la fecha específica</label>
+                                                                        <div class="input-group">
+                                                                            <input #basicDPFrom="ngbDatepicker"
+                                                                                #i18nDP="ngbDatepicker"
+                                                                                [(ngModel)]="toDate"
+                                                                                class="form-control" ngbDatepicker
+                                                                                placeholder="dd/mm/yyyy">
+                                                                            <div class="input-group-append">
+                                                                                <button (click)="basicDPFrom.toggle()"
+                                                                                    class="btn btn-outline-secondary feather icon-calendar"
+                                                                                    rippleEffect type="button"></button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="col-lg-3">
+                                                                <ng-select [(ngModel)]="row.idCriticidad"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    [items]="rowsCriticidad" [clearable]="false"
+                                                                    bindLabel="descripcion" bindValue="idColumna"
+                                                                    placeholder="Seleccionar">
+                                                                </ng-select>
+                                                            </div>
+                                                            <div ngbDropdown
+                                                                class="col-lg-2 d-flex justify-content-center">
+                                                                <div
+                                                                    class="custom-control custom-control-primary custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                        id="{{'dCheckEmpresa' + row.idDocumentoName}}"
+                                                                        [(ngModel)]="row.estado"
+                                                                        [ngModelOptions]="{ standalone: true }" />
+                                                                    <label class="custom-control-label"
+                                                                        for="{{'dCheckEmpresa' + row.idDocumentoName}}">
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- <div ng2FileDrop [ngClass]="{ 'file-drop-over': hasBaseDropZoneOver }"
+                                                        (fileOver)="fileAudEmpr($event)" [uploader]="archivosAudEmpresa"
+                                                        class="py-5 mb-3 text-center font-medium-5 text-uppercase file-drop-zone">
+                                                        Arrastre aquí los archivos
+                                                    </div>
+                                                    <div class="d-flex justify-content-between mb-1">
+                                                        <h4>Archivo(s) a subir</h4>
+                                                    </div>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                        
+                                                                    <th>Nombre</th>
+                                                                    <th>Tamaño</th>
+                                                                    <th>Acción</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr *ngFor="let item of archivosAudEmpr">
+                                                                    <td>
+                                                                        <strong>{{ item.nombre }}</strong>
+                                                                    </td>
+                                                                    <td>
+                                                                        {{item.tamanio}}
+                                                                    </td>
+                                                                    <td nowrap>
+                                                                        <button (click)="onEliminarArchivo(item)" type="button"
+                                                                            class="btn btn-raised btn-outline-danger btn-sm" rippleEffect>
+                                                                            <i data-feather="trash"></i>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </li>
+                            <li ngbNavItem>
+                                <a ngbNavLink><span [data-feather]="'globe'"></span> Auditoría (Empleados)</a>
+                                <ng-template ngbNavContent>
+                                    <div class="row">
+                                        <div class="col-md-12 col-12 lg-6">
+                                            <div class="divider divider-left divider-dotted divider-primary">
+                                                <div class="divider-text"><span class="ygcolor"
+                                                        [data-feather]="'arrow-down-right'"></span><span
+                                                        class="ml-1 ygcolor">General (Empleado)</span></div>
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="meetup-day text-left">
+                                                        <div class="media mb-1">
+                                                            <div class="col-lg-4" style="text-align: center;">
+                                                                <b>Documentos</b>
+                                                            </div>
+                                                            <div class="col-lg-3" style="text-align: center;">
+                                                                <b>Periodicidad</b>
+                                                            </div>
+                                                            <div class="col-lg-3" style="text-align: center;">
+                                                                <b>Criticidad</b>
+                                                            </div>
+                                                            <div class="col-lg-2 mr-2"
+                                                                style="text-align: center;margin-left: 40px">
+                                                                <i data-feather="info"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngFor="let row of rowsDocumentosEmpleado"
+                                                        class="meetup-day text-left">
+                                                        <div class="media mb-1">
+                                                            <div class="avatar bg-light-s rounded mr-1">
+                                                                <div class="avatar-content">
+                                                                    <i data-feather="file"
+                                                                        class="avatar-icon font-medium-3"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4">
+                                                                <h5>{{ row.documentoName }}</h5>
+                                                            </div>
+                                                            <div class="col-lg-3">
+                                                                <ng-select [(ngModel)]="row.idPeriodicidad"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    [items]="rowsPeriodo" [clearable]="false"
+                                                                    bindLabel="descripcion" bindValue="idColumna"
+                                                                    placeholder="Seleccionar">
+                                                                </ng-select>
+
+                                                                <div *ngIf="row.idPeriodicidad == 2"
+                                                                    class="col-md-12 col-12 mt-1">
+                                                                    <div class="form-group">
+                                                                        <label> Seleccione la fecha específica</label>
+                                                                        <div class="input-group">
+                                                                            <input #basicDPFrom="ngbDatepicker"
+                                                                                #i18nDP="ngbDatepicker"
+                                                                                [(ngModel)]="toDate"
+                                                                                class="form-control" ngbDatepicker
+                                                                                placeholder="dd/mm/yyyy">
+                                                                            <div class="input-group-append">
+                                                                                <button (click)="basicDPFrom.toggle()"
+                                                                                    class="btn btn-outline-secondary feather icon-calendar"
+                                                                                    rippleEffect type="button"></button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="col-lg-3">
+                                                                <ng-select [(ngModel)]="row.idCriticidad"
+                                                                    [ngModelOptions]="{standalone: true}"
+                                                                    [items]="rowsCriticidad" [clearable]="false"
+                                                                    bindLabel="descripcion" bindValue="idColumna"
+                                                                    placeholder="Seleccionar">
+                                                                </ng-select>
+                                                            </div>
+                                                            <div ngbDropdown
+                                                                class="col-lg-2 d-flex justify-content-center">
+                                                                <div
+                                                                    class="custom-control custom-control-primary custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                        id="{{'dCheckEmpleado' + row.idDocumentoName}}"
+                                                                        [(ngModel)]="row.estado"
+                                                                        [ngModelOptions]="{ standalone: true }" />
+                                                                    <label class="custom-control-label"
+                                                                        for="{{'dCheckEmpleado' + row.idDocumentoName}}">
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- <div ng2FileDrop [ngClass]="{ 'file-drop-over': hasBaseDropZoneOver }"
+                                                        (fileOver)="fileAudEmpl($event)" [uploader]="archivosAudEmpleado"
+                                                        class="py-5 mb-3 text-center font-medium-5 text-uppercase file-drop-zone">
+                                                        Arrastre aquí los archivos
+                                                    </div>
+                                                    <div class="d-flex justify-content-between mb-1">
+                                                        <h4>Archivo(s) a subir</h4>
+                                                    </div>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th [width]="250">Nivel</th>
+                                                                    <th [width]="250">Período</th>
+                                                                    <th>Nombre</th>
+                                                                    <th>Tamaño</th>
+                                                                    <th>Acción</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr *ngFor="let item of archivosAudEmpl">
+                                                                    <td [width]="250">
+                                                                        <ng-select appendTo="body" [clearable]="false" [items]="rowsNivel"
+                                                                            style="width: 250px" bindLabel="descripcion"
+                                                                            placeholder="Tipo Archivo" bindValue="idColumna"
+                                                                            [(ngModel)]="idNivel" [ngModelOptions]="{standalone: true}">
+                                                                        </ng-select>
+                                                                    </td>
+                                                                    <td [width]="250">
+                                                                        <ng-select appendTo="body" [clearable]="false" [items]="rowsPeriodo"
+                                                                            style="width: 250px" bindLabel="descripcion"
+                                                                            placeholder="Tipo Archivo" bindValue="idColumna"
+                                                                            [(ngModel)]="idPeriodo" [ngModelOptions]="{standalone: true}">
+                                                                        </ng-select>
+                                                                    </td>
+                                                                    <td>
+                                                                        <strong>{{ item.nombre }}</strong>
+                                                                    </td>
+                                                                    <td>
+                                                                        {{item.tamanio}}
+                                                                    </td>
+                                                                    <td nowrap>
+                                                                        <button (click)="onEliminarArchivo(item)" type="button"
+                                                                            class="btn btn-raised btn-outline-danger btn-sm" rippleEffect>
+                                                                            <i data-feather="trash"></i>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </li>
+                        </ul>
+                        <div [ngbNavOutlet]="navWithIcons" class="mt-2"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row invoice-add">
+                            <div class="col-xl-12 col-md-12 col-12">
+
+                                <form class="source-item">
+                                    <div data-repeater-list="group-a">
+                                        <div class="repeater-wrapper" data-repeater-item
+                                            *ngFor="let item of items; let i = index">
+                                            <div class="row">
+                                                <div
+                                                    class="col-12 d-flex product-details-border position-relative pr-0">
+                                                    <div class="row w-100 pr-lg-0 pr-1 py-2">
+                                                        <div class="col-lg-5 col-12 mb-lg-0 mb-2 mt-lg-0 mt-2">
+                                                            <p class="card-text col-title mb-md-2 mb-0">Sector</p>
+                                                            <ng-select [(ngModel)]="idTipoDoc"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                [items]="rowsTipoDoc" [clearable]="false"
+                                                                bindLabel="descripcion" placeholder="Tipo Archivo"
+                                                                bindValue="idColumna">
+                                                            </ng-select>
+                                                        </div>
+                                                        <div class="col-lg-3 col-12 my-lg-0 my-2">
+                                                            <p class="card-text col-title mb-md-2 mb-0">Documento</p>
+                                                            <input type="text" class="form-control"
+                                                                [(ngModel)]="item.itemCost" name="itemCost{{ i }}"
+                                                                id="itemCost{{ i }}" placeholder="24" />
+                                                        </div>
+                                                        <div class="col-lg-4 col-12 my-lg-0 my-2">
+                                                            <p class="card-text col-title mb-md-2 mb-0">Período</p>
+                                                            <ng-select [(ngModel)]="idPeriodo"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                [items]="rowsPeriodo" [clearable]="false"
+                                                                bindLabel="descripcion" placeholder="Periodicidad"
+                                                                bindValue="idColumna">
+                                                            </ng-select>
+                                                        </div>
+                                                    </div>
+                                                    <div
+                                                        class="d-flex flex-column align-items-center justify-content-between border-left invoice-product-actions py-50 px-25">
+                                                        <button (click)="deleteItem(i)" class="btn p-0">
+                                                            <i data-feather="x" [size]="18" class="cursor-pointer"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-1" style="margin-left: 5px;">
+                                        <div class="col-12 px-0">
+                                            <button type="button" class="btn btn-primary btn-sm btn-add-new"
+                                                (click)="addItem()" rippleEffect>
+                                                <i data-feather="plus" class="mr-25"></i>
+                                                <span class="align-middle">Agregar
+                                                    documento</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="col-12">
+                    <div class="d-flex justify-content-between mb-1">
+                        <h4>(Homologación) Archivo(s) adjuntos</h4>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th [width]="250">Nivel</th>
+                                    <th [width]="250">Período</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of sustentos">
+                                    <td [ngClass]="{'row-edicion': item.editado}">
+                                        <a href="{{item.rutaArchivo}}" target="_blank"><strong
+                                                [ngClass]="{ 'eliminado': !item.estado }">{{ item.archivo
+                                                }}</strong></a>
+                                    </td>
+                                    <td [width]="250">
+                                        <ng-select appendTo="body" [clearable]="false" [items]="rowsNivel"
+                                            style="width: 250px" bindLabel="descripcion" placeholder="Tipo Archivo"
+                                            bindValue="idColumna" [(ngModel)]="idNivel"
+                                            [ngModelOptions]="{standalone: true}">
+                                        </ng-select>
+                                    </td>
+                                    <td [width]="250">
+                                        <ng-select appendTo="body" [clearable]="false" [items]="rowsPeriodo"
+                                            style="width: 250px" bindLabel="descripcion" placeholder="Tipo Archivo"
+                                            bindValue="idColumna" [(ngModel)]="idPeriodo"
+                                            [ngModelOptions]="{standalone: true}">
+                                        </ng-select>
+                                    </td>
+                                    <td nowrap>
+                                        <button *ngIf="item.estado" type="button"
+                                            class="btn btn-raised btn-outline-danger btn-sm" rippleEffect
+                                            (click)="onEliminarArchivoAdjunto(item)">
+                                            <i data-feather="trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div> -->
+                <!-- <div *ngIf="notification != true" class="col-md-12 col-12">
+                    <div class="divider divider-secondary">
+                        <div class="divider-text">Auditoría</div>
+                    </div>
+                </div>
+                <div *ngIf="notification != true" class="col-md-6 col-12">
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" checked />
+                        <label class="custom-control-label" for="customRadio1">Cumple con los requisitos</label>
+                    </div>
+                </div>
+                <div *ngIf="notification != true" class="col-md-6 col-12">
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input" />
+                        <label class="custom-control-label" for="customRadio2">No cumple con los requisitos</label>
+                    </div>
+                </div> -->
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <div style="float: right">
+                            <button (click)="onSave()" class="btn btn-primary" rippleEffect type="submit">
+                                Aceptar
+                            </button>
+                            &nbsp;
+                            <button (click)="CancelModal()" class="btn btn-secondary" rippleEffect type="button">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template #modaledit let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">Información complementaria</h4>
+                <button (click)="modal.dismiss('Cross click')" aria-label="Close" class="close" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" ngbAutofocus tabindex="0">
+                <div class="row">
+                    <div class="col-md-6 col-12">
+                        <div class="form-group">
+                            <span> Estado del Contratista</span>
+                        </div>
+                    </div>
+
+                </div>
+                <ngb-progressbar type="primary" [value]="0">c%</ngb-progressbar>
+                <div class="col-md-12 col-12">
+                    <div class="divider divider-secondary">
+                        <div class="divider-text">Contratista</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-12">
+                        <div class="form-group">
+                            <label>Especialista encargado</label>
+                            <ng-select [clearable]="false" [items]="Especialista" bindLabel="despecialista"
+                                bindValue="idColumna" [(ngModel)]="this.Value">
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <div class="form-group">
+                            <label>Cliente</label>
+                            <input class="form-control" type="text" [(ngModel)]="cliente" />
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-12">
+                        <div class="form-group">
+                            <label>Contratista</label>
+                            <input class="form-control" type="text" [(ngModel)]="contratista" />
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-12">
+                        <div class="form-group">
+                            <label>Direccion</label>
+                            <input class="form-control" type="text" [(ngModel)]="direccion" />
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label>RUC</label>
+                            <input class="form-control" type="text" [(ngModel)]="ruc" />
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-12">
+                        <div class="form-group">
+                            <label>Correo</label>
+                            <input class="form-control" type="text" [(ngModel)]="correo" />
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-12 col-12">
+                        <div class="form-group">
+                            <label>Observaciones</label>
+                            <textarea name="" id="" rows="5" class="form-control"></textarea>
+                        </div>
+                    </div> -->
+                </div>
+
+                <div class="col-md-12 col-12">
+                    <div class="divider divider-dotted divider-danger">
+                        <div class="divider-text dsg">Documentos por subir</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <ul #navWithIcons="ngbNav" class="nav-tabs" ngbNav>
+                            <li ngbNavItem>
+                                <a ngbNavLink><span [data-feather]="'award'"></span> Homologación</a>
+                                <ng-template ngbNavContent>
+                                    <div class="row">
+                                        <div class="col-md-12 col-12 lg-6">
+                                            <div class="divider divider-left divider-dotted divider-primary">
+                                                <div class="divider-text"><span class="ygcolor"
+                                                        [data-feather]="'arrow-down-right'"></span><span
+                                                        class="ml-1 ygcolor">General (Homologación)</span></div>
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div *ngFor="let row of rowsDocumentos"
+                                                        class="meetup-day text-left">
+                                                        <div class="media mb-1">
+                                                            <div class="avatar bg-light-s rounded mr-1">
+                                                                <div class="avatar-content">
+                                                                    <i data-feather="file"
+                                                                        class="avatar-icon font-medium-3"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="media-body mg-6">
+                                                                <h5>{{ row.documentoName }}</h5>
+                                                            </div>
+                                                            <div ngbDropdown class="btn-group mg-6 mr-2">
+                                                                <div
+                                                                    class="custom-control custom-control-primary custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                        id="{{'dCheck' + row.idDocumentoName}}"
+                                                                        [(ngModel)]="row.estado" disabled
+                                                                        [ngModelOptions]="{ standalone: true }" />
+                                                                    <label class="custom-control-label"
+                                                                        for="{{'dCheck' + row.idDocumentoName}}">
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- <div class="mt-3">
+                                                        <button (click)="addItem()" type="button"
+                                                            class="btn btn-primary btn-sm" rippleEffect>
+                                                            <i class="mr-25" data-feather="plus-square"></i><span
+                                                                class="d-none d-sm-inline-block">Agregar
+                                                                documento</span>
+                                                        </button>
+                                                    </div> -->
+
+                                                    <!-- <div ng2FileDrop [ngClass]="{ 'file-drop-over': hasBaseDropZoneOver }"
+                                                        (fileOver)="fileHom($event)" [uploader]="archivosHomologacion"
+                                                        class="py-5 mb-3 text-center font-medium-5 text-uppercase file-drop-zone">
+                                                        Arrastre aquí los archivos
+                                                    </div>
+                                                    <div class="d-flex justify-content-between mb-1">
+                                                        <h4>Archivo(s) a subir</h4>
+                                                    </div>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th [width]="250">Nivel</th>
+                                                                    <th [width]="250">Período</th>
+                                                                    <th>Nombre</th>
+                                                                    <th>Tamaño</th>
+                                                                    <th>Acción</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr *ngFor="let item of archivosHom">
+                                                                    <td [width]="250">
+                                                                        <ng-select appendTo="body" [clearable]="false" [items]="rowsNivel"
+                                                                            style="width: 250px" bindLabel="descripcion"
+                                                                            placeholder="Tipo Archivo" bindValue="idColumna"
+                                                                            [(ngModel)]="idNivel" [ngModelOptions]="{standalone: true}">
+                                                                        </ng-select>
+                                                                    </td>
+                                                                    <td [width]="250">
+                                                                        <ng-select appendTo="body" [clearable]="false" [items]="rowsPeriodo"
+                                                                            style="width: 250px" bindLabel="descripcion"
+                                                                            placeholder="Tipo Archivo" bindValue="idColumna"
+                                                                            [(ngModel)]="idPeriodo" [ngModelOptions]="{standalone: true}">
+                                                                        </ng-select>
+                                                                    </td>
+                                                                    <td>
+                                                                        <strong>{{ item.nombre }}</strong>
+                                                                    </td>
+                                                                    <td>
+                                                                        {{item.tamanio}}
+                                                                    </td>
+                                                                    <td nowrap>
+                                                                        <button (click)="onEliminarArchivo(item)" type="button"
+                                                                            class="btn btn-raised btn-outline-danger btn-sm" rippleEffect>
+                                                                            <i data-feather="trash"></i>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </li>
+                            <li ngbNavItem>
+                                <a ngbNavLink><span [data-feather]="'globe'"></span> Auditoría (Empresa)</a>
+                                <ng-template ngbNavContent>
+                                    <div class="row">
+                                        <div class="col-md-12 col-12 lg-6">
+                                            <div class="divider divider-left divider-dotted divider-primary">
+                                                <div class="divider-text"><span class="ygcolor"
+                                                        [data-feather]="'arrow-down-right'"></span><span
+                                                        class="ml-1 ygcolor">General (Empresa)</span></div>
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div *ngFor="let row of rowsDocumentosEmpresa"
+                                                        class="meetup-day text-left">
+                                                        <div class="media mb-1">
+                                                            <div class="avatar bg-light-s rounded mr-1">
+                                                                <div class="avatar-content">
+                                                                    <i data-feather="file"
+                                                                        class="avatar-icon font-medium-3"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="media-body mg-6">
+                                                                <h5>{{ row.documentoName }}</h5>
+                                                            </div>
+                                                            <div ngbDropdown class="btn-group mg-6 mr-2">
+                                                                <div
+                                                                    class="custom-control custom-control-primary custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                        id="{{'dCheckEmpresa' + row.idDocumentoName}}"
+                                                                        [(ngModel)]="row.estado" disabled
+                                                                        [ngModelOptions]="{ standalone: true }" />
+                                                                    <label class="custom-control-label"
+                                                                        for="{{'dCheckEmpresa' + row.idDocumentoName}}">
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- <div ng2FileDrop [ngClass]="{ 'file-drop-over': hasBaseDropZoneOver }"
+                                                        (fileOver)="fileAudEmpr($event)" [uploader]="archivosAudEmpresa"
+                                                        class="py-5 mb-3 text-center font-medium-5 text-uppercase file-drop-zone">
+                                                        Arrastre aquí los archivos
+                                                    </div>
+                                                    <div class="d-flex justify-content-between mb-1">
+                                                        <h4>Archivo(s) a subir</h4>
+                                                    </div>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                        
+                                                                    <th>Nombre</th>
+                                                                    <th>Tamaño</th>
+                                                                    <th>Acción</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr *ngFor="let item of archivosAudEmpr">
+                                                                    <td>
+                                                                        <strong>{{ item.nombre }}</strong>
+                                                                    </td>
+                                                                    <td>
+                                                                        {{item.tamanio}}
+                                                                    </td>
+                                                                    <td nowrap>
+                                                                        <button (click)="onEliminarArchivo(item)" type="button"
+                                                                            class="btn btn-raised btn-outline-danger btn-sm" rippleEffect>
+                                                                            <i data-feather="trash"></i>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </li>
+                            <li ngbNavItem>
+                                <a ngbNavLink><span [data-feather]="'globe'"></span> Auditoría (Empleados)</a>
+                                <ng-template ngbNavContent>
+                                    <div class="row">
+                                        <div class="col-md-12 col-12 lg-6">
+                                            <div class="divider divider-left divider-dotted divider-primary">
+                                                <div class="divider-text"><span class="ygcolor"
+                                                        [data-feather]="'arrow-down-right'"></span><span
+                                                        class="ml-1 ygcolor">General (Empleado)</span></div>
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div *ngFor="let row of rowsDocumentosEmpleado"
+                                                        class="meetup-day text-left">
+                                                        <div class="media mb-1">
+                                                            <div class="avatar bg-light-s rounded mr-1">
+                                                                <div class="avatar-content">
+                                                                    <i data-feather="file"
+                                                                        class="avatar-icon font-medium-3"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="media-body mg-6">
+                                                                <h5>{{ row.documentoName }}</h5>
+                                                            </div>
+                                                            <div ngbDropdown class="btn-group mg-6 mr-2">
+                                                                <div
+                                                                    class="custom-control custom-control-primary custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                        id="{{'dCheckEmpleado' + row.idDocumentoName}}"
+                                                                        [(ngModel)]="row.estado" disabled
+                                                                        [ngModelOptions]="{ standalone: true }" />
+                                                                    <label class="custom-control-label"
+                                                                        for="{{'dCheckEmpleado' + row.idDocumentoName}}">
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- <div ng2FileDrop [ngClass]="{ 'file-drop-over': hasBaseDropZoneOver }"
+                                                        (fileOver)="fileAudEmpl($event)" [uploader]="archivosAudEmpleado"
+                                                        class="py-5 mb-3 text-center font-medium-5 text-uppercase file-drop-zone">
+                                                        Arrastre aquí los archivos
+                                                    </div>
+                                                    <div class="d-flex justify-content-between mb-1">
+                                                        <h4>Archivo(s) a subir</h4>
+                                                    </div>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th [width]="250">Nivel</th>
+                                                                    <th [width]="250">Período</th>
+                                                                    <th>Nombre</th>
+                                                                    <th>Tamaño</th>
+                                                                    <th>Acción</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr *ngFor="let item of archivosAudEmpl">
+                                                                    <td [width]="250">
+                                                                        <ng-select appendTo="body" [clearable]="false" [items]="rowsNivel"
+                                                                            style="width: 250px" bindLabel="descripcion"
+                                                                            placeholder="Tipo Archivo" bindValue="idColumna"
+                                                                            [(ngModel)]="idNivel" [ngModelOptions]="{standalone: true}">
+                                                                        </ng-select>
+                                                                    </td>
+                                                                    <td [width]="250">
+                                                                        <ng-select appendTo="body" [clearable]="false" [items]="rowsPeriodo"
+                                                                            style="width: 250px" bindLabel="descripcion"
+                                                                            placeholder="Tipo Archivo" bindValue="idColumna"
+                                                                            [(ngModel)]="idPeriodo" [ngModelOptions]="{standalone: true}">
+                                                                        </ng-select>
+                                                                    </td>
+                                                                    <td>
+                                                                        <strong>{{ item.nombre }}</strong>
+                                                                    </td>
+                                                                    <td>
+                                                                        {{item.tamanio}}
+                                                                    </td>
+                                                                    <td nowrap>
+                                                                        <button (click)="onEliminarArchivo(item)" type="button"
+                                                                            class="btn btn-raised btn-outline-danger btn-sm" rippleEffect>
+                                                                            <i data-feather="trash"></i>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </li>
+                        </ul>
+                        <div [ngbNavOutlet]="navWithIcons" class="mt-2"></div>
+                    </div>
+                </div>
+                <!-- <div *ngIf="notification != true" class="col-md-12 col-12">
+                    <div class="divider divider-secondary">
+                        <div class="divider-text">Auditoría</div>
+                    </div>
+                </div>
+                <div *ngIf="notification != true" class="col-md-6 col-12">
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" />
+                        <label class="custom-control-label" for="customRadio1">Cumple con los requisitos</label>
+                    </div>
+                </div>
+                <div *ngIf="notification != true" class="col-md-6 col-12">
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input" checked />
+                        <label class="custom-control-label" for="customRadio2">No cumple con los requisitos</label>
+                    </div>
+                </div> -->
+
+            </div>
+            <div class="modal-footer" style="display: block !important;">
+                <div class="row">
+                    <div class="col-md-6 col-12" style="margin-bottom: 5px">
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <div style="float: right">
+                            <button (click)="ValidacionDocumento()" class="btn btn-primary" rippleEffect type="submit">
+                                Aceptar
+                            </button>
+                            &nbsp;
+                            <button (click)="CancelModal()" class="btn btn-secondary" rippleEffect type="button">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template #CS let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">Búsqueda de Contratista</h4>
+                <button (click)="modal.dismiss('Cross click')" aria-label="Close" class="close" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12 col-12 d-flex justify-content-md-end mb-1">
+                                        <label class="d-flex align-items-center ml-1 utble">
+                                            <span class="d-none d-sm-inline-block mr-1">Buscar:</span>
+                                            <input (keyup)="onContratistaDropdown()"
+                                                [(ngModel)]="contratistadropdownSettings.searchString"
+                                                class="form-control" placeholder="Texto de búsqueda..." type="search" />
+                                        </label>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead class="centerall-header">
+                                                    <tr>
+                                                        <th class="width-column utble">ACCIÓN</th>
+                                                        <th class="width-column utble">⠀⠀⠀⠀CONTRATISTA⠀⠀⠀⠀</th>
+                                                        <th class="width-column utble">E-MAIL</th>
+                                                        <th class="width-column utble">TELÉFONO</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let row of rowsContratistaDropdown"
+                                                        class="cursor-pointer">
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <a title="Click para seleccionar al Contratista"
+                                                                    [class.selectedRow]="rowDiscIsSelected(row.razonSocial)"
+                                                                    (click)="onRowClick(row)">
+                                                                    <i class="text-primary cursor-pointer"
+                                                                        data-feather="check-circle"></i>
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                        <td><span>{{ row.razonSocial }}</span></td>
+                                                        <td><span>{{ row.correo }}</span></td>
+                                                        <td><span>{{ row.telefono }}</span></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-1">
+                                    <div class="col-12 col-md-12 utble mg-6 d-flex justify-content-end">
+                                        <ngb-pagination [collectionSize]="contratistadropdownSettings.colletionSize"
+                                            [(page)]="contratistadropdownSettings.page"
+                                            (pageChange)="onContratistaDropdown()" [rotate]="true"
+                                            [boundaryLinks]="true" [pageSize]="contratistadropdownSettings.pageSize"
+                                            class="d-flex justify-content-center">
+                                            <ng-template ngbPaginationFirst>⠀<span data-feather="skip-back"></span>
+                                            </ng-template>
+                                            <ng-template ngbPaginationPrevious><span [data-feather]="'chevron-left'"
+                                                    [class]="'font-weight-bolder'"></span>⠀
+                                            </ng-template>
+                                            <ng-template ngbPaginationNext>⠀<span [data-feather]="'chevron-right'"
+                                                    [class]="'font-weight-bolder'"></span>
+                                            </ng-template>
+                                            <ng-template ngbPaginationLast><span data-feather="skip-forward"></span>⠀
+                                            </ng-template>
+                                        </ngb-pagination>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <div style="float: right">
+                            <button (click)="onCloseConstratista()" class="btn btn-secondary" rippleEffect
+                                type="button">
+                                Cerrar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <block-ui></block-ui>
+    </div>
+</div>

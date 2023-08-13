@@ -1,0 +1,574 @@
+<div class="content-wrapper">
+    <div class="content-body">
+        <h2>Clientes |
+            <span style="font-size: 14px;">
+                <a href="" style="margin-right: 5px; margin-left: 5px;" [routerLink]="['/dashboard/cliente-parconsil']"
+                    [queryParams]="{}"> Inicio</a>
+
+                <span data-feather="chevron-right" style="margin-right: 5px; margin-top: 4px;"></span>
+
+                <a href="" style="margin-right: 5px; margin-left: 5px;" [routerLink]="['/dashboard/cliente-parconsil']"
+                    [queryParams]="{}"> Cliente</a>
+
+                <span data-feather="chevron-right" style="margin-right: 5px; margin-top: 4px;"></span>
+
+                <span style="margin-right: 5px; margin-left: 5px;">
+                    Contratistas</span>
+
+                <span data-feather="chevron-right" style="margin-right: 5px; margin-top: 4px;"></span>
+
+                <a style="margin-right: 5px; margin-left: 5px;"
+                    [routerLink]="['/dashboard/cliente-parconsil/contratista-cliente/empleado-contratista']"
+                    [queryParams]="{}" style="flex: auto;" queryParamsHandling="merge" skipLocationChange> Empleados</a>
+
+                <span data-feather="chevron-right" style="margin-right: 5px; margin-top: 4px;"></span>
+
+                <span style="margin-right: 5px; margin-left: 5px;"> Documentos</span>
+            </span>
+        </h2>
+        <section class="app-user-view">
+            <div class="row">
+                <div class="col-xl-9 col-lg-8 col-md-7">
+                    <div class="card user-card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-xl-1 col-lg-12 d-flex justify-content-between border-container-lg"
+                                    style="text-align: center;">
+                                    <button
+                                        [routerLink]="['/dashboard/cliente-parconsil/contratista-cliente/empleado-contratista']"
+                                        [queryParams]="{}" style="flex: auto;" queryParamsHandling="merge"
+                                        skipLocationChange class="btn go-back p-0 mr-1">
+                                        <i data-feather="chevron-left" [size]="21"></i>
+                                    </button>
+                                </div>
+                                <div
+                                    class="col-xl-5 col-lg-12 d-flex flex-column justify-content-between border-container-lg">
+                                    <div class="user-avatar-section">
+                                        <div class="d-flex flex-wrap my-50">
+                                            <div class="user-info-title">
+                                                <i class="fa fa-building-o mr-1" style="margin-left: 2px;"></i>
+                                                <span
+                                                    class="card-text user-info-title font-weight-bold mb-0">Cliente</span>
+                                            </div>
+                                            <span class="card-text mb-0 ml-1">{{ params.RazonSocial }}</span>
+                                        </div>
+                                        <div class="d-flex flex-wrap my-50">
+                                            <div class="user-info-title">
+                                                <i data-feather="globe" class="mr-1"></i>
+                                                <span class="card-text user-info-title font-weight-bold mb-0">RUC</span>
+                                            </div>
+                                            <p class="card-text mb-0 ml-1"> {{ params.Ruc }} </p>
+                                        </div>
+                                        <div class="d-flex flex-wrap my-50">
+                                            <div class="user-info-title">
+                                                <i data-feather="phone" class="mr-1"></i>
+                                                <span
+                                                    class="card-text user-info-title font-weight-bold mb-0">Télefono</span>
+                                            </div>
+                                            <p class="card-text mb-0 ml-1"> {{ params.Telefono }} </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-12 mt-2 mt-xl-0">
+                                    <div class="user-info-wrapper">
+                                        <div class="d-flex flex-wrap my-50">
+                                            <div class="user-info-title">
+                                                <i data-feather="user" class="mr-1"></i>
+                                                <span
+                                                    class="card-text user-info-title font-weight-bold mb-0">Especialista</span>
+                                            </div>
+                                            <p class="card-text mb-0 ml-1"> {{ params.Especialista }}</p>
+                                        </div>
+                                        <div class="d-flex flex-wrap my-50">
+                                            <div class="user-info-title">
+                                                <i data-feather="mail" class="mr-1"></i>
+                                                <span
+                                                    class="card-text user-info-title font-weight-bold mb-0">Correo</span>
+                                            </div>
+                                            <p class="card-text mb-0 ml-1"> {{ params.Correo }} </p>
+                                        </div>
+                                        <div class="d-flex flex-wrap my-50">
+                                            <div class="user-info-title">
+                                                <i data-feather="compass" class="mr-1"></i>
+                                                <span
+                                                    class="card-text user-info-title font-weight-bold mb-0">Dirección</span>
+                                            </div>
+                                            <p class="card-text mb-0 ml-1"> {{ params.Direccion }} </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-lg-4 col-md-5">
+                    <!-- border-primary -->
+                    <div class="card plan-card">
+                        <div class="card-header d-flex justify-content-between align-items-center pt-75 pb-1">
+                            <h5 class="mb-0">Estado de cumplimiento</h5>
+                            <span class="badge badge-light-secondary" data-toggle="tooltip" data-placement="top">{{
+                                monthText }}
+                                {{ day }}, {{ nowYear }} <span class="nextYear"></span>
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <div class="badge badge-light-warning"><span class="text-dark">Documentos</span></div>
+                            <ul class="list-unstyled" style="margin: 7px; text-align: center;">
+                                <li>
+                                    <span class="mb-25">Progreso Actual
+                                        %</span>
+                                    <div class="progress-wrapper">
+                                        <ngb-progressbar type="primary" showValue="true" [animated]="true"
+                                            [value]="AControls.porcentaje.value" [striped]="true">
+                                        </ngb-progressbar>
+                                    </div>
+                                </li>
+                            </ul>
+                            <!-- <div class="card-body">
+                                <button [routerLink]="['/dashboard/cliente-parconsil/contratista-cliente']"
+                                    [queryParams]="{}" queryParamsHandling="merge" skipLocationChange
+                                    class="btn btn-primary text-center btn-block" rippleEffect>Regresar</button>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <section id="Revision">
+                <ul #navWithIcons="ngbNav" class="nav-tabs col-12" ngbNav>
+                    <li ngbNavItem>
+                        <a ngbNavLink><span class="fa fa-folder-open-o" style="margin-right: 8px;"></span> Revisión de
+                            documentos
+                            publicados</a>
+                        <ng-template ngbNavContent>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="card-title mb-1 h-w">EMPLEADO : ({{ params.Empleado }} {{params.nroDocumento}})
+                                                <script>
+                                                    console.log(params)
+                                                </script>
+                                            </h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="d-flex flex-wrap mb-0">
+                                                    <div class="p-1">
+                                                        <button type="submit" rippleEffect class="btn btn-primary"
+                                                            (click)="onConfirmar()">
+                                                            <i class="mr-0 mr-sm-1" data-feather="check"></i>
+                                                            <span class="d-none d-sm-inline-block">Guardar</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="pt-1 pb-1 pr-1">
+                                                        <button type="submit" rippleEffect class="btn btn-secondary"
+                                                            (click)="onDeshacerCambios()">
+                                                            <i class="mr-0 mr-sm-1" data-feather="corner-up-left"></i>
+                                                            <span class="d-none d-sm-inline-block">Deshacer
+                                                                Cambios</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="ml-auto d-flex flex-wrap mb-0">
+                                                    <!-- <div class="p-1">
+                                                            <button type="submit" rippleEffect class="btn btn-success"
+                                                                [routerLink]="['/dashboard/cliente-parconsil/certificado']"
+                                                                [queryParams]="{ IdCliente: params.IdCliente, Especialista: params.Especialista,
+                                                                FechaCreacion: params.FechaCreacion }" queryParamsHandling="merge"
+                                                                skipLocationChange>
+                                                                <i class="mr-0 mr-sm-1 fa fa-file-pdf-o"></i>
+                                                                <span class="d-none d-sm-inline-block">Generar Certificado</span>
+                                                            </button>
+                                                        </div> -->
+                                                </div>
+                                            </div>
+                                            <div class="row">
+
+                                                <!-- <div class="col-lg-6 col-md-6 col-12 mt-1">
+                                                        <button (click)="onGuardar()" class="btn btn-secondary d-flex align-items-center utble ml-2" type="button">
+                                                            <i data-feather="save" class="mr-1"></i> Guardar</button>
+                                                            <button (click)="onDeshacerCambios()" class="btn btn-secondary d-flex align-items-center utble ml-2" type="button">
+                                                                <i data-feather="corner-up-left" class="mr-1"></i> Deshacer Cambios</button>
+                                                    </div> -->
+                                                <div class="col-lg-3 col-md-3 col-12">
+                                                    <label class="d-flex align-items-center utble ml-2"
+                                                        style="margin-top: 6px;">
+                                                        <span class="mr-1">Mostrar</span>
+                                                        <ng-select [clearable]="false" [items]="forPageOptions"
+                                                            [(ngModel)]="empresadocumentosSettings.pageSize">
+                                                        </ng-select>
+                                                        <span class="ml-1">Filas</span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-6 col-12 d-flex justify-content-center utble">
+                                                    <div class="demo-inline-spacing">
+                                                        <div class="custom-control custom-control-primary custom-radio">
+                                                            <input type="radio" id="customRadio1" name="customRadio"
+                                                                class="custom-control-input" (change)="onClickBtn(0)">
+                                                            <label class="custom-control-label"
+                                                                for="customRadio1">TODOS</label>
+                                                        </div>
+                                                        <div class="custom-control custom-control-warning custom-radio">
+                                                            <input type="radio" id="customRadio2" name="customRadio"
+                                                                class="custom-control-input" (change)="onClickBtn(1)"
+                                                                checked>
+                                                            <label class="custom-control-label"
+                                                                for="customRadio2">Pendientes</label>
+                                                        </div>
+                                                        <div class="custom-control custom-control-success custom-radio">
+                                                            <input type="radio" id="customRadio3" name="customRadio"
+                                                                class="custom-control-input" (change)="onClickBtn(2)">
+                                                            <label class="custom-control-label"
+                                                                for="customRadio3">Aprobados</label>
+                                                        </div>
+                                                        <div class="custom-control custom-control-danger custom-radio">
+                                                            <input type="radio" id="customRadio4" name="customRadio"
+                                                                class="custom-control-input" (change)="onClickBtn(3)">
+                                                            <label class="custom-control-label"
+                                                                for="customRadio4">Desaprobados</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-12 mt-1">
+                                                    <label class="d-flex align-items-center ml-1 utble">
+                                                        <span class="d-none d-sm-inline-block mr-1">Buscar:</span>
+                                                        <div class="input-group">
+                                                            <input type="text" (change)="onSetEmpleadoDocumentos()"
+                                                                class="form-control" placeholder="Texto de búsqueda..."
+                                                                aria-label="Amount"
+                                                                [(ngModel)]="empresadocumentosSettings.searchString" />
+                                                            <div class="input-group-append">
+                                                                <!-- <button (click)="onClearFilter()" class="btn btn-outline-primary"
+                                                                        type="button" rippleEffect>
+                                                                        <i data-feather="trash-2"></i>
+                                                                    </button> -->
+                                                                <button (click)="onSetEmpleadoDocumentos()"
+                                                                    class="btn btn-outline-primary" type="button"
+                                                                    rippleEffect>
+                                                                    <i data-feather="search"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover">
+                                                        <thead class="centerall-header">
+                                                            <tr>
+                                                                <th class="utble">ACCIÓN</th>
+                                                                <th class="utble">DOCUMENTO</th>
+                                                                <th class="utble">ARCHIVO</th>
+                                                                <th class="utble">ESTADO</th>
+                                                                <th class="utble" *ngIf="AControls.idEstado.value != 2">
+                                                                    OBSERVACIÓN</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let row of rowsEmpleadoDocumentos"
+                                                                class="cursor-pointer">
+                                                                <td>
+                                                                    <div
+                                                                        class="d-flex align-items-center justify-content-center">
+                                                                        <div class="avatar bg-light-success mr-1"
+                                                                            *ngIf="AControls.idEstado.value == 1">
+                                                                            <button (click)="onAprobarArchivo(row, 2)"
+                                                                                ngbTooltip="Aprobar" placement="top"
+                                                                                class="btn btn-icon btn-icon rounded-circle btn-outline-secondary"
+                                                                                rippleEffect>
+                                                                                <span
+                                                                                    [data-feather]="'thumbs-up'"></span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="avatar bg-light-danger mr-1"
+                                                                            *ngIf="AControls.idEstado.value == 1">
+                                                                            <button
+                                                                                (click)="onDesaprobarArchivo(DOCDESAPROVE, row, 3)"
+                                                                                ngbTooltip="Desaprobar" placement="top"
+                                                                                class="btn btn-icon btn-icon rounded-circle btn-outline-secondary"
+                                                                                rippleEffect>
+                                                                                <span
+                                                                                    [data-feather]="'thumbs-down'"></span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="avatar bg-light-primary mr-1"
+                                                                            *ngIf="row.archivo != ''">
+                                                                            <button
+                                                                                (click)="onVisualizadorPdf(row, VPDF)"
+                                                                                ngbTooltip="Ver Archivo" placement="top"
+                                                                                class="btn btn-icon btn-icon rounded-circle btn-outline-secondary"
+                                                                                rippleEffect>
+                                                                                <span [data-feather]="'eye'"></span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="avatar bg-light-info mr-1"
+                                                                            *ngIf="AControls.idEstado.value == 2 && row.idPeriodicidad == 2">
+                                                                            <button
+                                                                                (click)="onFechaVencimiento(row, FVENC)"
+                                                                                ngbTooltip="Fecha Venc." placement="top"
+                                                                                class="btn btn-icon btn-icon rounded-circle btn-outline-secondary"
+                                                                                rippleEffect>
+                                                                                <span
+                                                                                    [data-feather]="'calendar'"></span>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+
+                                                                <td class="c-w">{{ row.nombreDocumento }}</td>
+
+                                                                <td [ngClass]="{'row-edicion': row.editado}">
+                                                                    <a href="{{row.rutaArchivo}}"
+                                                                        target="_blank"><strong
+                                                                            [ngClass]="{ 'eliminado': !row.estado }">{{
+                                                                            row.archivo
+                                                                            }}</strong></a>
+                                                                </td>
+
+                                                                <td class="c-w utble">
+                                                                    <div class="badge badge-pill" [ngClass]="{
+                                                                                        'badge-light-warning': row.idEstado == 1,
+                                                                                        'badge-light-success': row.idEstado == 2,
+                                                                                        'badge-light-danger': row.idEstado == 3
+                                                                                        }">
+                                                                        {{ row.estado }}
+                                                                    </div>
+                                                                </td>
+
+                                                                <td *ngIf="AControls.idEstado.value == 1" class="c-w">
+                                                                </td>
+                                                                <td *ngIf="AControls.idEstado.value == 3 || AControls.idEstado.value == 0"
+                                                                    class="c-w">
+                                                                    {{row.observacion}}
+                                                                </td>
+                                                                <!-- <td>
+                                                                        <div class="progress-wrapper" *ngIf="20 >= row.porcentaje">
+                                                                            <div class="mb-25">Progreso&hellip;{{
+                                                                                row.porcentaje }} %</div>
+                                                                            <ngb-progressbar type="danger" showValue="true"
+                                                                                [value]="row.porcentaje" [animated]="true"
+                                                                                [striped]="true" [height]="progressbarHeight">
+                                                                            </ngb-progressbar>
+                                                                        </div>
+                                                                        <div class="progress-wrapper"
+                                                                            *ngIf="row.porcentaje > 20 && 50 >= row.porcentaje">
+                                                                            <div class="mb-25">Progreso&hellip;{{
+                                                                                row.porcentaje }} %</div>
+                                                                            <ngb-progressbar type="warning" showValue="true"
+                                                                                [value]="row.porcentaje" [animated]="true"
+                                                                                [striped]="true" [height]="progressbarHeight">
+                                                                            </ngb-progressbar>
+                                                                        </div>
+                                                                        <div class="progress-wrapper"
+                                                                            *ngIf="row.porcentaje > 50 && 99 >= row.porcentaje">
+                                                                            <div class="mb-25">Progreso&hellip;{{
+                                                                                row.porcentaje }} %</div>
+                                                                            <ngb-progressbar type="info" showValue="true"
+                                                                                [value]="row.porcentaje" [animated]="true"
+                                                                                [striped]="true" [height]="progressbarHeight">
+                                                                            </ngb-progressbar>
+                                                                        </div>
+                                                                        <div class="progress-wrapper" *ngIf="100 == row.porcentaje">
+                                                                            <div class="mb-25">Progreso&hellip;{{
+                                                                                row.porcentaje }} %</div>
+                                                                            <ngb-progressbar type="success" showValue="true"
+                                                                                [value]="row.porcentaje" [animated]="true"
+                                                                                [striped]="true" [height]="progressbarHeight">
+                                                                            </ngb-progressbar>
+                                                                        </div>
+                                                                    </td> -->
+                                                            </tr>
+                                                            <tr *ngFor="let row of totalPuntaje">
+                                                                <td *ngIf="AControls.idEstado.value == 2"
+                                                                    style="text-align: left;" colspan="1"><strong>
+                                                                        RESULTADO DE PUNTAJE :</strong></td>
+                                                                <td *ngIf="AControls.idEstado.value == 2"
+                                                                    style="text-align: right; font-size: medium; font-family: 'Courier New', Courier, monospace;">
+                                                                    <strong> {{ row.puntajeDefinido }}</strong>
+                                                                </td>
+                                                                <td *ngIf="AControls.idEstado.value == 2"
+                                                                    style="text-align: right; font-size: medium; font-family: 'Courier New', Courier, monospace;">
+                                                                    <strong> {{ row.puntajeTotal }}</strong>
+                                                                </td>
+                                                                <td *ngIf="AControls.idEstado.value == 2"
+                                                                    style="text-align: left;" colspan="2"><strong>
+                                                                        FALTAN : {{ row.resultado }} </strong></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </li>
+                    <li ngbNavItem>
+                        <a ngbNavLink><span class="fa fa-folder-open-o" style="margin-right: 8px;"></span> Documentos
+                            del
+                            Contratista</a>
+                        <ng-template ngbNavContent>
+                            <div class="row">
+                                <div class="col-12 col-md-12">
+                                    <div class="card card-company-table">
+                                        <div class="card-header">
+                                            <h4 class="card-title mb-1 h-w">EMPLEADO : ({{ params.Empleado }})
+                                            </h4>
+                                        </div>
+                                        <div class="card-body p-0">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover">
+                                                    <thead class="centerall-header">
+                                                        <tr>
+                                                            <th class="utble">Nombre</th>
+                                                            <th class="utble">Tipo</th>
+                                                            <th class="utble">Subir Archivo</th>
+                                                            <th class="utble">Archivo</th>
+                                                            <th class="utble">Motivo</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody *ngFor="let row of rowsDocumentosHomTrabajador">
+                                                        <td class="c-w">{{ row.documentoName }}</td>
+                                                        <td class="c-w">{{ row.tipoExtension }}</td>
+                                                        <td>
+                                                            <div *ngIf="row.idEstado == 1"
+                                                                class="d-flex justify-content-center">
+                                                                <div class="badge d-block badge-secondary">
+                                                                    <span class="c-w">Pendiente</span>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="row.idEstado == 2"
+                                                                class="d-flex justify-content-center">
+                                                                <div class="badge d-block badge-success">
+                                                                    <span class="c-w">Aprobado</span>
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="row.idEstado == 3 && row.aplica != true"
+                                                                class="d-flex justify-content-center">
+                                                                <div class="badge d-block badge-danger">
+                                                                    <span class="c-w">Observado</span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="c-w">{{ row.fileName }}</td>
+                                                        <td class="c-w">{{ row.observacion }}</td>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </li>
+                </ul>
+                <div [ngbNavOutlet]="navWithIcons" class="mt-2"></div>
+            </section>
+        </section>
+
+        <ng-template #VPDF let-modal>
+            <div class="modal-header" style="text-align: center;">
+                <h4 class="modal-title" id="myModalLabel1" style="flex: auto;">{{ params.Empleado }}: {{params.nroDocumento}} - {{ name }}</h4>
+                <button (click)="modal.dismiss('Cross click')" aria-label="Close" class="close" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <ngx-doc-viewer [url]="pdfSrc" viewer="url" style="width:100%;height:100vh;">
+            </ngx-doc-viewer>
+        </ng-template>
+
+        <ng-template #FVENC let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">Vencimiento del Documento</h4>
+                <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" ngbAutofocus tabindex="0" [ngStyle]="{ 'height': height + 'px' }">
+
+                <!-- <form [formGroup]="EmpresaHomologacion"> -->
+                <div class="row mt-1 ">
+                    <div class="col-md-12 col-12">
+                        <div class="form-group">
+                            <label>Fecha Vencimiento</label>
+                            <div class="input-group">
+                                <input #basicV="ngbDatepicker" #i18nDP="ngbDatepicker" [(ngModel)]="fechaVenc"
+                                    class="form-control" ngbDatepicker placeholder="dd/mm/yyyy">
+                                <div class="input-group-append">
+                                    <button (click)="basicV.toggle()" (click)="fechaVenctest(this.value)"
+                                        class="btn btn-outline-secondary feather icon-calendar" rippleEffect
+                                        type="button"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- </form> -->
+            </div>
+            <div class="modal-footer" style="display: block !important;">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <div style="float: right">
+                            <button (click)="saveFechaVenc()" class="btn btn-primary" rippleEffect type="button">
+                                <i class="mr-0 mr-sm-1" data-feather="save"></i>
+                                <span class="d-none d-sm-inline-block">Guardar</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template #DOCDESAPROVE let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">Estado Desaprobado (Archivo)</h4>
+                <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" ngbAutofocus tabindex="0">
+
+                <form [formGroup]="EmpresaHomologacion">
+                    <div class="row mt-1">
+                        <div class="col-md-12 col-12">
+                            <div class="form-group">
+                                <fieldset class="form-label-group mb-0">
+                                    <textarea id="textarea-counter" rows="5" class="form-control" [maxlength]="200"
+                                        #textLength formControlName="observacion" placeholder="Motivo"></textarea>
+                                    <label for="textarea-counter">Motivo:</label>
+                                </fieldset>
+                                <small class="textarea-counter-value float-right"><span *ngIf="textLength"
+                                        class="char-count">{{ textLength.value.length }}</span>
+                                    <span *ngIf="!textLength" class="char-count">0 </span> / 200
+                                </small>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer" style="display: block !important;">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <div style="float: right">
+                            <button (click)="onDesaprobarDocumentoHomologacion()" class="btn btn-primary" rippleEffect
+                                type="button">
+                                <i class="mr-0 mr-sm-1" data-feather="send"></i>
+                                <span class="d-none d-sm-inline-block">Enviar</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+</div>
